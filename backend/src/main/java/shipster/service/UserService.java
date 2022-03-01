@@ -4,13 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import shipster.data.domain.Role;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 import shipster.data.domain.User;
 import shipster.data.repository.RoleRepository;
 import shipster.data.repository.UserRepository;
 import shipster.exceptions.NoPermissionException;
 import shipster.exceptions.NotFoundException;
+import shipster.config.SecurityConfig;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
@@ -19,6 +22,9 @@ import java.util.Optional;
 
 // Daniel
 // Some methods inspired by our Internet Technology project in semester 3
+@Service
+@Validated
+@Transactional
 public class UserService {
     @Autowired
     private UserRepository userRepository;

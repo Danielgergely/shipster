@@ -11,6 +11,7 @@ import shipster.exceptions.NoPermissionException;
 import shipster.exceptions.NotFoundException;
 import shipster.service.UserService;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class UserEndpoint {
             path = "/user/register",
             produces = "application/json",
             consumes = "application/json")
-    public ResponseEntity<User> postUser(@RequestBody User user) {
+    public ResponseEntity<User> postUser(@Valid @RequestBody User user) {
         try {
             user = userService.createUser(user);
         } catch (Exception e) {
@@ -84,7 +85,7 @@ public class UserEndpoint {
     }
 
     @PutMapping(path = "/users/{id}", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<User> editUser(@PathVariable(value = "id") Long id, @RequestParam User user) {
+    public ResponseEntity<User> editUser(@PathVariable(value = "id") Long id, @Valid @RequestParam User user) {
         try {
             user = userService.editUser(id, user);
             return ResponseEntity.ok(user);

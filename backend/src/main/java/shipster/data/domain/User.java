@@ -1,7 +1,6 @@
 package shipster.data.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -23,9 +22,8 @@ public class User {
     private String firstName;
     private String lastName;
 
-    @NotEmpty(message = "Please provide a username")
+    //@NotEmpty(message = "Please provide a username")
     private String username;
-
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
