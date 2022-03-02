@@ -1,0 +1,121 @@
+.bg-shipster {
+    background: url("../assets/img/shipping_background.jpg") no-repeat center center fixed;
+    background-size: cover;
+}
+
+.bg-home {
+    background: url("../assets/img/boxes_background.jpg") no-repeat center center fixed;
+    background-size: cover;
+}
+
+.img-logo {
+    width: 100px;
+}
+
+.home-title {
+    width: 60%;
+    height: 100%;
+    margin: auto;
+}
+
+.navbar {
+    background-color: black;
+}
+
+.profile-card {
+    width: 270px;
+    height: 500px;
+    background-color: black;
+    color: white;
+}
+
+.text-secondary {
+    color: #ffc800;
+}
+
+.home-div {
+    margin-top: 200px;
+    background-color: rgba(0,0,0,0.6);
+}
+
+.rounded {
+    border-radius: .5rem!important;
+}
+
+.button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+}
+
+.btn-outline-secondary {
+    width: 100%;
+    margin-top: 5px;
+    color: #ffc800;
+    border-color: #ffc800;
+}
+
+.btn-outline-secondary:hover {
+    color: black;
+    background-color: #ffc800;
+}
+
+.btn-outline-secondary-small {
+    width: 100%;
+    margin-top: 5px;
+    color: #ffc800;
+    border-color: #ffc800;
+    font-size: small;
+}
+
+.btn-outline-secondary-small:hover {
+    color: black;
+    background-color: #ffc800;
+}
+
+.btn-outline-secondary-large {
+    width: 80%;
+    margin-top: 100px;
+    margin-bottom: 20px;
+    color: #ffc800;
+    border-color: #ffc800;
+    font-size: x-large;
+    align-self: center;
+}
+
+.btn-outline-secondary-large:hover {
+    color: black;
+    background-color: #ffc800;
+}
+
+.button:hover {
+    background-color: #555;
+}
+
+.text-centered {
+    text-align: center;
+}
+
+.page-location {
+    font-weight: bold;
+}
+
+.page-start {
+    margin-top: 100px;
+}
+
+.email {
+    font-size: 0.7rem;
+    text-align: center;
+}
+
+.names {
+    font-size: 1.5rem;
+    text-align: center;
+}
