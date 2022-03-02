@@ -4,7 +4,7 @@
 }
 
 .bg-home {
-    background: url("../assets/img/boxes_background.jpg") no-repeat center center fixed;
+    background: url("../assets/img/shipster_road_containers.jpg") no-repeat center center fixed;
     background-size: cover;
 }
 
@@ -29,9 +29,29 @@
     color: white;
 }
 
+.navbar-toggler {
+    width: 60px;
+}
+
 .text-secondary {
     color: #ffc800;
 }
+
+.nav-link {
+    font-size: 1.2rem;
+}
+
+.nav-menu {
+    display: flex;
+}
+
+@media screen and (max-width: 991px) {
+    .nav-menu {
+        flex-direction: column;
+        margin-left: unset!important;
+    }
+}
+
 
 .home-div {
     margin-top: 150px;
