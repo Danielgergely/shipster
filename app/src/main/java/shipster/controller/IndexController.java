@@ -13,4 +13,14 @@ public class IndexController {
         return "index.html";
     }
 
+    @GetMapping(path = "/team")
+    public String getTeamView(){
+        return "team.html";
+    }
+
+    @GetMapping(path = "/about")
+    public String getAboutView(){
+        return "about.html";
+    }
+
 }

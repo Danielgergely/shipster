@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@900&display=swap');
+
 .bg-shipster {
     background: url("../assets/img/shipping_background.jpg") no-repeat center center fixed;
     background-size: cover;
@@ -45,24 +47,17 @@
     display: flex;
 }
 
-@media screen and (max-width: 991px) {
-    .nav-menu {
-        flex-direction: column;
-        margin-left: unset!important;
-    }
-}
-
 
 .home-div {
     margin-top: 150px;
-    background-color: rgba(0,0,0,0.6);
+    background-color: rgba(0, 0, 0, 0.6);
     max-width: 1200px;
     width: 100%;
     align-self: center;
 }
 
 .rounded {
-    border-radius: .5rem!important;
+    border-radius: .5rem !important;
 }
 
 .button {
@@ -141,4 +136,120 @@
 .names {
     font-size: 1.5rem;
     text-align: center;
+}
+
+/* about page */
+.about {
+    height: 200vh;
+}
+
+.container-about {
+    clip: rect(0, auto, auto, 0);
+    overflow: hidden;
+    position: absolute;
+    height: 100vh;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.container_solid-about-first {
+    background: black;
+    top: 100vh;
+    height: 60vh;
+}
+
+.container_solid-about-second {
+    background: #ffc800;
+    top: 160vh;
+    height: 60vh;
+}
+
+.container_solid-about-third {
+    background: black;
+    top: 220vh;
+    height: 100vh;
+}
+
+.title_wrapper {
+    position: fixed;
+    display: block;
+    margin: auto;
+    width: 100%;
+    max-width: 750px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.title_wrapper .h1-about {
+    text-align: center;
+    font-size: 64px;
+    text-transform: uppercase;
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+}
+
+.h3-about{
+    color: #ffc800;
+}
+
+.h3-about-second{
+    color: black;
+}
+
+.h4-about {
+    text-align: center;
+    color: rgb(0,0,0,0.1);
+    transition: color 3s ease;
+}
+
+.h4-about:hover {
+    color: rgb(0,0,0,0.6);
+}
+
+.title_wrapper .h3-about {
+    text-align: center;
+    font-size: 26px;
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    margin: 50px;
+}
+
+.title_wrapper .h3-about-second {
+    text-align: center;
+    font-size: 26px;
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    margin: 50px;
+}
+
+.transparent-text {
+    background: url("../assets/img/ship_bright.jpg") no-repeat center fixed;
+    background-size: cover;
+    text-fill-color: transparent;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: black;
+}
+
+.container_image-about {
+    background: url("../assets/img/ship_bright.jpg") no-repeat center fixed;
+    background-size: cover;
+    top: 0;
+}
+
+.container_image-about .title_wrapper .h1-about {
+    color: black;
+}
+
+
+@media screen and (max-width: 991px) {
+    .nav-menu {
+        flex-direction: column;
+        margin-left: unset !important;
+    }
 }
