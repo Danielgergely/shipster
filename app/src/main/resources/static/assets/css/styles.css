@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@900&display=swap');
 
 .bg-shipster {
-    background: url("../assets/img/shipping_background.jpg") no-repeat center center fixed;
+    background: url("../img/shipping_background.jpg") no-repeat center center fixed;
     background-size: cover;
 }
 
 .bg-home {
-    background: url("../assets/img/shipster_road_containers.jpg") no-repeat center center fixed;
+    background: url("../img/shipster_road_containers.jpg") no-repeat center center fixed;
     background-size: cover;
 }
 
@@ -227,7 +227,7 @@
 }
 
 .transparent-text {
-    background: url("../assets/img/ship_bright.jpg") no-repeat center fixed;
+    background: url("../img/ship_bright.jpg") no-repeat center fixed;
     background-size: cover;
     text-fill-color: transparent;
     -webkit-text-fill-color: transparent;
@@ -237,7 +237,7 @@
 }
 
 .container_image-about {
-    background: url("../assets/img/ship_bright.jpg") no-repeat center fixed;
+    background: url("../img/ship_bright.jpg") no-repeat center fixed;
     background-size: cover;
     top: 0;
 }
