@@ -44,7 +44,7 @@ public class UserEndpoint {
         return ResponseEntity.created(location).body(user);
     }
 
-    @GetMapping(path = "/users/{id}", produces = "application/json")
+    @GetMapping(path = "/user/{id}", produces = "application/json")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         User user;
         try {
@@ -70,17 +70,17 @@ public class UserEndpoint {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping(path = "users/currennt", produces = "application/json")
-    public User getCurrentUser() {
+    @GetMapping(path = "/profile", produces = "application/json")
+    public User getProfile() {
         return userService.getCurrentUser();
     }
 
-    @GetMapping(path = "signup_check/username", produces = "application/json")
+    @GetMapping(path = "/signup_check/username", produces = "application/json")
     public boolean usernameAvailable(@RequestParam String username) {
         return userService.usernameAvailable(username);
     }
 
-    @PutMapping(path = "/users/{id}", produces = "application/json", consumes = "application/json")
+    @PutMapping(path = "/user/{id}", produces = "application/json", consumes = "application/json")
     public ResponseEntity<User> editUser(@PathVariable(value = "id") Long id, @Valid @RequestParam User user) {
         try {
             user = userService.editUser(id, user);
