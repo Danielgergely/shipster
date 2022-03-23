@@ -14,6 +14,8 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
+//Daniel
+
 @RestController
 @RequestMapping(path = "/api")
 public class UserEndpoint {
