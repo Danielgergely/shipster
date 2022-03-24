@@ -1,32 +1,31 @@
 package ch.shipster.controller;
 
 import ch.shipster.data.domain.User;
-import ch.shipster.data.repository.UserRepository;
-import ch.shipster.exceptions.NotFoundException;
-import ch.shipster.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.Arrays;
+import java.util.List;
 
 @RestController
-@RequestMapping("api/security/users")
+@RequestMapping("api/v1/users")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private static final List<User> USERS = Arrays.asList(
+            new User(1, "Daniel Gergely"),
+            new User(2, "Jonas Mägli"),
+            new User(3, "Timo Grünenfelder"),
+            new User(4, "Manuel Oliva"),
+            new User(5, "Giacomo Travaglione")
+    );
 
     @GetMapping(path = "{userId}")
-    public ResponseEntity<User> getUser(@PathVariable("userId") Long userId) {
-        User user;
-        try {
-            user = userService.getUser(userId);
-        } catch (NotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(user);
+    public User getUser(@PathVariable("userId") Integer userId) {
+        return USERS.stream()
+                .filter(user -> userId.equals(user.getUserId()))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException(
+                        "User " + userId + " does not exist."
+                ));
     }
 
     @GetMapping("/login")
