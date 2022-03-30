@@ -39,7 +39,10 @@ public class ShipsterSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .formLogin().loginPage("/login").permitAll();
+                .formLogin().loginPage("/login").permitAll()
+                .defaultSuccessUrl("/", true)
+                .and()
+                .rememberMe();
     }
 
     @Override

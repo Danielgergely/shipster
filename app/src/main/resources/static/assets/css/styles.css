@@ -8,6 +8,11 @@
     color: black;
 }
 
+.shipster-checkbox {
+    width: 15px;
+    height: 15px;
+}
+
 .bg-shipster {
     background: url("../img/shipping_background.jpg") no-repeat center center fixed;
     background-size: cover;
