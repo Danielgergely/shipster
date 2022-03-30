@@ -29,11 +29,6 @@ public class UserController {
                 ));
     }
 
-    @GetMapping("/login")
-    public String getLoginView() {
-        return "user/login.html";
-    }
-
     @GetMapping("/register")
     public String getRegisterView() {
         return "user/register.html";

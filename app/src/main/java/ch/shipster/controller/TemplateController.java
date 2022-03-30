@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping(path = "/")
-public class IndexController {
+public class TemplateController {
 
     @GetMapping
     public String getIndexView(){
@@ -21,6 +21,11 @@ public class IndexController {
     @GetMapping(path = "/about")
     public String getAboutView(){
         return "about.html";
+    }
+
+    @GetMapping(path = "/login")
+    public String getLoginView(){
+        return "user/login.html";
     }
 
 }

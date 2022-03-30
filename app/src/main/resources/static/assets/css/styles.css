@@ -1,7 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@900&display=swap');
 
+.shipster-text-light {
+    color: #ffc800;
+}
+
+.shipster-text-dark {
+    color: black;
+}
+
 .bg-shipster {
     background: url("../img/shipping_background.jpg") no-repeat center center fixed;
+    background-size: cover;
+}
+
+.bg-login {
+    background: url("../img/login.jpg") no-repeat center fixed;
     background-size: cover;
 }
 
