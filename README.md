@@ -1,6 +1,6 @@
 # Shipster
 
-![This is an image](https://gitlab.fhnw.ch/daniel.gergely/shipster/-/blob/master/app/src/main/resources/static/assets/img/shipster_yellow_transparent.svg)
+![](https://gitlab.fhnw.ch/daniel.gergely/shipster/-/blob/master/app/src/main/resources/static/assets/img/shipster_yellow_transparent.svg)
 
 ### Shipping made easy and fun
 
