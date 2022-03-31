@@ -13,17 +13,17 @@ public class TemplateController {
         return "index.html";
     }
 
-    @GetMapping(path = "/team")
+    @GetMapping(path = "team")
     public String getTeamView(){
         return "team.html";
     }
 
-    @GetMapping(path = "/about")
+    @GetMapping(path = "about")
     public String getAboutView(){
         return "about.html";
     }
 
-    @GetMapping(path = "/login")
+    @GetMapping(path = "login")
     public String getLoginView(){
         return "user/login.html";
     }
