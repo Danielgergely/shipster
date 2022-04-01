@@ -12,7 +12,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import java.util.concurrent.TimeUnit;
 
 import static ch.shipster.security.ShipsterUserRole.*;
 
@@ -33,7 +35,7 @@ public class ShipsterSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers( "/assets/**", "/js/*").permitAll()
+                .antMatchers( "/static/**", "/css/**", "/images/**", "/").permitAll()
                 .antMatchers("/api/**").hasRole(ADMIN.name())
                 .anyRequest()
                 .authenticated()
@@ -45,7 +47,17 @@ public class ShipsterSecurityConfig extends WebSecurityConfigurerAdapter {
                     .passwordParameter("password")
                     .usernameParameter("username")
                 .and()
-                .rememberMe();
+                .rememberMe()
+                    .tokenValiditySeconds((int)TimeUnit.DAYS.toSeconds(21))
+                    .key("FsG*ME5VxC!SobGhQTChV01!03fiM1g3Xxs!zwVeLY")
+                .and()
+                .logout()
+                    .logoutUrl("/logout")
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+                    .clearAuthentication(true)
+                    .invalidateHttpSession(true)
+                    .deleteCookies("JSESSIONID", "remember-me")
+                    .logoutSuccessUrl("/login");
     }
 
     @Override

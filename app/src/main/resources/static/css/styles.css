@@ -13,18 +13,22 @@
     height: 15px;
 }
 
+.form-signin {
+    max-width: 400px!important;
+}
+
 .bg-shipster {
-    background: url("../img/shipping_background.jpg") no-repeat center center fixed;
+    background: url("../images/shipping_background.jpg") no-repeat center center fixed;
     background-size: cover;
 }
 
 .bg-login {
-    background: url("../img/login.jpg") no-repeat center fixed;
+    background: url("../images/login.jpeg") no-repeat center fixed;
     background-size: cover;
 }
 
 .bg-home {
-    background: url("../img/shipster_road_containers.jpg") no-repeat center center fixed;
+    background: url("../images/shipster_road_containers.jpg") no-repeat center center fixed;
     background-size: cover;
 }
 
@@ -245,7 +249,7 @@
 }
 
 .transparent-text {
-    background: url("../img/ship_bright.jpg") no-repeat center fixed;
+    background: url("../images/ship_bright.jpg") no-repeat center fixed;
     background-size: cover;
     text-fill-color: transparent;
     -webkit-text-fill-color: transparent;
@@ -255,7 +259,7 @@
 }
 
 .container_image-about {
-    background: url("../img/ship_bright.jpg") no-repeat center fixed;
+    background: url("../images/ship_bright.jpg") no-repeat center fixed;
     background-size: cover;
     top: 0;
 }
