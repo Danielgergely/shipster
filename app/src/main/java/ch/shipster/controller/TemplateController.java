@@ -22,13 +22,13 @@ public class TemplateController {
 
     @GetMapping(path = "team")
     public String getTeamView(Model model){
-    //    model.addAttribute("userName", userService.getCurrentUser());
+        model.addAttribute("userName", "userName");
         return "team.html";
     }
 
     @GetMapping(path = "about")
     public String getAboutView(Model model){
-    //    model.addAttribute("userName", userService.getCurrentUser());
+        model.addAttribute("userName", "userName");
         return "about.html";
     }
 
