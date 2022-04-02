@@ -1,37 +1,48 @@
 package ch.shipster.controller;
 
+import ch.shipster.data.domain.Address;
 import ch.shipster.data.domain.User;
+import ch.shipster.service.AddressService;
+import ch.shipster.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
 
 
-@RestController
-@RequestMapping("api/v1/users")
+@Controller
+@RequestMapping(path = "/")
 public class UserController {
 
-    private static final List<User> USERS = Arrays.asList(
-            new User(1, "Daniel Gergely"),
-            new User(2, "Jonas Mägli"),
-            new User(3, "Timo Grünenfelder"),
-            new User(4, "Manuel Oliva"),
-            new User(5, "Giacomo Travaglione")
-    );
+    @Autowired
+    UserService userService;
 
-    @GetMapping(path = "{userId}")
-    public User getUser(@PathVariable("userId") Integer userId) {
-        return USERS.stream()
-                .filter(user -> userId.equals(user.getUserId()))
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException(
-                        "User " + userId + " does not exist."
-                ));
-    }
+    @Autowired
+    AddressService addressService;
 
-    @GetMapping("/register")
-    public String getRegisterView() {
-        return "user/register.html";
+    @PostMapping("register")
+    public String registerUser(@ModelAttribute User user, Address address) throws Exception {
+        Address newAddress = new Address(
+                address.getStreet(),
+                address.getNumber(),
+                address.getCity(),
+                address.getZip(),
+                address.getCountry());
+        addressService.saveAddress(newAddress);
+        user.setAddressId(newAddress.getAddressId());
+        User newUser = new User(
+                user.getUserName(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getPassword(),
+                user.getAddressId(),
+                user.getGender());
+        userService.saveUser(newUser);
+        return "user/login";
     }
 
     @GetMapping("/profile/edit")

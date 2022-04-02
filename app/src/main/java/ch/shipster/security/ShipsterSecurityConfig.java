@@ -1,41 +1,39 @@
 package ch.shipster.security;
 
+import ch.shipster.security.authentication.ShipsterUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.concurrent.TimeUnit;
 
 import static ch.shipster.security.ShipsterUserRole.*;
 
+// Daniel
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ShipsterSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final PasswordEncoder passwordEncoder;
-
     @Autowired
-    public ShipsterSecurityConfig(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
+    ShipsterUserDetailsService userDetailsService;
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
+                .headers().frameOptions().disable()
+                .and()
                 .authorizeRequests()
-                .antMatchers( "/static/**", "/css/**", "/images/**", "/").permitAll()
+                .antMatchers( "/static/**", "/css/**", "/images/**", "/", "/register/**").permitAll()
                 .antMatchers("/api/**").hasRole(ADMIN.name())
                 .anyRequest()
                 .authenticated()
@@ -50,6 +48,7 @@ public class ShipsterSecurityConfig extends WebSecurityConfigurerAdapter {
                 .rememberMe()
                     .tokenValiditySeconds((int)TimeUnit.DAYS.toSeconds(21))
                     .key("FsG*ME5VxC!SobGhQTChV01!03fiM1g3Xxs!zwVeLY")
+                    .rememberMeParameter("remember-me")
                 .and()
                 .logout()
                     .logoutUrl("/logout")
@@ -61,35 +60,8 @@ public class ShipsterSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    @Bean
-    protected UserDetailsService userDetailsService() {
-        UserDetails testUser = User.builder()
-                .username("test")
-                .password(passwordEncoder.encode("testpassword"))
-//                .roles(USER.name())
-                .authorities(USER.getGrantedAuthorities())
-                .build();
-
-        UserDetails developerUser = User.builder()
-                .username("developer")
-                .password(passwordEncoder.encode("developerpassword"))
-//                .roles(DEVELOPER.name())
-                .authorities(DEVELOPER.getGrantedAuthorities())
-                .build();
-
-        UserDetails adminUser = User.builder()
-                .username("admin")
-                .password(passwordEncoder.encode("adminpassword"))
-//                .roles(ADMIN.name())
-                .authorities(ADMIN.getGrantedAuthorities())
-                .build();
-
-        return new InMemoryUserDetailsManager(
-                testUser,
-                developerUser,
-                adminUser
-        );
-
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService);
     }
 
 }

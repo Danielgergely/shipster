@@ -11,19 +11,19 @@ import java.util.List;
 @RequestMapping("management/api/v1/users")
 public class UserManagementController {
 
-    private static final List<User> USERS = Arrays.asList(
-            new User(1, "Daniel Gergely"),
-            new User(2, "Jonas Mägli"),
-            new User(3, "Timo Grünenfelder"),
-            new User(4, "Manuel Oliva"),
-            new User(5, "Giacomo Travaglione")
-    );
-
-    @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN, ROLE_DEVELOPER')")
-    public List<User> getAllUsers() {
-        return USERS;
-    }
+//    private static final List<User> USERS = Arrays.asList(
+//            new User(1L, "Daniel Gergely"),
+//            new User(2L, "Jonas Mägli"),
+//            new User(3L, "Timo Grünenfelder"),
+//            new User(4L, "Manuel Oliva"),
+//            new User(5L, "Giacomo Travaglione")
+//    );
+//
+//    @GetMapping
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN, ROLE_DEVELOPER')")
+//    public List<User> getAllUsers() {
+//        return USERS;
+//    }
 
     @PostMapping
     @PreAuthorize("hasAuthority('user:write')")

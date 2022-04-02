@@ -1,9 +1,73 @@
+<!-- Daniel -->
 <!DOCTYPE html>
-<html lang="en">
-<head th:replace="general.html :: headerfiles(title='Register')">
-</head>
-<body>
-<div>This is the sign-up page</div>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="general.html :: headerfiles(title='Register')"></head>
+<body class="p-0 bg-register">
+<div class="container home-div d-flex justify-content-center">
+    <form class="form-signin" method="post" action="#" th:action="@{/register}">
+        <h2 class="form-signin-heading text-centered shipster-text-light">Create a Shipster account</h2>
+        <p>
+            <label for="firstname" class="sr-only shipster-text-light">First name</label>
+            <input th:field="*{user.firstName}" type="text" id="firstname" name="firstname" class="form-control" placeholder="First  name" required=""
+                   autofocus="" autocomplete="off">
+        </p>
+        <p>
+            <label for="lastname" class="sr-only shipster-text-light">Last name</label>
+            <input th:field="*{user.lastName}" type="text" id="lastname" name="lastname" class="form-control" placeholder="Last name" required=""
+                   autocomplete="off">
+        </p>
+        <p>
+            <input th:field="*{user.gender}" type="radio" id="male" name="gender" value="male" required>
+            <label for="male" class="shipster-text-light">Male</label>
+            <input type="radio" id="female" name="gender" value="female">
+            <label for="female" class="shipster-text-light">Female</label><br>
+        </p>
+        <p>
+            <label for="username" class="sr-only shipster-text-light">Username</label>
+            <input th:field="*{user.userName}" type="text" id="username" name="username" class="form-control" placeholder="Username" required=""
+                   autofocus="" autocomplete="off">
+        </p>
+        <p>
+            <label for="email" class="sr-only shipster-text-light">Email</label>
+            <input th:field="*{user.email}" type="email" id="email" name="email" class="form-control" placeholder="Email" required=""
+                   autocomplete="off">
+        </p>
+        <p>
+            <label for="password" class="sr-only shipster-text-light">Password</label>
+            <input th:field="*{user.password}" type="password" id="password" name="password" class="form-control" placeholder="Password" required=""
+                   autocomplete="off">
+        </p>
 
+        <h3 class="form-signin-heading text-centered shipster-text-light">Address information</h3>
+        <p>
+            <label for="street" class="sr-only shipster-text-light">Street</label>
+            <input th:field="*{address.street}" type="text" id="street" name="street" class="form-control" placeholder="Street" required=""
+                   autofocus="" autocomplete="off">
+        </p>
+        <p>
+            <label for="number" class="sr-only shipster-text-light">Number</label>
+            <input th:field="*{address.number}" type="text" id="number" name="number" class="form-control" placeholder="Number" required=""
+                   autofocus="" autocomplete="off">
+        </p>
+        <p>
+            <label for="city" class="sr-only shipster-text-light">City</label>
+            <input th:field="*{address.city}" type="text" id="city" name="city" class="form-control" placeholder="City" required=""
+                   autofocus="" autocomplete="off">
+        </p>
+        <p>
+            <label for="zip" class="sr-only shipster-text-light">ZIP</label>
+            <input th:field="*{address.zip}" type="text" id="zip" name="zip" class="form-control" placeholder="ZIP" required=""
+                   autofocus="" autocomplete="off">
+        </p>
+        <p>
+            <label for="country" class="sr-only shipster-text-light">Country</label>
+            <input th:field="*{address.country}" type="text" id="country" name="country" class="form-control" placeholder="Country" required=""
+                   autofocus="" autocomplete="off">
+        </p>
+
+        <button class="btn btn-outline-secondary" type="submit">Register</button>
+    </form>
+</div>
 </body>
 </html>

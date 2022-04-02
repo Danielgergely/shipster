@@ -1,7 +1,14 @@
 package ch.shipster.data.domain;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="address")
 public class Address {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String street;
     private String number;
     private String city;
@@ -14,6 +21,13 @@ public class Address {
         this.city = city;
         this.zip = zip;
         this.country = country;
+    }
+
+    public Address() {
+    }
+
+    public Long getAddressId() {
+        return id;
     }
 
     public String getStreet() {

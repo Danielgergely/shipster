@@ -17,13 +17,18 @@
     max-width: 400px!important;
 }
 
-.bg-shipster {
+.bg-team {
     background: url("../images/shipping_background.jpg") no-repeat center center fixed;
     background-size: cover;
 }
 
 .bg-login {
     background: url("../images/login.jpeg") no-repeat center fixed;
+    background-size: cover;
+}
+
+.bg-register {
+    background: url("../images/register.jpeg") no-repeat center fixed;
     background-size: cover;
 }
 
@@ -76,6 +81,9 @@
     max-width: 1200px;
     width: 100%;
     align-self: center;
+    margin-bottom: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .rounded {
@@ -136,6 +144,34 @@
 
 .button:hover {
     background-color: #555;
+}
+
+.avatar {
+    vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    transition: transform .2s;
+    cursor: pointer;
+}
+
+.avatar:hover {
+    transform: scale(1.25);
+}
+
+.nav-item .tooltiptext {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    width: 120px;
+    color: #ffc800;
+    text-align: center;
+    border-radius: 6px;
+    position: absolute;
+    bottom: 0;
+}
+
+.nav-item:hover .tooltiptext {
+    opacity: 1;
 }
 
 .text-centered {
@@ -272,6 +308,9 @@
 @media screen and (max-width: 991px) {
     .nav-menu {
         flex-direction: column;
-        margin-left: unset !important;
+    }
+
+    .nav-item .tooltiptext {
+        bottom: 135px!important;
     }
 }

@@ -32,11 +32,16 @@
                     <li class="nav-item" th:classappend="${page == 'Team' ? 'page-location' : ''}"><a class="nav-link" href="/team">Team</a></li>
                 </div>
 
-                <div th:if="${user != 'anonymousUser'}" class="ms-auto nav-menu">
-                    <li class="nav-item ms-2"><a class="btn btn-outline-secondary" th:text="${user}"></a></li>
+                <div th:if="${user != 'no_user'}" class="ms-auto nav-menu">
+                    <li class="nav-item ms-2 d-flex justify-content-center">
+                        <img th:if="${user.getGender() == 'male'}" th:src="@{images/avatar_male.svg}" alt="Avatar_male" class="avatar">
+                        <img th:unless="${user.getGender() == 'male'}" th:src="@{images/avatar_female.svg}" alt="Avatar_female" class="avatar">
+                        <span class="tooltiptext" th:text="${user.getUserName()}"></span>
+                    </li>
+                    <li class="nav-item ms-2"><a class="btn btn-outline-secondary" href="/logout">Logout</a></li>
                 </div>
 
-                <div th:unless="${user == 'anonymousUser'}" class="ms-auto nav-menu">
+                <div th:unless="${user != 'no_user'}" class="ms-auto nav-menu">
                     <li class="nav-item ms-2"><a class="btn btn-outline-secondary" href="/login">Login</a></li>
                     <li class="nav-item ms-2"><a class="btn btn-outline-secondary" href="/register">Sign up</a></li>
                 </div>

@@ -5,7 +5,7 @@
 <head th:replace="general.html :: headerfiles(title='About')"></head>
 <body>
 <!-- Navigation-->
-<nav th:replace="general.html :: navigation(page='About', user=${userName})"></nav>
+<nav th:replace="general.html :: navigation(page='About', user=${user})"></nav>
 
 <!-- based on: https://codepen.io/blakeeric/pen/MWwGpmR -->
 <div class="about page-start">
@@ -21,7 +21,8 @@
     <div class="container-about container_solid-about-first" aria-hidden="true">
         <div class="title_wrapper">
             <h1 class="h1-about transparent-text">Reliability</h1>
-            <h3 class="h3-about">We ship over 200K pallets every year, and 99.99% of our shipments arrive on time and in perfect shape.</h3>
+            <h3 class="h3-about">We ship over 200K pallets every year, and 99.99% of our shipments arrive on time and in
+                perfect shape.</h3>
         </div>
     </div>
 
@@ -29,7 +30,8 @@
     <div class="container-about container_solid-about-second" aria-hidden="true">
         <div class="title_wrapper">
             <h1 class="h1-about transparent-text">Environment friendly</h1>
-            <h3 class="h3-about-second">We keep our carbon footprint at the minimum and pledge to only use green ground-transportation by 2035.</h3>
+            <h3 class="h3-about-second">We keep our carbon footprint at the minimum and pledge to only use green
+                ground-transportation by 2035.</h3>
         </div>
     </div>
 
@@ -37,7 +39,8 @@
     <div class="container-about container_solid-about-third" aria-hidden="true">
         <div class="title_wrapper">
             <h1 class="h1-about transparent-text">24H customer support</h1>
-            <h3 class="h3-about">Don't worry, we are always there for you, so if anything happens or you simply have a question just write us or give us a call!</h3>
+            <h3 class="h3-about">Don't worry, we are always there for you, so if anything happens or you simply have a
+                question just write us or give us a call!</h3>
             <div class="btn btn-outline-secondary-large w-100" onclick="location.href='/shop';">Discover</div>
         </div>
     </div>
