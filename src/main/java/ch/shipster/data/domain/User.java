@@ -5,7 +5,6 @@ package ch.shipster.data.domain;
 import javax.persistence.*;
 
 import ch.shipster.security.ShipsterUserRole;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name="user")

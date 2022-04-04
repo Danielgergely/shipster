@@ -4,7 +4,6 @@ package ch.shipster.security;
 // amigoscode - Spring Boot Security
 
 import com.google.common.collect.Sets;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Set;
