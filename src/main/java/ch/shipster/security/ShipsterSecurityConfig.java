@@ -40,7 +40,6 @@ public class ShipsterSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                     .loginPage("/login")
                     .permitAll()
-                    .defaultSuccessUrl("/", true)
                     .passwordParameter("password")
                     .usernameParameter("username")
                 .and()

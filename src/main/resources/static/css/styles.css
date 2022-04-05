@@ -22,6 +22,11 @@
     background-size: cover;
 }
 
+.bg-profile {
+    background: url("../images/profile_background.jpg") no-repeat center center fixed;
+    background-size: cover;
+}
+
 .bg-login {
     background: url("../images/login.jpeg") no-repeat center fixed;
     background-size: cover;
@@ -52,10 +57,15 @@
 }
 
 .profile-card {
-    width: 270px;
+    width: 300px;
     height: 500px;
     background-color: black;
     color: white;
+}
+
+.border-right-shipster {
+    border-color: #ffc800;
+    border-right: solid;
 }
 
 .navbar-toggler {
@@ -186,6 +196,10 @@
     margin-top: 100px;
 }
 
+.profile-start {
+    margin-top: 150px!important;
+}
+
 .email {
     font-size: 0.7rem;
     text-align: center;
@@ -312,5 +326,15 @@
 
     .nav-item .tooltiptext {
         bottom: 135px!important;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .title_wrapper .h1-about {
+        font-size: 40px;
+    }
+
+    .home-title {
+        width: 90%;
     }
 }

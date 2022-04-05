@@ -18,15 +18,15 @@
                    autocomplete="off">
         </p>
         <p>
+            <label for="username" class="sr-only shipster-text-light">Username</label>
+            <input th:field="*{user.userName}" type="text" id="username" name="username" class="form-control" placeholder="Username" required=""
+                   autofocus="" autocomplete="off">
+        </p>
+        <p>
             <input th:field="*{user.gender}" type="radio" id="male" name="gender" value="male" required>
             <label for="male" class="shipster-text-light">Male</label>
             <input type="radio" id="female" name="gender" value="female">
             <label for="female" class="shipster-text-light">Female</label><br>
-        </p>
-        <p>
-            <label for="username" class="sr-only shipster-text-light">Username</label>
-            <input th:field="*{user.userName}" type="text" id="username" name="username" class="form-control" placeholder="Username" required=""
-                   autofocus="" autocomplete="off">
         </p>
         <p>
             <label for="email" class="sr-only shipster-text-light">Email</label>

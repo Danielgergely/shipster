@@ -6,7 +6,10 @@ import ch.shipster.service.AddressService;
 import ch.shipster.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 
 @Controller
@@ -41,8 +44,21 @@ public class UserController {
         return "user/login";
     }
 
-    @GetMapping("/profile/edit")
+    @GetMapping("profile")
+    public String getProfileView(Model model) {
+        Optional<User> user = userService.getCurrentUser();
+        if (user.isEmpty()) {
+            return "user/login";
+        } else {
+            Address address = addressService.findAddressById(user.get().getAddressId());
+            model.addAttribute("user" , user.get());
+            model.addAttribute("address", address);
+            return "user/userProfile";
+        }
+    }
+
+    @GetMapping("profile/edit")
     public String getEditProfileView() {
-        return "user/profileEdit.html";
+        return "user/profileEdit";
     }
 }
