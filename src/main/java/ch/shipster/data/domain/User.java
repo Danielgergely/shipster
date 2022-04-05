@@ -7,7 +7,7 @@ import javax.persistence.*;
 import ch.shipster.security.ShipsterUserRole;
 
 @Entity
-@Table(name="user")
+@Table(name="shipster_user")
 public class User {
 
     @Id
