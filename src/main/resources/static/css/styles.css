@@ -204,6 +204,12 @@
     border: 1px solid red;
 }
 
+.text-success {
+    color: green;
+    font-size: small!important;
+    padding-top: 3px;
+}
+
 .email {
     font-size: 0.7rem;
     text-align: center;

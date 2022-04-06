@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
@@ -48,7 +49,7 @@ public class UserController {
     }
 
     @GetMapping("profile")
-    public String getProfileView(Model model) {
+    public String getProfileView(@RequestParam(required = false, name = "message") String message, Model model) {
         Optional<User> user = userService.getCurrentUser();
         if (user.isEmpty()) {
             return "user/login";
@@ -56,20 +57,29 @@ public class UserController {
             Address address = addressService.findAddressById(user.get().getAddressId());
             model.addAttribute("user", user.get());
             model.addAttribute("address", address);
+            if (message != null) {
+                if (message.equals("Your profile has been updated.")) {
+                    model.addAttribute("profile_update", message);
+                } else {
+                    model.addAttribute("password_changed", message);
+                }
+            }
             return "user/userProfile";
         }
     }
 
     @PostMapping("updateProfile")
-    public String updateProfile(@ModelAttribute User updatedUser, Address updatedAddress) throws Exception {
+    public String updateProfile(@ModelAttribute User updatedUser, Address updatedAddress, RedirectAttributes redirectAttributes) throws Exception {
         userService.saveUser(updatedUser);
         addressService.saveAddress(updatedAddress);
+        redirectAttributes.addAttribute("message", "Your profile has been updated.");
         return "redirect:profile";
     }
 
     @PostMapping("updatePassword")
-    public String updatePassword(@RequestParam(name = "password") String password) throws Exception {
+    public String updatePassword(@RequestParam(name = "password") String password, RedirectAttributes redirectAttributes) throws Exception {
         userService.changePassword(password);
+        redirectAttributes.addAttribute("message", "Your password has been changed.");
         return "redirect:profile";
     }
 }
