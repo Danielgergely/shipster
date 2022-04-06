@@ -3,6 +3,7 @@ package ch.shipster.service;
 import ch.shipster.data.domain.User;
 import ch.shipster.data.repository.UserRepository;
 import ch.shipster.exceptions.NotFoundException;
+import ch.shipster.exceptions.NotLoggedInException;
 import ch.shipster.security.authentication.ShipsterUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -59,12 +60,19 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void saveUser(User user) throws Exception {
-        Optional<User> dbUser = userRepository.findById(user.getUserId());
-        if (dbUser.isEmpty()) {
-            createUser(user);
+    public void saveUser(User updatedUser) throws Exception {
+        Optional<User> currentUser = getCurrentUser();
+        if (currentUser.isEmpty()) {
+            throw new NotLoggedInException("User is not logged in");
+        } else {
+            currentUser.get().setFirstName(updatedUser.getFirstName());
+            currentUser.get().setLastName(updatedUser.getLastName());
+            currentUser.get().setUserName(updatedUser.getUserName());
+            currentUser.get().setEmail(updatedUser.getEmail());
+            currentUser.get().setGender(updatedUser.getGender());
+
+            userRepository.save(currentUser.get());
         }
-        userRepository.save(user);
     }
 
     public Optional<User> getCurrentUser() {
@@ -75,6 +83,16 @@ public class UserService {
         } else {
             return Optional.empty();
         }
+    }
 
+    public void changePassword(String password) throws Exception {
+        Optional<User> user = getCurrentUser();
+        if (user.isEmpty()){
+            throw new NotLoggedInException("User is not logged in");
+        } else {
+            String encodedPassword = passwordEncoder.encode(password);
+            user.get().setPassword(encodedPassword);
+            saveUser(user.get());
+        }
     }
 }

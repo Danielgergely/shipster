@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 
+// Daniel
+
 @Controller
 @RequestMapping(path = "/")
 public class UserController {
@@ -60,31 +62,14 @@ public class UserController {
 
     @PostMapping("updateProfile")
     public String updateProfile(@ModelAttribute User updatedUser, Address updatedAddress) throws Exception {
-        Optional<User> currentUser = userService.getCurrentUser();
-        if (currentUser.isEmpty()) {
-            return "user/login";
-        } else {
-            Address address = addressService.findAddressById(currentUser.get().getAddressId());
+        userService.saveUser(updatedUser);
+        addressService.saveAddress(updatedAddress);
+        return "redirect:profile";
+    }
 
-            address.setStreet(updatedAddress.getStreet());
-            address.setNumber(updatedAddress.getNumber());
-            address.setCity(updatedAddress.getCity());
-            address.setZip(updatedAddress.getZip());
-            address.setCountry(updatedAddress.getCountry());
-
-            addressService.saveAddress(address);
-
-            User user = userService.findById(currentUser.get().getUserId());
-
-            user.setFirstName(updatedUser.getFirstName());
-            user.setLastName(updatedUser.getLastName());
-            user.setUserName(updatedUser.getUserName());
-            user.setEmail(updatedUser.getEmail());
-            user.setGender(updatedUser.getGender());
-
-            userService.saveUser(user);
-
-            return "redirect:profile";
-        }
+    @PostMapping("updatePassword")
+    public String updatePassword(@RequestParam(name = "password") String password) throws Exception {
+        userService.changePassword(password);
+        return "redirect:profile";
     }
 }
