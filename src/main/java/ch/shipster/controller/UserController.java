@@ -2,6 +2,7 @@ package ch.shipster.controller;
 
 import ch.shipster.data.domain.Address;
 import ch.shipster.data.domain.User;
+import ch.shipster.exceptions.NotFoundException;
 import ch.shipster.service.AddressService;
 import ch.shipster.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,14 +52,39 @@ public class UserController {
             return "user/login";
         } else {
             Address address = addressService.findAddressById(user.get().getAddressId());
-            model.addAttribute("user" , user.get());
+            model.addAttribute("user", user.get());
             model.addAttribute("address", address);
             return "user/userProfile";
         }
     }
 
-    @GetMapping("profile/edit")
-    public String getEditProfileView() {
-        return "user/profileEdit";
+    @PostMapping("updateProfile")
+    public String updateProfile(@ModelAttribute User updatedUser, Address updatedAddress) throws Exception {
+        Optional<User> currentUser = userService.getCurrentUser();
+        if (currentUser.isEmpty()) {
+            return "user/login";
+        } else {
+            Address address = addressService.findAddressById(currentUser.get().getAddressId());
+
+            address.setStreet(updatedAddress.getStreet());
+            address.setNumber(updatedAddress.getNumber());
+            address.setCity(updatedAddress.getCity());
+            address.setZip(updatedAddress.getZip());
+            address.setCountry(updatedAddress.getCountry());
+
+            addressService.saveAddress(address);
+
+            User user = userService.findById(currentUser.get().getUserId());
+
+            user.setFirstName(updatedUser.getFirstName());
+            user.setLastName(updatedUser.getLastName());
+            user.setUserName(updatedUser.getUserName());
+            user.setEmail(updatedUser.getEmail());
+            user.setGender(updatedUser.getGender());
+
+            userService.saveUser(user);
+
+            return "redirect:profile";
+        }
     }
 }

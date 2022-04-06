@@ -43,7 +43,7 @@ public class UserService {
         return user.get();
     }
 
-    public void saveUser(User user) throws Exception {
+    public void createUser(User user) throws Exception {
         if (user.getUserId() == null) {
             if (userRepository.findByEmailIgnoreCase(user.getEmail()).isPresent()) {
                 throw new Exception("Email address " + user.getEmail() + " already assigned another user.");
@@ -56,6 +56,14 @@ public class UserService {
         }
         String userPassword = user.getPassword();
         user.setPassword(passwordEncoder.encode(userPassword));
+        userRepository.save(user);
+    }
+
+    public void saveUser(User user) throws Exception {
+        Optional<User> dbUser = userRepository.findById(user.getUserId());
+        if (dbUser.isEmpty()) {
+            createUser(user);
+        }
         userRepository.save(user);
     }
 

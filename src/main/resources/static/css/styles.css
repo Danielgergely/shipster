@@ -200,6 +200,10 @@
     margin-top: 150px!important;
 }
 
+.error {
+    border: 1px solid red;
+}
+
 .email {
     font-size: 0.7rem;
     text-align: center;
