@@ -123,7 +123,10 @@
         const confirm_psw_value = confirm_psw[0].value;
         const change_btn = $('#change_btn');
 
-        if ( new_psw_value !== confirm_psw_value) {
+        if (new_psw_value === "") {
+            change_btn.prop('disabled', true);
+        }
+        else if ( new_psw_value !== confirm_psw_value) {
             console.log("The two passwords are not the same");
             confirm_psw.css("border", "2px solid red");
             change_btn.prop('disabled', true);

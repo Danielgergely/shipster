@@ -32,7 +32,7 @@ public class ShipsterSecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable()
                 .and()
                 .authorizeRequests()
-                .antMatchers( "/static/**", "/css/**", "/images/**", "/", "/register/**").permitAll()
+                .antMatchers( "/static/**", "/css/**", "/images/**", "/", "/about", "/team", "/shop", "/register/**").permitAll()
                 .antMatchers("/api/**").hasRole(ADMIN.name())
                 .anyRequest()
                 .authenticated()

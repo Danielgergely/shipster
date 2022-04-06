@@ -42,6 +42,15 @@
     background-size: cover;
 }
 
+.bg-shop {
+    background: url("../images/loading_dock.jpg") no-repeat center center fixed;
+    background-size: cover;
+}
+
+a:hover {
+    color:#ffc800;
+}
+
 .img-logo {
     width: 100px;
 }
@@ -193,11 +202,15 @@
 }
 
 .page-start {
-    margin-top: 100px;
+    margin-top: 110px;
 }
 
 .profile-start {
     margin-top: 150px!important;
+}
+
+.shop-start {
+    margin-top:210px!important;
 }
 
 .error {
@@ -218,6 +231,13 @@
 .names {
     font-size: 1.5rem;
     text-align: center;
+}
+
+.main-img {
+    display: table-cell;
+    width: 65%;
+    padding: 15px;
+    vertical-align: middle
 }
 
 /* about page */

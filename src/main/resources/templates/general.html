@@ -38,6 +38,9 @@
                     <li class="nav-item" th:classappend="${page == 'Team' ? 'page-location' : ''}"><a class="nav-link"
                                                                                                       href="/team">Team</a>
                     </li>
+                    <li class="nav-item" th:classappend="${page == 'Shop' ? 'page-location' : ''}"><a class="nav-link"
+                                                                                                      href="/shop">Shop</a>
+                    </li>
                 </div>
 
                 <div th:if="${user != 'no_user'}" class="ms-auto nav-menu">

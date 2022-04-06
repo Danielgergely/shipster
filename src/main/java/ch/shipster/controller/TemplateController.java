@@ -65,4 +65,37 @@ public class TemplateController {
         return "user/register";
     }
 
+    @GetMapping(path = "shop")
+    public String getShopView(Model model){
+        Optional<User> user = userService.getCurrentUser();
+        if ( user.isPresent()) {
+            model.addAttribute("user", user.get());
+        } else {
+            model.addAttribute("user", "no_user");
+        }
+        return "shop/shop";
+    }
+
+    @GetMapping(path = "express")
+    public String getExpressView(Model model){
+        Optional<User> user = userService.getCurrentUser();
+        if ( user.isPresent()) {
+            model.addAttribute("user", user.get());
+        } else {
+            model.addAttribute("user", "no_user");
+        }
+        return "shop/express";
+    }
+
+    @GetMapping(path = "standard")
+    public String getStandardView(Model model){
+        Optional<User> user = userService.getCurrentUser();
+        if ( user.isPresent()) {
+            model.addAttribute("user", user.get());
+        } else {
+            model.addAttribute("user", "no_user");
+        }
+        return "shop/standard";
+    }
+
 }
