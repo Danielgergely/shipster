@@ -73,13 +73,13 @@ public class UserController {
         userService.saveUser(updatedUser);
         addressService.saveAddress(updatedAddress);
         redirectAttributes.addAttribute("message", "Your profile has been updated.");
-        return "redirect:user/profile";
+        return "redirect:/profile";
     }
 
     @PostMapping("updatePassword")
     public String updatePassword(@RequestParam(name = "password") String password, RedirectAttributes redirectAttributes) throws Exception {
         userService.changePassword(password);
         redirectAttributes.addAttribute("message", "Your password has been changed.");
-        return "redirect:user/profile";
+        return "redirect:/profile";
     }
 }
