@@ -34,7 +34,7 @@ public class UserController {
                 address.getCity(),
                 address.getZip(),
                 address.getCountry());
-        addressService.saveAddress(newAddress);
+        addressService.createAddress(newAddress);
         user.setAddressId(newAddress.getAddressId());
         User newUser = new User(
                 user.getUserName(),
@@ -44,7 +44,7 @@ public class UserController {
                 user.getPassword(),
                 user.getAddressId(),
                 user.getGender());
-        userService.saveUser(newUser);
+        userService.createUser(newUser);
         return "user/login";
     }
 
@@ -73,13 +73,13 @@ public class UserController {
         userService.saveUser(updatedUser);
         addressService.saveAddress(updatedAddress);
         redirectAttributes.addAttribute("message", "Your profile has been updated.");
-        return "redirect:profile";
+        return "redirect:user/profile";
     }
 
     @PostMapping("updatePassword")
     public String updatePassword(@RequestParam(name = "password") String password, RedirectAttributes redirectAttributes) throws Exception {
         userService.changePassword(password);
         redirectAttributes.addAttribute("message", "Your password has been changed.");
-        return "redirect:profile";
+        return "redirect:user/profile";
     }
 }

@@ -29,6 +29,14 @@ public class AddressService {
         return address.get();
     }
 
+    public void createAddress(Address address) throws Exception {
+        if (address.getAddressId() == null) {
+            addressRepository.save(address);
+        } else {
+            saveAddress(address);
+        }
+    }
+
     public void saveAddress(Address updatedAddress) {
         Optional<User> currentUser = userService.getCurrentUser();
         if (currentUser.isEmpty()) {
