@@ -5,9 +5,9 @@ RUN mvn dependency:go-offline
 COPY src src
 
 FROM base as development
-EXPOSE 8000
+EXPOSE 8001
 EXPOSE 8080
-CMD ["mvn", "spring-boot:run", "-Dspring-boot.run.jvmArguments='-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000'"]
+CMD ["mvn", "spring-boot:run", "-Dspring-boot.run.jvmArguments='-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8001'"]
 
 FROM base as build
 RUN mvn package
