@@ -18,6 +18,7 @@ public class CalculationTest {
         Address TestUserAdress = new Address("Lehnfeldstrasse", "6", "Oensingen", "4702", "Oensingen");
         String Output = DistanceCalculator.calculateDistance(TestUserAdress);
         System.out.println(Output);
+        System.out.println("Test");
     }
 
 }

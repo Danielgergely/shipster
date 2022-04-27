@@ -41,12 +41,16 @@ public class DistanceCalculator {
         HttpResponse<String> response = client.send(request,
                 HttpResponse.BodyHandlers.ofString());
         String outputAPI = response.body();
-        JSONObject json = new JSONObject(response.body());
-        JSONArray test = json.names();
-        String test2 = json.get("resourceSets").get(0).get("resources");
-        //String longitude = json.get("resourceSets").getJSONObject(0).get("resources").getJSONObject(0).get("geocodePoints").getJSONObject(0);
-        //String latitude = json.get("resourceSets").values.get(0).nameValuePairs.get("resources").values.get(0).nameValuePairs.get("geocodePoints").values.get(0).nameValuePairs.get("coordinates").values.get(1);
-        return request.toString();
+       // outputAPI = outputAPI.replaceAll("\"", "\\\"");
+        String long_latitude = outputAPI.substring(outputAPI.indexOf("geocodePoints")+14,
+                outputAPI.indexOf("calculationMethod")-2);
+        String latitude = long_latitude.substring(long_latitude.indexOf("coordinates")+14);
+        latitude = latitude.substring(0,
+                latitude.indexOf(","));
+        String longitude = long_latitude.substring(long_latitude.indexOf("coordinates")+14);
+        longitude = longitude.substring(longitude.indexOf(",")+1, longitude.indexOf("]"));
+
+         return outputAPI;
     }
 
     // BingMapsAPI Key: AvoMg355hzmFo7_Z3oXH0rlIMbBG2GQPM9kJVOpxMvpa2UaiVxm61yKNzxKJc6ks
