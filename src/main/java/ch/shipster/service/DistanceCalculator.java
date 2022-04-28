@@ -1,16 +1,9 @@
 package ch.shipster.service;
 
 import ch.shipster.data.domain.Address;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
-
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -24,16 +17,15 @@ public class DistanceCalculator {
 
 
 
-    public static String calculateDistance(Address deliveryAddress) throws IOException, InterruptedException, JSONException {
+    public static int calculateDistance(Address deliveryAddress) throws IOException, InterruptedException, JSONException {
         // TODO: call google API and calculate distance between warehouse and to address
       String[] deliveryCoordinates = getCoordinates(deliveryAddress);
       String[] warehouseCoordinates = getCoordinates(warehouseAddress);
       int distance = getDistance(warehouseCoordinates, deliveryCoordinates);
-    return "replace me later";
+    return distance;
     }
 
     public static int getDistance(String[] coordinates1, String[] coordinates2) throws IOException, InterruptedException {
-        //deliveryCoordinates[0]+","+deliveryCoordinates[1]
 
         String baseURL = "https://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix?key=AvoMg355hzmFo7_Z3oXH0rlIMbBG2GQPM9kJVOpxMvpa2UaiVxm61yKNzxKJc6ks";
         String origin = "&origins="+coordinates1[0]+","+coordinates1[1];
@@ -49,12 +41,11 @@ public class DistanceCalculator {
         HttpResponse<String> response = client.send(request,
                 HttpResponse.BodyHandlers.ofString());
         String outputAPI = response.body();
-        //output {"authenticationResultCode":"ValidCredentials","brandLogoUri":"http:\/\/dev.virtualearth.net\/Branding\/logo_powered_by.png","copyright":"Copyright © 2022 Microsoft and its suppliers. All rights reserved. This API cannot be accessed and the content and any results may not be used, reproduced or transmitted in any manner without express written permission from Microsoft Corporation.","resourceSets":[{"estimatedTotal":1,"resources":[{"__type":"DistanceMatrix:http:\/\/schemas.microsoft.com\/search\/local\/ws\/rest\/v1","destinations":[{"latitude":47.28534,"longitude":7.70362}],"origins":[{"latitude":47.48119,"longitude":8.21193}],"results":[{"destinationIndex":0,"originIndex":0,"totalWalkDuration":0,"travelDistance":54.401,"travelDuration":37.6}]}]}],"statusCode":200,"statusDescription":"OK","traceId":"a1533c0007da4db48784576bddcdef7b|DU00002759|0.0.0.0|DU00000484"}
+               String distance = outputAPI;
+        distance = outputAPI.substring(distance.indexOf("travelDistance")+16, distance.indexOf("travelDuration")-2);
+        float finaldistance = Float.parseFloat(distance);
 
-
- //https://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix?key=AvoMg355hzmFo7_Z3oXH0rlIMbBG2GQPM9kJVOpxMvpa2UaiVxm61yKNzxKJc6ks&origins=47.28534,7.70362&destinations=47.4811,8.21193&travelMode=driving
-        //TODO: Parse the response to an integer (don't forget rounding)
-        return 2;
+        return Math.round(finaldistance);
     }
 
     public static String[] getCoordinates(Address address) throws IOException, InterruptedException {
