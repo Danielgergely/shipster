@@ -15,7 +15,7 @@ public class CalculationTest {
     public static void main(String[] args) throws IOException, InterruptedException, JSONException {
 
         //adresse definieren
-        Address TestUserAdress = new Address("Lehnfeldstrasse", "6", "Oensingen", "4702", "Oensingen");
+        Address TestUserAdress = new Address("Lehnfeldstrasse", "6", "Oensingen", "4702", "Switzerland");
         String Output = DistanceCalculator.calculateDistance(TestUserAdress);
         System.out.println(Output);
         System.out.println("Test");
