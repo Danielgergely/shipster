@@ -14,9 +14,6 @@ public class DistanceCalculator {
 
     public static Address warehouseAddress = new Address("Bahnhofstrasse", "6", "Windisch", "5210", "Switzerland");
 
-
-
-
     public static int calculateDistance(Address deliveryAddress) throws IOException, InterruptedException, JSONException {
         // TODO: call google API and calculate distance between warehouse and to address
       String[] deliveryCoordinates = getCoordinates(deliveryAddress);
@@ -63,7 +60,6 @@ public class DistanceCalculator {
         // APIpart1+country+APIpart2+ZIP+APIpart3+Street+Number+APIpart4
         String APIcall = APIpart1+UserCountry+APIpart2+UserZIP+APIpart3+StreetAndStreetnum+APIpart4;
 
-
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(APIcall))
@@ -84,13 +80,40 @@ public class DistanceCalculator {
         return new String[]{latitude, longitude};
     }
 
-    // BingMapsAPI Key: AvoMg355hzmFo7_Z3oXH0rlIMbBG2GQPM9kJVOpxMvpa2UaiVxm61yKNzxKJc6ks
-    // DistanceAPI: https://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix?origins=47.6044,-122.3345;47.6731,-122.1185;47.6149,-122.1936&destinations=45.5347,-122.6231;47.4747,-122.2057&travelMode=driving&key={BingMapsKey}
-    // API for entering ZIP code returning ZIP Code: http://dev.virtualearth.net/REST/v1/Locations?countryRegion=Switzerland&postalCode=4528&addressLine=Luterbachstrasse 29&key=AvoMg355hzmFo7_Z3oXH0rlIMbBG2GQPM9kJVOpxMvpa2UaiVxm61yKNzxKJc6ks
-    public static boolean validateAddress(Address deliveryAddress) {
+     public static boolean validateAddress(Address deliveryAddress) throws IOException, InterruptedException {
         boolean isAddressValid = false;
 
         //TODO: call API and validate if address is correct / IS THIS IN THE CORRECT PLACE HERE
+
+        String UserStreet = deliveryAddress.getStreet();
+        String UserAddressNumber = deliveryAddress.getNumber();
+        String UserZIP = deliveryAddress.getZip();
+        String UserCity = deliveryAddress.getCity();
+        String UserCountry = deliveryAddress.getCountry();
+        String StreetAndStreetnum = UserStreet+" "+UserAddressNumber;
+        StreetAndStreetnum = StreetAndStreetnum.replaceAll(" ", "%20");
+        String APIpart1 = "http://dev.virtualearth.net/REST/v1/Locations?countryRegion=";
+        String APIpart2 = "&postalCode=";
+        String APIpart3 = "&addressLine=";
+        String APIpart4 = "&key=AvoMg355hzmFo7_Z3oXH0rlIMbBG2GQPM9kJVOpxMvpa2UaiVxm61yKNzxKJc6ks";
+        String APIcall = APIpart1+UserCountry+APIpart2+UserZIP+APIpart3+StreetAndStreetnum+APIpart4;
+
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(APIcall))
+                .build();
+
+        HttpResponse<String> response = client.send(request,
+                HttpResponse.BodyHandlers.ofString());
+        String outputAPI = response.body();
+        String confidence = outputAPI.substring(outputAPI.indexOf("confidence")+13,
+                outputAPI.indexOf("entityType")-3);
+
+        if (confidence.equals("High")){
+            isAddressValid = true;
+        }
+        //it would be possible to integrate the confidence "Medium" and "Low" here if we have UC's which need this.
         return isAddressValid;
     }
 }

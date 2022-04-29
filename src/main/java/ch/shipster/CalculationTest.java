@@ -16,7 +16,7 @@ public class CalculationTest {
 
         //adresse definieren
         Address TestUserAdress = new Address("Lehnfeldstrasse", "6", "Oensingen", "4702", "Switzerland");
-        int Output = DistanceCalculator.calculateDistance(TestUserAdress);
+        boolean Output = DistanceCalculator.validateAddress(TestUserAdress);
         System.out.println(Output);
         System.out.println("Test");
     }
