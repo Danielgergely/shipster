@@ -4,6 +4,8 @@ package ch.shipster.data.domain;
 import javax.persistence.*;
 import java.util.Date;
 
+//Timo
+
 @Entity
 @Table(name="order")
 public class Order {
@@ -25,10 +27,32 @@ public class Order {
     private Date cancellationDate;
 
     /// Constructor
+
+    public Order(User user){
+        this.userId = user.getUserId();
+        this.orderStatus = OrderStatus.BASKET;
+        this.lastUpdateDate = new Date();
+        this.basketDate = new Date();
+        this.orderDate = new Date(0);
+        this.shippingDate = new Date(0);
+        this.deliveryDate = new Date(0);
+        this.cancellationDate = new Date(0);
+
+    }
+
+    public Order(long userId){
+        this.userId = userId;
+        this.orderStatus = OrderStatus.BASKET;
+        this.lastUpdateDate = new Date();
+        this.basketDate = new Date();
+        this.orderDate = new Date(0);
+        this.shippingDate = new Date(0);
+        this.deliveryDate = new Date(0);
+        this.cancellationDate = new Date(0);
+    }
     public Order(){}
 
     /// Getter & Setter
-
     //TODO getUser (Instead of getUserId)
 
     public Long getId() {
