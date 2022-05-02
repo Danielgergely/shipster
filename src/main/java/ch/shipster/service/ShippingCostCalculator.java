@@ -27,8 +27,8 @@ public class ShippingCostCalculator {
     float minPalletSpace;
     int requiredPallet;
     float requiredTotalSpace;
-    int HashTableSize; //required for creation of array below
-    ShippingCostObject sco[] = new ShippingCostObject[2];
+    int HashTableSize;
+    ShippingCostObject sco[] = new ShippingCostObject[HashTableSize];
 
     //create total sum of requiredTotalSpace
     private float requiredSpace(){
@@ -55,15 +55,12 @@ public class ShippingCostCalculator {
         this.requiredTotalSpace = requiredTotalSpace;
         this.minPalletSpace = minPalletSpace;
 
-        if (requiredTotalSpace < minPalletSpace) {
-            requiredPallet = (int) Math.ceil(minPalletSpace);
-        }
-        else {
+        while (requiredTotalSpace < minPalletSpace) {
             minPalletSpace = (minPalletSpace * 2);
         }
-        //need to loop this
-        return requiredPallet;
-   }
+       requiredPallet = (int) Math.ceil(minPalletSpace);
+       return requiredPallet;
+        }
 
     public static float calculateShippingCost(Integer distance, Integer pallets, ShippingProvider shippingProvider) {
         float shippingCost = 1.0F;
