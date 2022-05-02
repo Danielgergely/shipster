@@ -6,6 +6,8 @@ import javax.persistence.*;
 
 import ch.shipster.security.ShipsterUserRole;
 
+//Timo
+
 @Entity
 @Table(name="shipster_user")
 public class User {

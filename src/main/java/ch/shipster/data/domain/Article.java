@@ -3,6 +3,8 @@ package ch.shipster.data.domain;
 
 import javax.persistence.*;
 
+//Timo
+
 @Entity
 @Table(name="article")
 public class Article {

@@ -52,9 +52,10 @@ public class Order {
     }
     public Order(){}
 
-    /// Getter & Setter
+    /// Special Getter & Setter
     //TODO getUser (Instead of getUserId)
 
+    /// Getter & Setter
     public Long getId() {
         return id;
     }
