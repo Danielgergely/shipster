@@ -1,14 +1,12 @@
 package ch.shipster.data.domain;
 
-import org.jetbrains.annotations.NotNull;
-
 import javax.persistence.*;
 
 // Timo
 // Intermediate Class for n:m relation between Order and Article
 
 @Entity
-@Table(name="orderItem")
+@Table(name="order_item")
 public class OrderItem {
 
     /// ID
@@ -22,7 +20,7 @@ public class OrderItem {
     private int quantity;
 
     /// Constructor
-    public OrderItem(@NotNull Article article, @NotNull Order order, int quantity){
+    public OrderItem(Article article, Order order, int quantity){
         this.articleId = article.getId();
         this.orderId = order.getId();
         this.quantity = quantity;
@@ -39,8 +37,7 @@ public class OrderItem {
     // TODO removeArticles
 
     /// Special Getter & Setter
-    //TODO getArticle()
-
+    // TODO getArticle()
     // TODO getOrder()
 
     /// Getter & Setter
