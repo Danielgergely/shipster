@@ -32,6 +32,8 @@ public class Address {
 
     public Address() {}
 
+    /// Methods
+
     /// Getter & Setter
     public Long getAddressId() {
         return id;

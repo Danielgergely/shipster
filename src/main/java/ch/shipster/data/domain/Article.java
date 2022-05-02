@@ -16,12 +16,17 @@ public class Article {
 
     /// Attributes
     private String name;
+    private String description;
     private float price;
     private float palletSpace;
     private float maxStack;
 
     /// Constructor
     public Article(){}
+
+    /// Methods
+
+    /// Special Getters & Setters
 
     /// Getter & Setter
 
@@ -39,6 +44,14 @@ public class Article {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public float getPrice() {

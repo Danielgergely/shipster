@@ -52,6 +52,8 @@ public class Order {
     }
     public Order(){}
 
+    /// Methods
+
     /// Special Getter & Setter
     //TODO getUser (Instead of getUserId)
 
