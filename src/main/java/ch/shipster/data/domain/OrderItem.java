@@ -1,7 +1,5 @@
 package ch.shipster.data.domain;
 
-import org.jetbrains.annotations.NotNull;
-
 import javax.persistence.*;
 
 // Timo
@@ -22,7 +20,7 @@ public class OrderItem {
     private int quantity;
 
     /// Constructor
-    public OrderItem(@NotNull Article article, @NotNull Order order, int quantity){
+    public OrderItem(Article article, Order order, int quantity){
         this.articleId = article.getId();
         this.orderId = order.getId();
         this.quantity = quantity;
