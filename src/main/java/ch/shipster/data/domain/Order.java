@@ -16,7 +16,7 @@ public class Order {
     private Long id;
 
     /// Attributes
-    private long userId;
+    private Long userId;
     private OrderStatus orderStatus;
 
     private Date lastUpdateDate;
