@@ -1,6 +1,5 @@
 package ch.shipster.controller;
 
-import ch.shipster.data.domain.Address;
 import ch.shipster.data.domain.User;
 import ch.shipster.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,53 +14,41 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping(path = "/")
-public class TemplateController {
+public class ShopController {
 
     @Autowired
     UserService userService;
 
-    @GetMapping
-    public String getIndexView( Model model){
+    @GetMapping(path = "shop")
+    public String getShopView(Model model){
         Optional<User> user = userService.getCurrentUser();
         if ( user.isPresent()) {
             model.addAttribute("user", user.get());
         } else {
             model.addAttribute("user", "no_user");
         }
-        return "index";
+        return "shop/shop";
     }
 
-    @GetMapping(path = "team")
-    public String getTeamView(Model model){
+    @GetMapping(path = "shop/express")
+    public String getExpressView(Model model){
         Optional<User> user = userService.getCurrentUser();
         if ( user.isPresent()) {
             model.addAttribute("user", user.get());
         } else {
             model.addAttribute("user", "no_user");
         }
-        return "team";
+        return "shop/express";
     }
 
-    @GetMapping(path = "about")
-    public String getAboutView(Model model){
+    @GetMapping(path = "shop/standard")
+    public String getStandardView(Model model){
         Optional<User> user = userService.getCurrentUser();
         if ( user.isPresent()) {
             model.addAttribute("user", user.get());
         } else {
             model.addAttribute("user", "no_user");
         }
-        return "about";
-    }
-
-    @GetMapping(path = "login")
-    public String getLoginView(){
-        return "user/login";
-    }
-
-    @GetMapping(path = "register")
-    public String getRegisterView(Model model){
-        model.addAttribute("user", new User());
-        model.addAttribute("address", new Address());
-        return "user/register";
+        return "shop/standard";
     }
 }
