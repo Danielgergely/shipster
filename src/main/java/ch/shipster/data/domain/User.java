@@ -6,28 +6,28 @@ import javax.persistence.*;
 
 import ch.shipster.security.ShipsterUserRole;
 
+//Timo
+
 @Entity
 @Table(name="shipster_user")
 public class User {
 
+    /// ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-    private String userName;
 
+    /// Attributes
+    private String userName;
     private String firstName;
     private String lastName;
-
     private String email;
-
     private String password;
-
     private Long addressId;
-
     private String gender;
-
     private String roles;
 
+    /// Constructor
     public User(String userName,
                 String firstName,
                 String lastName,
@@ -47,6 +47,7 @@ public class User {
 
     public User() {}
 
+    /// Getters & Setters
     public Long getUserId() {
         return userId;
     }

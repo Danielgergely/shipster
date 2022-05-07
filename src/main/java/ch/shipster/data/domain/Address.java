@@ -2,19 +2,26 @@ package ch.shipster.data.domain;
 
 import javax.persistence.*;
 
+//Timo
+
 @Entity
 @Table(name="address")
 public class Address {
 
+    /// ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    /// Attributes
     private String street;
     private String number;
     private String city;
     private String zip;
     private String country;
 
+
+    /// Constructor
     public Address(String street, String number, String city, String zip, String country) {
         this.street = street;
         this.number = number;
@@ -23,9 +30,11 @@ public class Address {
         this.country = country;
     }
 
-    public Address() {
-    }
+    public Address() {}
 
+    /// Methods
+
+    /// Getter & Setter
     public Long getAddressId() {
         return id;
     }
