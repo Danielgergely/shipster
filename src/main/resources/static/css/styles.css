@@ -27,6 +27,11 @@
     background-size: cover;
 }
 
+.bg-admin {
+    background: url("../images/admin_background.jpg") no-repeat center center fixed;
+    background-size: cover;
+}
+
 .bg-login {
     background: url("../images/login.jpeg") no-repeat center fixed;
     background-size: cover;

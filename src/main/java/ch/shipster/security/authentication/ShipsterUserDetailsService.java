@@ -24,7 +24,7 @@ public class ShipsterUserDetailsService implements UserDetailsService {
         if (user.isEmpty()) {
             throw new UsernameNotFoundException(username);
         }
-        return user.map(ShipsterUserDetails::new).get();
+        return new ShipsterUserDetails(user.get());
 
     }
 }

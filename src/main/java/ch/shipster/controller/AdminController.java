@@ -23,6 +23,7 @@ public class AdminController {
         if (user.isEmpty()) {
             return "user/login";
         } else {
+            model.addAttribute("user", user.get());
             return "admin/admin";
         }
     }

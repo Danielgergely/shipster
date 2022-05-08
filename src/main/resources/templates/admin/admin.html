@@ -3,6 +3,17 @@
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="general.html :: headerfiles(title='Admin')"></head>
 <body class="bg-admin">
+<!-- Navigation-->
+<nav th:replace="general.html :: navigation_admin (page='Admin', user=${user})"></nav>
+
+<div>
+    <div>
+        User administration
+    </div>
+    <div>
+        Order administration
+    </div>
+</div>
 
 </body>
 </html>

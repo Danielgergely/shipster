@@ -15,21 +15,16 @@ public class ShipsterUserDetails implements UserDetails {
     private final List<? extends GrantedAuthority> grantedAuthorities;
     private final String password;
     private final String username;
-    private final String firstName;
-    private final String lastName;
+
     private final String email;
-    private final Long addressId;
 
     public ShipsterUserDetails(User user) {
         this.grantedAuthorities = Arrays.stream(user.getRoles().split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
+        this.email = user.getEmail();
         this.password = user.getPassword();
         this.username = user.getUserName();
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
-        this.email = user.getEmail();
-        this.addressId = user.getAddressId();
     }
 
     @Override
@@ -47,20 +42,8 @@ public class ShipsterUserDetails implements UserDetails {
         return username;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getEmail() {
+    public String getEmail(){
         return email;
-    }
-
-    public Long getAddressId() {
-        return addressId;
     }
 
     @Override
