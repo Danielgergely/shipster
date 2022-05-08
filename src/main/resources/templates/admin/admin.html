@@ -4,16 +4,17 @@
 <head th:replace="general.html :: headerfiles(title='Admin')"></head>
 <body class="bg-admin">
 <!-- Navigation-->
-<nav th:replace="general.html :: navigation_admin (page='Administration page', user=${user})"></nav>
+<nav th:replace="general.html :: navigation_admin (page='Admin', user=${user})"></nav>
 
 <div class="shop-start">
     <div class="container">
-        <div class="row justify-content-center">
+        <div class="row w-100 justify-content-center">
 
             <div class="col-md-4 col-sm-6 bg-dark border rounded m-2"
                  onmouseover="this.style.transform = 'scale(1.1)'; this.style.opacity = '0.8'"
-                 onmouseout="this.style.transform = 'scale(1.0)'; this.style.opacity = '1'">
-                <a href="shop/express" class="text-decoration-none shipster-text-light">
+                 onmouseout="this.style.transform = 'scale(1.0)'; this.style.opacity = '1'"
+                 style="min-width: 300px;">
+                <a href="admin/users" class="text-decoration-none shipster-text-light">
                     <div class="card-body mb-30"
                          onmouseover="this.style.transform = 'scale(1.1)'; this.style.opacity = '0.8'"
                          onmouseout="this.style.transform = 'scale(1.0)'; this.style.opacity = '1'">
@@ -30,8 +31,9 @@
 
             <div class="col-md-4 col-sm-6 bg-dark border rounded m-2"
                  onmouseover="this.style.transform = 'scale(1.1)'; this.style.opacity = '0.8'"
-                 onmouseout="this.style.transform = 'scale(1.0)'; this.style.opacity = '1'">
-                <a href="shop/standard" class="text-decoration-none shipster-text-light">
+                 onmouseout="this.style.transform = 'scale(1.0)'; this.style.opacity = '1'"
+                 style="min-width: 300px;">
+                <a href="admin/orders" class="text-decoration-none shipster-text-light">
                     <div class="card-body mb-30">
                         <div class="inner">
                             <div class="main-img"><img class="w-100" th:src="@{images/order_management.jpeg}"

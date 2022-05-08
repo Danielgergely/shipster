@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="general.html :: headerfiles(title='Admin')"></head>
+<body class="bg-admin">
+<!-- Navigation-->
+<nav th:replace="general.html :: navigation_admin (page='Order admin', user=${user})"></nav>
+
+<div class="shop-start">
+    This is the order admin page
+</div>
+
+</body>
+</html>

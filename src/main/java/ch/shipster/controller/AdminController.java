@@ -27,4 +27,26 @@ public class AdminController {
             return "admin/admin";
         }
     }
+
+    @GetMapping("admin/users")
+    public String getUserAdminView(Model model){
+        Optional<User> user = userService.getCurrentUser();
+        if(user.isEmpty()){
+            return "user/login";
+        } else {
+            model.addAttribute("user", user.get());
+            return "admin/users";
+        }
+    }
+
+    @GetMapping("admin/orders")
+    public String getOrderAdminView(Model model){
+        Optional<User> user = userService.getCurrentUser();
+        if(user.isEmpty()){
+            return "user/login";
+        } else {
+            model.addAttribute("user", user.get());
+            return "admin/orders";
+        }
+    }
 }
