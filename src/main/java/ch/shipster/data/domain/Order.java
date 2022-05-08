@@ -7,7 +7,7 @@ import java.util.Date;
 //Timo
 
 @Entity
-@Table(name="order")
+@Table(name="shipster_order")
 public class Order {
 
     /// ID
@@ -40,16 +40,16 @@ public class Order {
 
     }
 
-    public Order(long userId){
-        this.userId = userId;
-        this.orderStatus = OrderStatus.BASKET;
-        this.lastUpdateDate = new Date();
-        this.basketDate = new Date();
-        this.orderDate = new Date(0);
-        this.shippingDate = new Date(0);
-        this.deliveryDate = new Date(0);
-        this.cancellationDate = new Date(0);
-    }
+//    public Order(long userId){
+//        this.userId = userId;
+//        this.orderStatus = OrderStatus.BASKET;
+//        this.lastUpdateDate = new Date();
+//        this.basketDate = new Date();
+//        this.orderDate = new Date(0);
+//        this.shippingDate = new Date(0);
+//        this.deliveryDate = new Date(0);
+//        this.cancellationDate = new Date(0);
+//    }
     public Order(){}
 
     /// Methods
@@ -60,10 +60,6 @@ public class Order {
     /// Getter & Setter
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public long getUserId() {
