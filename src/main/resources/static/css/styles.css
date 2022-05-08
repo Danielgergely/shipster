@@ -22,6 +22,11 @@
     background-size: cover;
 }
 
+.bg-error {
+    background: url("../images/error_background.jpeg") no-repeat center center fixed;
+    background-size: cover;
+}
+
 .bg-profile {
     background: url("../images/profile_background.jpg") no-repeat center center fixed;
     background-size: cover;
@@ -54,6 +59,14 @@
 
 a:hover {
     color:#ffc800;
+}
+
+.error-text {
+    color: black!important;
+    font-weight: bold;
+    font-size: xxx-large;
+    text-align: center;
+    margin-bottom: 100px;
 }
 
 .img-logo {
@@ -164,6 +177,21 @@ a:hover {
 .btn-outline-secondary-large:hover {
     color: black;
     background-color: #ffc800;
+}
+
+.btn-outline-secondary-dark-large {
+    width: 80%;
+    margin-top: 100px;
+    margin-bottom: 20px;
+    color: #000000;
+    border-color: #000000;
+    font-size: x-large;
+    align-self: center;
+}
+
+.btn-outline-secondary-dark-large:hover {
+    color: #ffc800;
+    background-color: #000000;
 }
 
 .button:hover {

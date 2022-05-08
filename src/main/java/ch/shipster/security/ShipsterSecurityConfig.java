@@ -79,7 +79,7 @@ public class ShipsterSecurityConfig extends WebSecurityConfigurerAdapter {
                 .clearAuthentication(true)
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID", "remember-me")
-                .logoutSuccessUrl("/login");
+                .logoutSuccessUrl("/");
     }
 
 }

@@ -4,14 +4,48 @@
 <head th:replace="general.html :: headerfiles(title='Admin')"></head>
 <body class="bg-admin">
 <!-- Navigation-->
-<nav th:replace="general.html :: navigation_admin (page='Admin', user=${user})"></nav>
+<nav th:replace="general.html :: navigation_admin (page='Administration page', user=${user})"></nav>
 
-<div>
-    <div>
-        User administration
-    </div>
-    <div>
-        Order administration
+<div class="shop-start">
+    <div class="container">
+        <div class="row justify-content-center">
+
+            <div class="col-md-4 col-sm-6 bg-dark border rounded m-2"
+                 onmouseover="this.style.transform = 'scale(1.1)'; this.style.opacity = '0.8'"
+                 onmouseout="this.style.transform = 'scale(1.0)'; this.style.opacity = '1'">
+                <a href="shop/express" class="text-decoration-none shipster-text-light">
+                    <div class="card-body mb-30"
+                         onmouseover="this.style.transform = 'scale(1.1)'; this.style.opacity = '0.8'"
+                         onmouseout="this.style.transform = 'scale(1.0)'; this.style.opacity = '1'">
+                        <div class="inner">
+                            <div class="main-img"><img class="w-100" th:src="@{images/user_management.jpeg}"
+                                                       alt="express delivery"></div>
+                        </div>
+                        <div class="card-body text-center">
+                            <h4 class="card-title">User management</h4>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-4 col-sm-6 bg-dark border rounded m-2"
+                 onmouseover="this.style.transform = 'scale(1.1)'; this.style.opacity = '0.8'"
+                 onmouseout="this.style.transform = 'scale(1.0)'; this.style.opacity = '1'">
+                <a href="shop/standard" class="text-decoration-none shipster-text-light">
+                    <div class="card-body mb-30">
+                        <div class="inner">
+                            <div class="main-img"><img class="w-100" th:src="@{images/order_management.jpeg}"
+                                                       alt="normal delivery"></div>
+
+                        </div>
+                        <div class="card-body text-center">
+                            <h4 class="card-title">Order management</h4>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        </div>
     </div>
 </div>
 
