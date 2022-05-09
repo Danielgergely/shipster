@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 
+// Daniel
+// https://www.baeldung.com/spring-boot-custom-error-page
 @Controller
 public class ShipsterErrorController implements ErrorController {
 

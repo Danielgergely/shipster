@@ -1,3 +1,4 @@
+/* Daniel */
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@900&display=swap');
 
 .shipster-text-light {
@@ -67,6 +68,16 @@ a:hover {
     font-size: xxx-large;
     text-align: center;
     margin-bottom: 100px;
+}
+
+.shipster-user-tbl {
+    background-color: black;
+    color: #ffc800;
+}
+
+.shipster-user-tbl-header {
+    background-color: #ffc800;
+    color: black;
 }
 
 .img-logo {
@@ -162,6 +173,35 @@ a:hover {
 .btn-outline-secondary-small:hover {
     color: black;
     background-color: #ffc800;
+}
+
+.btn-outline-primary-small {
+    width: 100%;
+    max-width: 175px;
+    margin-top: 5px;
+    color: black;
+    border-color: black;
+    font-size: small;
+}
+
+.btn-outline-primary-small:hover {
+    color: #ffc800;
+    background-color: black;
+}
+
+.btn-primary-small {
+    width: 100%;
+    max-width: 175px;
+    margin-top: 5px;
+    color: black;
+    background-color: #ffc800;
+    border-color: black;
+    font-size: small;
+}
+
+.btn-primary-small:hover {
+    color: #ffc800;
+    background-color: black;
 }
 
 .btn-outline-secondary-large {

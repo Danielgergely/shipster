@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 // Daniel
@@ -73,6 +74,10 @@ public class UserService {
 
             userRepository.save(currentUser.get());
         }
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
     public Optional<User> getCurrentUser() {

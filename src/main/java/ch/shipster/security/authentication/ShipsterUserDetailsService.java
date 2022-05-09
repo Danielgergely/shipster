@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 // Daniel
+// amigoscode - Spring Boot Security
 
-@Service
 public class ShipsterUserDetailsService implements UserDetailsService {
 
     @Autowired

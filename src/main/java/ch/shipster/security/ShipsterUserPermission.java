@@ -1,5 +1,7 @@
 package ch.shipster.security;
 
+// Daniel
+// amigoscode - Spring Boot Security
 public enum ShipsterUserPermission {
     USER_READ("user:read"),
     USER_WRITE("user:write"),

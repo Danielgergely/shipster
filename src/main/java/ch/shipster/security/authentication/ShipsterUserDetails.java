@@ -10,6 +10,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+// Daniel
+// amigoscode - Spring Boot Security
 public class ShipsterUserDetails implements UserDetails {
 
     private final List<? extends GrantedAuthority> grantedAuthorities;

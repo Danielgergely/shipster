@@ -1,13 +1,141 @@
+<!-- Daniel -->
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="general.html :: headerfiles(title='Admin')"></head>
 <body class="bg-admin">
 <!-- Navigation-->
-<nav th:replace="general.html :: navigation_admin (page='User admin', user=${user})"></nav>
+<nav th:replace="general.html :: navigation_admin (page='User admin', user=${currentUser})"></nav>
 
 <div class="shop-start">
-    This is the user admin page
+    <div class="w-100 d-flex justify-content-center">
+        <table class="table shipster-user-tbl m-2">
+            <thead class="shipster-user-tbl-header">
+            <tr>
+                <td>Username</td>
+                <td>Firstname</td>
+                <td>Lastname</td>
+                <td>Email</td>
+                <td>Address</td>
+                <td>Gender</td>
+                <td>Role(s)</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.getUserName()}"></td>
+                <td th:text="${user.getFirstName()}"></td>
+                <td th:text="${user.getLastName()}"></td>
+                <td th:text="${user.getEmail()}"></td>
+                <td th:text="${user.getAddressId()}"></td>
+                <td th:text="${user.getGender()}"></td>
+                <td th:text="${user.getRoles()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="w-100 d-flex justify-content-center">
+        <div class="btn btn-primary-small" data-bs-toggle="modal" data-bs-target="#createUser">Create new user</div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="createUser" tabindex="-1" aria-labelledby="createUser" aria-hidden="true">
+    <div class="modal-dialog">
+        <form class="form-create-user" method="post" action="#" th:action="@{/admin/createUser}">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="form-signin-heading text-centered shipster-text-light">Create a Shipster account</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-12 d-flex">
+                        <div class="col-6">
+                            <label for="firstname" class="sr-only shipster-text-light">First name</label>
+                            <input th:field="*{newUser.firstName}" type="text" id="firstname" name="firstname"
+                                   class="form-control" placeholder="First  name" required=""
+                                   autofocus="" autocomplete="off">
+                        </div>
+                        <div class="col-6 ms-1">
+                            <label for="lastname" class="sr-only shipster-text-light">Last name</label>
+                            <input th:field="*{newUser.lastName}" type="text" id="lastname" name="lastname"
+                                   class="form-control" placeholder="Last name" required=""
+                                   autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="col-12 d-flex">
+                        <div class="col-6">
+                            <label for="username" class="sr-only shipster-text-light">Username</label>
+                            <input th:field="*{newUser.userName}" type="text" id="username" name="username"
+                                   class="form-control" placeholder="Username" required=""
+                                   autofocus="" autocomplete="off">
+                        </div>
+                        <div class="col-6 ms-1 mt-4">
+                            <input th:field="*{newUser.gender}" type="radio" id="male" name="gender" value="male"
+                                   required>
+                            <label for="male" class="shipster-text-light">Male</label>
+                            <input type="radio" id="female" name="gender" value="female">
+                            <label for="female" class="shipster-text-light">Female</label><br>
+                        </div>
+                    </div>
+                    <div class="col-12 d-flex">
+                        <div class="col-6">
+                            <label for="email" class="sr-only shipster-text-light">Email</label>
+                            <input th:field="*{newUser.email}" type="email" id="email" name="email" class="form-control"
+                                   placeholder="Email" required=""
+                                   autocomplete="off">
+                        </div>
+                        <div class="col-6 ms-1">
+                            <label for="password" class="sr-only shipster-text-light">Password</label>
+                            <input th:field="*{newUser.password}" type="password" id="password" name="password"
+                                   class="form-control" placeholder="Password" required=""
+                                   autocomplete="off">
+                        </div>
+                    </div>
+
+                    <div class="col-12 d-flex">
+                        <div class="col-10">
+                            <label for="street" class="sr-only shipster-text-light">Street</label>
+                            <input th:field="*{newAddress.street}" type="text" id="street" name="street"
+                                   class="form-control" placeholder="Street" required=""
+                                   autofocus="" autocomplete="off">
+                        </div>
+                        <div class="col-2 ms-1">
+                            <label for="number" class="sr-only shipster-text-light">Number</label>
+                            <input th:field="*{newAddress.number}" type="text" id="number" name="number"
+                                   class="form-control" placeholder="No." required=""
+                                   autofocus="" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="col-12 d-flex">
+                        <div class="col-6">
+                            <label for="city" class="sr-only shipster-text-light">City</label>
+                            <input th:field="*{newAddress.city}" type="text" id="city" name="city" class="form-control"
+                                   placeholder="City" required=""
+                                   autofocus="" autocomplete="off">
+                        </div>
+                        <div class="col-6 ms-1">
+                            <label for="zip" class="sr-only shipster-text-light">ZIP</label>
+                            <input th:field="*{newAddress.zip}" type="text" id="zip" name="zip" class="form-control"
+                                   placeholder="ZIP" required=""
+                                   autofocus="" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="col-12 d-flex">
+                        <div class="col-6">
+                            <label for="country" class="sr-only shipster-text-light">Country</label>
+                            <input th:field="*{newAddress.country}" type="text" id="country" name="country"
+                                   class="form-control" placeholder="Country" required=""
+                                   autofocus="" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary-small" data-bs-dismiss="modal">Create</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 
 </body>

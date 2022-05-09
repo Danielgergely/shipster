@@ -19,6 +19,8 @@ import java.util.concurrent.TimeUnit;
 import static ch.shipster.security.ShipsterUserRole.*;
 
 // Daniel
+// amigoscode - Spring Boot Security
+// StudyWithSomebody - https://github.com/benjaminkech/Study-With-Somebody
 
 @Configuration
 @EnableWebSecurity
