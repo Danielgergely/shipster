@@ -7,10 +7,7 @@ import ch.shipster.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +25,7 @@ public class AdminController {
     AddressService addressService;
 
     @GetMapping("admin")
-    public String getAdminView(Model model){
+    public String getAdminView(Model model) {
         Optional<User> user = userService.getCurrentUser();
         if (user.isEmpty()) {
             return "user/login";
@@ -39,10 +36,10 @@ public class AdminController {
     }
 
     @GetMapping("admin/users")
-    public String getUserAdminView(Model model){
+    public String getUsersAdminView(Model model) {
         Optional<User> user = userService.getCurrentUser();
 
-        if(user.isEmpty()){
+        if (user.isEmpty()) {
             return "user/login";
         } else {
             List<User> users = userService.getAllUsers();
@@ -54,10 +51,23 @@ public class AdminController {
         }
     }
 
+    @GetMapping("admin/user")
+    public String getUserAdminView(@RequestParam Long userId, Model model) {
+        Optional<User> adminUser = userService.getCurrentUser();
+        if (adminUser.isEmpty()) {
+            return "user/login";
+        } else {
+            User user = userService.findById(userId);
+            model.addAttribute("currentUser", adminUser.get());
+            model.addAttribute("user", user);
+            return "admin/user";
+        }
+    }
+
     @GetMapping("admin/orders")
-    public String getOrderAdminView(Model model){
+    public String getOrderAdminView(Model model) {
         Optional<User> user = userService.getCurrentUser();
-        if(user.isEmpty()){
+        if (user.isEmpty()) {
             return "user/login";
         } else {
             model.addAttribute("user", user.get());

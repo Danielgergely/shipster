@@ -1,0 +1,47 @@
+<!-- Daniel -->
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="general.html :: headerfiles(title='Admin')"></head>
+<body class="bg-admin">
+<!-- Navigation-->
+<nav th:replace="general.html :: navigation_admin (page='User admin', user=${currentUser})"></nav>
+
+<div class="shop-start">
+    <div class="w-100 d-flex justify-content-center">
+        <table class="table shipster-user-tbl m-2">
+            <thead class="shipster-user-tbl-header">
+            <tr>
+                <td>Username</td>
+                <td>Firstname</td>
+                <td>Lastname</td>
+                <td>Email</td>
+                <td>Address</td>
+                <td>Gender</td>
+                <td>Role(s)</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${user.getUserName()}"></td>
+                <td th:text="${user.getFirstName()}"></td>
+                <td th:text="${user.getLastName()}"></td>
+                <td th:text="${user.getEmail()}"></td>
+                <td th:text="${user.getAddressId()}"></td>
+                <td th:text="${user.getGender()}"></td>
+                <td th:text="${user.getRoles()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="w-100 d-flex justify-content-center">
+        <div class="btn btn-primary-small" data-bs-toggle="modal" data-bs-target="#createUser"
+             th:text="${user.getRoles().contains('ADMIN')} ? 'Add Admin role' : 'Remove Admin Role'"></div>
+        <div class="btn btn-primary-small" data-bs-toggle="modal" data-bs-target="#createUser">Update User</div>
+        <div class="btn btn-primary-small" data-bs-toggle="modal" data-bs-target="#createUser">Delete User</div>
+    </div>
+</div>
+
+
+</body>
+</html>

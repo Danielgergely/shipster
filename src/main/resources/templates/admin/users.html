@@ -22,7 +22,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="user : ${users}">
+            <tr th:each="user : ${users}" th:onclick="'window.location.href=\'user?userId=' + ${user.getUserId()} + '\''">
                 <td th:text="${user.getUserName()}"></td>
                 <td th:text="${user.getFirstName()}"></td>
                 <td th:text="${user.getLastName()}"></td>
