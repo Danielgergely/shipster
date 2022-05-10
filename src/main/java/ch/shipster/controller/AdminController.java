@@ -2,6 +2,8 @@ package ch.shipster.controller;
 
 import ch.shipster.data.domain.Address;
 import ch.shipster.data.domain.User;
+import ch.shipster.exceptions.NoPermissionException;
+import ch.shipster.security.ShipsterUserRole;
 import ch.shipster.service.AddressService;
 import ch.shipster.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +63,43 @@ public class AdminController {
             model.addAttribute("currentUser", adminUser.get());
             model.addAttribute("user", user);
             return "admin/user";
+        }
+    }
+
+    @GetMapping("admin/role")
+    public String addRemoveAdminRole(@RequestParam Long userId, Model model) throws Exception {
+        Optional<User> adminUser = userService.getCurrentUser();
+        if (adminUser.isEmpty()) {
+            return "user/login";
+        } else {
+            User user = userService.findById(userId);
+            if(user.getRoles().contains("ADMIN")){
+                user.setRole("USER");
+            } else {
+                user.setRoles(ShipsterUserRole.ADMIN);
+            }
+            userService.updateUser(user);
+            model.addAttribute("currentUser", adminUser.get());
+            model.addAttribute("user", user);
+            return "redirect:user?userId=" + userId;
+        }
+    }
+
+    @GetMapping("admin/user/delete")
+    public String deleteUser(@RequestParam Long userId, Model model) throws Exception {
+        Optional<User> adminUser = userService.getCurrentUser();
+        if (adminUser.isEmpty()) {
+            return "user/login";
+        } else if (!adminUser.get().getRoles().contains("ADMIN")) {
+            throw new NoPermissionException("You can not delete this user. You are not an admin");
+        } else {
+            userService.deleteUser(userId);
+            List<User> users = userService.getAllUsers();
+            model.addAttribute("currentUser", adminUser.get());
+            model.addAttribute("users", users);
+            model.addAttribute("newUser", new User());
+            model.addAttribute("newAddress", new Address());
+            return "admin/users";
         }
     }
 

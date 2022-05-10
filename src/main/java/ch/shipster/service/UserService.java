@@ -76,6 +76,10 @@ public class UserService {
         }
     }
 
+    public void updateUser(User updatedUser) throws Exception {
+            userRepository.save(updatedUser);
+    }
+
     public void deleteUser(Long id) throws Exception {
         Optional<User> user = userRepository.findById(id);
         if (user.isEmpty()) {

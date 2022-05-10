@@ -1,9 +1,8 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="ShipsterApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-    <module name="shipster" />
-    <option name="SPRING_BOOT_MAIN_CLASS" value="ch.shipster.ShipsterApplication" />
     <option name="ACTIVE_PROFILES" value="dev" />
-    <option name="ALTERNATIVE_JRE_PATH" />
+    <module name="ch.shipster" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="ch.shipster.ShipsterApplication" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

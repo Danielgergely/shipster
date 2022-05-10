@@ -71,7 +71,7 @@ a:hover {
 }
 
 .shipster-user-tbl {
-    background-color: black;
+    /*background-color: black;*/
     color: #ffc800;
 }
 
@@ -419,6 +419,15 @@ a:hover {
 
 .container_image-about .title_wrapper .h1-about {
     color: black;
+}
+
+.user-row {
+    cursor: pointer;
+    background-color: black;
+}
+
+.user-row:hover {
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
 

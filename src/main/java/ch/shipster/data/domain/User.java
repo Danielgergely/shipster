@@ -112,6 +112,11 @@ public class User {
         return roles;
     }
 
+    // to overwrite current role and remove ADMIN
+    public void setRole(String role) {
+        this.roles = role;
+    }
+
     public void setRoles(ShipsterUserRole role) {
         String r = this.roles;
         if (!r.contains(role.name())) {
