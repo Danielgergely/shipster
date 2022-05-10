@@ -113,4 +113,15 @@ public class UserService {
             saveUser(user.get());
         }
     }
+
+    public void changeUserPassword(String password, Long userId) throws Exception {
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isEmpty()){
+            throw new NotFoundException("User not found");
+        } else {
+            String encodedPassword = passwordEncoder.encode(password);
+            user.get().setPassword(encodedPassword);
+            updateUser(user.get());
+        }
+    }
 }

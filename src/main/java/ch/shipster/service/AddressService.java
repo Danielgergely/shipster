@@ -37,6 +37,10 @@ public class AddressService {
         }
     }
 
+    public void updateAddress(Address updatedAddress) {
+        addressRepository.save(updatedAddress);
+    }
+
     public void saveAddress(Address updatedAddress) {
         Optional<User> currentUser = userService.getCurrentUser();
         if (currentUser.isEmpty()) {

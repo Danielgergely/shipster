@@ -35,15 +35,177 @@
         </table>
     </div>
     <div class="w-100 d-flex justify-content-center">
-        <div class="btn btn-primary-small" data-bs-toggle="modal" data-bs-target="#createUser"
+        <div class="btn btn-primary-small"
              th:text="${user.getRoles().contains('ADMIN')} ? 'Remove Admin Role' : 'Add Admin role'"
              th:onclick="'window.location.href=\'role?userId=' + ${user.getUserId()} + '\''"></div>
-        <div class="btn btn-primary-small" data-bs-toggle="modal" data-bs-target="#createUser">Update User</div>
-        <div class="btn btn-primary-small" data-bs-toggle="modal" data-bs-target="#createUser"
-             th:onclick="'window.location.href=\'user/delete?userId=' + ${user.getUserId()} + '\''">Delete User</div>
+        <div class="btn btn-primary-small" data-bs-toggle="modal" data-bs-target="#updateUser">Update User</div>
+        <div class="btn btn-primary-small"
+             th:onclick="'window.location.href=\'user/delete?userId=' + ${user.getUserId()} + '\''">Delete User
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="updateUser" tabindex="-1" aria-labelledby="updateUser" aria-hidden="true">
+        <div class="modal-dialog" style="min-width: 90%">
+            <div class="modal-content" style="background-color: black;">
+                <div class="modal-header">
+                    <h2 class="form-signin-heading text-centered shipster-text-light text-centered">Update account</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container rounded bg-dark mb-5 shipster-text-light">
+                        <div class="row p-2">
+                            <div class="col-md-3 border-right border-right-shipster">
+                                <div class="d-flex flex-column align-items-center text-center p-3 py-5 m-2">
+                                    <img class="rounded-circle mt-5" width="150px" th:if="${user.getGender() == 'male'}"
+                                         th:src="@{./images/avatar_male.svg}" alt="Avatar_male">
+                                    <img class="rounded-circle mt-5" width="150px"
+                                         th:unless="${user.getGender() == 'male'}"
+                                         th:src="@{./images/avatar_female.svg}" alt="Avatar_female">
+                                    <span class="font-weight-bold" th:text="${user.getUserName()}"></span>
+                                    <span th:text="${user.getEmail()}"></span><span> </span>
+                                </div>
+                            </div>
+                            <form class="col-md-5 border-right border-right-shipster pb-2" id="profile" method="post"
+                                  action="#"
+                                  th:action="@{/admin/updateProfile(userId=${user.getUserId()})}">
+                                <div class="p-3 pt-5 pb-2">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h3 class="text-right">Profile Settings</h3>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-md-6"><label for="first_name" class="labels">First name</label>
+                                            <input type="text" class="form-control" id="first_name"
+                                                   onkeyup="enableUpdateBtn()"
+                                                   th:field="*{user.firstName}" th:placeholder="${user.firstName}">
+                                        </div>
+                                        <div class="col-md-6"><label for="last_name" class="labels">Last name</label>
+                                            <input type="text" class="form-control" id="last_name"
+                                                   onkeyup="enableUpdateBtn()"
+                                                   th:field="*{user.lastName}" th:placeholder="${user.lastName}">
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-12"><label for="user_name" class="labels">Username</label>
+                                            <input type="text" class="form-control" id="user_name"
+                                                   onkeyup="enableUpdateBtn()"
+                                                   th:field="*{user.userName}" th:placeholder="${user.userName}">
+                                        </div>
+                                        <div class="col-md-12"><label for="email" class="labels">Email</label>
+                                            <input type="text" class="form-control" id="email"
+                                                   onkeyup="enableUpdateBtn()"
+                                                   th:field="*{user.email}" th:placeholder="${user.email}">
+                                        </div>
+                                        <div class="col-md-12 mt-2 mb-2"><label class="labels">Gender: </label>
+                                            <input type="radio" id="male" name="gender" value="male"
+                                                   onchange="enableUpdateBtn()"
+                                                   required th:field="*{user.gender}"
+                                                   th:checked="${user.getGender().contentEquals('male')}">
+                                            <label for="male" class="shipster-text-light">Male</label>
+                                            <input type="radio" id="female" name="gender" value="female"
+                                                   onchange="enableUpdateBtn()"
+                                                   th:checked="${user.getGender().contentEquals('female')}">
+                                            <label for="female" class="shipster-text-light">Female</label><br>
+                                        </div>
+                                    </div>
+
+                                    <h4 class="form-signin-heading shipster-text-light mt-2">Address information</h4>
+
+                                    <div class="row mt-2">
+
+                                        <div class="col-md-8"><label for="street" class="labels">Street</label>
+                                            <input type="text" class="form-control" id="street"
+                                                   onkeyup="enableUpdateBtn()"
+                                                   th:field="*{address.street}" th:placeholder="${address.street}">
+                                        </div>
+
+                                        <div class="col-md-4"><label for="number" class="labels">Number</label>
+                                            <input type="text" class="form-control" id="number"
+                                                   onkeyup="enableUpdateBtn()"
+                                                   th:field="*{address.number}" th:placeholder="${address.number}">
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row mt-2">
+                                        <div class="col-md-8"><label for="city" class="labels">City</label>
+                                            <input type="text" class="form-control" id="city"
+                                                   onkeyup="enableUpdateBtn()"
+                                                   th:field="*{address.city}" th:placeholder="${address.city}">
+                                        </div>
+                                        <div class="col-md-4"><label for="zip" class="labels">ZIP</label>
+                                            <input type="text" class="form-control" id="zip" onkeyup="enableUpdateBtn()"
+                                                   th:field="*{address.zip}" th:placeholder="${address.zip}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12"><label for="country" class="labels">Country</label>
+                                        <input type="text" class="form-control" id="country" onkeyup="enableUpdateBtn()"
+                                               th:field="*{address.country}" th:placeholder="${address.country}">
+                                    </div>
+                                </div>
+                                <div th:if="${profile_update != null}" class="col-md-12 pb-2">
+                                    <h5 class="fst-italic text-centered text-success" th:text="${profile_update}"></h5>
+                                </div>
+                                <button id="update_btn" class="btn btn-outline-secondary mb-4" type="submit" disabled>
+                                    Update
+                                </button>
+                            </form>
+                            <form class="col-md-4" id="password_change" method="post" action="#"
+                                  th:action="@{/admin/updatePassword}">
+                                <div class="p-3 py-5">
+                                    <h4 class="form-signin-heading ">Change password</h4>
+                                    <div class="col-md-12"><label for="new_psw" class="labels">New password</label>
+                                        <input type="password" class="form-control" id="new_psw" value="">
+                                    </div>
+                                    <div class="col-md-12"><label for="confirm_psw" class="labels">Confirm
+                                        password</label>
+                                        <input type="password" class="form-control" name="password" id="confirm_psw"
+                                               onkeyup="checkPassword()" value="">
+                                    </div>
+                                    <div th:if="${password_changed != null}" class="col-md-12 pb-2">
+                                        <h5 class="fst-italic text-centered text-success"
+                                            th:text="${password_changed}"></h5>
+                                    </div>
+                                    <button id="change_btn" class="btn btn-outline-secondary mt-2 mb-4" type="submit"
+                                            disabled>Change
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
     </div>
 </div>
-
-
 </body>
+<script th:inline="javascript">
+
+    function enableUpdateBtn() {
+        const update_btn = $('#update_btn');
+        update_btn.prop('disabled', false);
+    }
+
+    function checkPassword() {
+        const confirm_psw = $('#confirm_psw');
+        const new_psw_value = $('#new_psw')[0].value;
+        const confirm_psw_value = confirm_psw[0].value;
+        const change_btn = $('#change_btn');
+
+        if (new_psw_value === "") {
+            change_btn.prop('disabled', true);
+        } else if (new_psw_value !== confirm_psw_value) {
+            console.log("The two passwords are not the same");
+            confirm_psw.css("border", "2px solid red");
+            change_btn.prop('disabled', true);
+        } else {
+            console.log("The two passwords match!");
+            confirm_psw.css("border", "none");
+            change_btn.prop('disabled', false);
+        }
+    }
+
+</script>
 </html>

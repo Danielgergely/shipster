@@ -9,7 +9,7 @@ import ch.shipster.security.ShipsterUserRole;
 //Timo
 
 @Entity
-@Table(name="shipster_user")
+@Table(name = "shipster_user")
 public class User {
 
     /// ID
@@ -45,7 +45,8 @@ public class User {
         this.roles = "USER";
     }
 
-    public User() {}
+    public User() {
+    }
 
     /// Getters & Setters
     public Long getUserId() {
