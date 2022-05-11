@@ -39,7 +39,7 @@ public class AdminController {
     }
 
     @GetMapping("admin/users")
-    public String getUsersAdminView(Model model) {
+    public String getUsersAdminView(@RequestParam(required = false, name = "success_message") String message, Model model) {
         Optional<User> user = userService.getCurrentUser();
 
         if (user.isEmpty()) {
@@ -50,12 +50,15 @@ public class AdminController {
             model.addAttribute("users", users);
             model.addAttribute("newUser", new User());
             model.addAttribute("newAddress", new Address());
+            if (message != null) {
+                model.addAttribute("success_message", message);
+            }
             return "admin/users";
         }
     }
 
     @GetMapping("admin/user")
-    public String getUserAdminView(@RequestParam Long userId, Model model) {
+    public String getUserAdminView(@RequestParam(required = false, name = "success_message") String message, @RequestParam Long userId, Model model) {
         Optional<User> adminUser = userService.getCurrentUser();
         if (adminUser.isEmpty()) {
             return "user/login";
@@ -65,6 +68,9 @@ public class AdminController {
             model.addAttribute("currentUser", adminUser.get());
             model.addAttribute("user", user);
             model.addAttribute("address", address);
+            if (message != null) {
+                model.addAttribute("success_message", message);
+            }
             return "admin/user";
         }
     }
@@ -78,6 +84,7 @@ public class AdminController {
         userToUpdate.setEmail(updatedUser.getEmail());
         userToUpdate.setGender(updatedUser.getGender());
         userService.updateUser(userToUpdate);
+
         Address addressToUpdate = addressService.findAddressById(userToUpdate.getAddressId());
         addressToUpdate.setStreet(updatedAddress.getStreet());
         addressToUpdate.setCity(updatedAddress.getCity());
@@ -85,7 +92,8 @@ public class AdminController {
         addressToUpdate.setNumber(updatedAddress.getNumber());
         addressToUpdate.setZip(updatedAddress.getZip());
         addressService.updateAddress(addressToUpdate);
-        //redirectAttributes.addAttribute("message", "Profile has been updated.");
+
+        redirectAttributes.addAttribute("success_message", "User has been updated.");
         return "redirect:user?userId=" + userToUpdate.getUserId();
     }
 
@@ -93,17 +101,17 @@ public class AdminController {
     public String updatePassword(@RequestParam(name = "password") String password, @RequestParam Long userId, RedirectAttributes redirectAttributes) throws Exception {
         userService.changeUserPassword(password, userId);
         redirectAttributes.addAttribute("message", "Password has been changed.");
-        return "redirect:/profile";
+        return "redirect:user?userId=" + userId;
     }
 
     @GetMapping("admin/role")
-    public String addRemoveAdminRole(@RequestParam Long userId, Model model) throws Exception {
+    public String addRemoveAdminRole(@RequestParam Long userId, Model model, RedirectAttributes redirectAttributes) throws Exception {
         Optional<User> adminUser = userService.getCurrentUser();
         if (adminUser.isEmpty()) {
             return "user/login";
         } else {
             User user = userService.findById(userId);
-            if(user.getRoles().contains("ADMIN")){
+            if (user.getRoles().contains("ADMIN")) {
                 user.setRole("USER");
             } else {
                 user.setRoles(ShipsterUserRole.ADMIN);
@@ -111,6 +119,7 @@ public class AdminController {
             userService.updateUser(user);
             model.addAttribute("currentUser", adminUser.get());
             model.addAttribute("user", user);
+            redirectAttributes.addAttribute("success_message", "Role has been updated.");
             return "redirect:user?userId=" + userId;
         }
     }
@@ -121,7 +130,7 @@ public class AdminController {
         if (adminUser.isEmpty()) {
             return "user/login";
         } else if (!adminUser.get().getRoles().contains("ADMIN")) {
-            throw new NoPermissionException("You can not delete this user. You are not an admin");
+            throw new NoPermissionException("You can not delete this user. You are not an admin.");
         } else {
             userService.deleteUser(userId);
             List<User> users = userService.getAllUsers();
@@ -129,23 +138,13 @@ public class AdminController {
             model.addAttribute("users", users);
             model.addAttribute("newUser", new User());
             model.addAttribute("newAddress", new Address());
+            model.addAttribute("success_message", "User has been deleted.");
             return "admin/users";
         }
     }
 
-    @GetMapping("admin/orders")
-    public String getOrderAdminView(Model model) {
-        Optional<User> user = userService.getCurrentUser();
-        if (user.isEmpty()) {
-            return "user/login";
-        } else {
-            model.addAttribute("user", user.get());
-            return "admin/orders";
-        }
-    }
-
     @PostMapping("admin/createUser")
-    public String registerUser(@ModelAttribute User user, Address address) throws Exception {
+    public String registerUser(@ModelAttribute User user, Address address, RedirectAttributes redirectAttributes) throws Exception {
         Address newAddress = new Address(
                 address.getStreet(),
                 address.getNumber(),
@@ -163,6 +162,18 @@ public class AdminController {
                 user.getAddressId(),
                 user.getGender());
         userService.createUser(newUser);
+        redirectAttributes.addAttribute("success_message", "User has been created");
         return "redirect:/admin/users";
+    }
+
+    @GetMapping("admin/orders")
+    public String getOrderAdminView(Model model) {
+        Optional<User> user = userService.getCurrentUser();
+        if (user.isEmpty()) {
+            return "user/login";
+        } else {
+            model.addAttribute("user", user.get());
+            return "admin/orders";
+        }
     }
 }

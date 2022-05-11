@@ -296,6 +296,14 @@ a:hover {
     padding-top: 3px;
 }
 
+.text-success-message {
+    padding-top: 3px;
+    color: green;
+    background-color: rgba(0, 0, 0, 0.7);
+    margin-top: 5px;
+    font-size: initial!important;
+}
+
 .email {
     font-size: 0.7rem;
     text-align: center;
