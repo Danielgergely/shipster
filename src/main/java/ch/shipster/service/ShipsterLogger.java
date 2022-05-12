@@ -2,16 +2,25 @@ package ch.shipster.service;
 
 import ch.shipster.ShipsterApplication;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+//import java.util.logging.Logger;
 
 // Jonas
 // Software engineering class REPLACE ME WITH REPO LINK
-
+@Service
 public class ShipsterLogger {
-    public static final String LOGGER_NAME = ShipsterApplication.class.getSimpleName();
+
+    public static Logger logger = LoggerFactory.getLogger(ShipsterLogger.class);
+
+
+
+    /*public static final String LOGGER_NAME = ShipsterApplication.class.getSimpleName();
     private Logger logger = null;
 
     public ShipsterLogger() {
@@ -43,5 +52,7 @@ public class ShipsterLogger {
         logger.warning("Warning message from main class");
         //OtherClass other = new OtherClass();
         //OtherClass2 other2 = new OtherClass2();
-    }
+    } */
+
+
 }

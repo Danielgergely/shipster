@@ -9,7 +9,7 @@ public class ShipsterApplication {
 
     public static void main(String[] args){
         SpringApplication.run(ShipsterApplication.class, args);
-        ShipsterLogger programInstance = new ShipsterLogger();
-        programInstance.doStuff();
+       //ShipsterLogger programInstance = new ShipsterLogger();
+       // programInstance.doStuff();
     }
 }
