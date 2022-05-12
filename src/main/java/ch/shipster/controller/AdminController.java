@@ -3,6 +3,7 @@ package ch.shipster.controller;
 import ch.shipster.data.domain.Address;
 import ch.shipster.data.domain.User;
 import ch.shipster.service.AddressService;
+import ch.shipster.service.ShipsterLogger;
 import ch.shipster.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,6 +51,7 @@ public class AdminController {
             model.addAttribute("users", users);
             model.addAttribute("newUser", new User());
             model.addAttribute("newAddress", new Address());
+            ShipsterLogger.logger.info("User " + user + " accessed the user admin view");
             return "admin/users";
         }
     }
@@ -61,6 +63,7 @@ public class AdminController {
             return "user/login";
         } else {
             model.addAttribute("user", user.get());
+            ShipsterLogger.logger.info("User " + user + " accessed the order admin view");
             return "admin/orders";
         }
     }
@@ -84,6 +87,7 @@ public class AdminController {
                 user.getAddressId(),
                 user.getGender());
         userService.createUser(newUser);
+        ShipsterLogger.logger.info("User with  ID" + user.getAddressId() + " was granted admin rights");
         return "redirect:/admin/users";
     }
 }

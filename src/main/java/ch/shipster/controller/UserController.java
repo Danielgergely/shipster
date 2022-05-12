@@ -77,6 +77,7 @@ public class UserController {
     public String updateProfile(@ModelAttribute User updatedUser, Address updatedAddress, RedirectAttributes redirectAttributes) throws Exception {
         userService.saveUser(updatedUser);
         addressService.saveAddress(updatedAddress);
+        ShipsterLogger.logger.info("User " + userService.getCurrentUser() + " changed his address");
         redirectAttributes.addAttribute("message", "Your profile has been updated.");
         return "redirect:/profile";
     }
@@ -84,6 +85,7 @@ public class UserController {
     @PostMapping("updatePassword")
     public String updatePassword(@RequestParam(name = "password") String password, RedirectAttributes redirectAttributes) throws Exception {
         userService.changePassword(password);
+        ShipsterLogger.logger.info("User " + userService.getCurrentUser() + " changed his password");
         redirectAttributes.addAttribute("message", "Your password has been changed.");
         return "redirect:/profile";
     }
