@@ -17,11 +17,22 @@ public class Article {
     /// Attributes
     private String name;
     private String description;
-    private float price;
-    private float palletSpace;
-    private float maxStack;
+    private String imageUrl;
+    Float price;
+    Float palletSpace;
+    Float maxStack;
 
     /// Constructor
+
+    public Article(String name, String description, String imageUrl, Float price, Float palletSpace, Float maxStack) {
+        this.name = name;
+        this.description = description;
+        this.imageUrl = imageUrl;
+        this.price = price;
+        this.palletSpace = palletSpace;
+        this.maxStack = maxStack;
+    }
+
     public Article(){}
 
     /// Methods
@@ -76,5 +87,13 @@ public class Article {
 
     public void setMaxStack(float maxStack) {
         this.maxStack = maxStack;
+    }
+
+    public String getUrl() {
+        return imageUrl;
+    }
+
+    public void setUrl(String url) {
+        this.imageUrl = url;
     }
 }

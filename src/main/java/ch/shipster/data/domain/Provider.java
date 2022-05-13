@@ -14,8 +14,14 @@ public class Provider {
     private Long id;
 
     /// Attributes
+    private String name;
 
     /// Constructor
+
+    public Provider(String name) {
+        this.name = name;
+    }
+
     public Provider(){}
 
     /// Methods
@@ -24,4 +30,19 @@ public class Provider {
 
     /// Getters & Setters
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
