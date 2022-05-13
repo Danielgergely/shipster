@@ -6,11 +6,14 @@ INSERT INTO shipster_user (user_id, user_name, first_name, last_name, email, pas
 INSERT INTO shipster_user (user_id, user_name, first_name, last_name, email, password, address_id, gender, roles) VALUES (998, 'est_01', 'Esther', 'Collins', 'esther.collins@students.fhnw.ch', '$2a$10$.oTsOd/w3Lx4xdr3LGC6qe6aYOSZpKIbDi4mq5AgmjT2j29KhT5Bi', '998', 'female', 'USER') ON CONFLICT DO NOTHING;
 INSERT INTO shipster_user (user_id, user_name, first_name, last_name, email, password, address_id, gender, roles) VALUES (997, 'admin', 'Admin', 'Admin', 'admin.admin@students.fhnw.ch', '$2a$10$.oTsOd/w3Lx4xdr3LGC6qe6aYOSZpKIbDi4mq5AgmjT2j29KhT5Bi', '997', 'male', 'USER,ADMIN') ON CONFLICT DO NOTHING;
 
-INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (1, 'Article P1', 'Our most first of our Ps', 'https://media.istockphoto.com/photos/alphabet-antique-block-letters-isolated-on-white-letter-a-picture-id471440765', 175.95, 1.2,25) ON CONFLICT DO NOTHING;
-INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (2, 'Article P2', 'For those, who need more that just P1', 'https://live.staticflickr.com/7236/6981941244_cbe55d6aa4.jpg', 215.95, 2, 10)ON CONFLICT DO NOTHING;
-INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (3, 'Article P3', 'Its basically P3, but more expensive', 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.b-P01RZ_J-VhSj5OLqoV5QAAAA%26pid%3DApi&f=1', 225.95, 2.5,15)ON CONFLICT DO NOTHING;
-INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (4, 'Article P4', 'A top-notch P', 'https://www.sydneyprops.com.au/wp-content/uploads/2017/09/d-letter-marquee-letter-sydney-props-hire.jpg', 315.95, 0.8, 100)ON CONFLICT DO NOTHING;
-INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (5, 'Article P5', 'We have more than 4 articles in our DB', 'https://www.publicdomainpictures.net/pictures/180000/velka/letter-e-floral-initial.jpg', 95.95, .4, 7)ON CONFLICT DO NOTHING;
+INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (1, 'Shipster box 1', 'A standard shipping box. 25cm - 80cm - 35cm', '/images/box_1.png', 12.95, 0.2,25) ON CONFLICT DO NOTHING;
+INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (2, 'Shipster box 2', 'A standard shipping box. 35cm - 90cm - 45cm', '/images/box_2.jpeg', 18.95, 0.3, 20) ON CONFLICT DO NOTHING;
+INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (3, 'Shipster box 3', 'A standard shipping box. 35cm - 120cm - 30cm', '/images/box_3.jpeg', 20.95, 0.4, 30) ON CONFLICT DO NOTHING;
+INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (4, 'Shipster big box 1', 'A large shipping box. 40cm - 150cm - 50cm', '/images/box_4.jpeg', 39.95, 0.8, 5) ON CONFLICT DO NOTHING;
+INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (5, 'Shipster tall box', 'A tall shipping box. 50cm - 50cm - 160cm', '/images/box_5.jpg', 42.95, 0.4, 2) ON CONFLICT DO NOTHING;
+INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (6, 'Shipster big box 2', 'A large shipping box. 50cm - 70cm - 120cm', '/images/box_6.jpeg', 49.95, 0.9, 4) ON CONFLICT DO NOTHING;
+INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (7, 'Shipster wooden box', 'A wooden shipping box. 40cm - 50cm - 30cm', '/images/box_7.jpeg', 80.95, 1, 6) ON CONFLICT DO NOTHING;
+INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (8, 'Shipster premium box', 'A premium shipping box. 40cm - 50cm - 40cm', '/images/box_8.jpg', 99.95, 1, 5) ON CONFLICT DO NOTHING;
 
 INSERT INTO shipster_order (id, user_id, order_status) VALUES (1, 999, 'BASKET') ON CONFLICT DO NOTHING;
 INSERT INTO shipster_order (id, user_id, order_status) VALUES (2, 998, 'ORDERED') ON CONFLICT DO NOTHING;
@@ -31,7 +34,7 @@ INSERT INTO order_item (id, article_id, order_id, quantity) VALUES (10, 3, 5, 1)
 INSERT INTO order_item (id, article_id, order_id, quantity) VALUES (12, 4, 5, 5) ON CONFLICT DO NOTHING;
 INSERT INTO order_item (id, article_id, order_id, quantity) VALUES (13, 5, 5, 28) ON CONFLICT DO NOTHING;
 
-INSERT INTO provider (id, pallets, distance, cost) VALUES (1,'1' ,'30', '58.65') ON CONFLICT DO NOTHING;
+/*INSERT INTO provider (id, pallets, distance, cost) VALUES (1,'1' ,'30', '58.65') ON CONFLICT DO NOTHING;
 INSERT INTO provider (id, pallets, distance, cost) VALUES (1,'1' ,'60', '67.00') ON CONFLICT DO NOTHING;
 INSERT INTO provider (id, pallets, distance, cost) VALUES (1,'1' ,'90', '75.40') ON CONFLICT DO NOTHING;
 INSERT INTO provider (id, pallets, distance, cost) VALUES (1,'1' ,'120', '83.75') ON CONFLICT DO NOTHING;
@@ -175,4 +178,4 @@ INSERT INTO provider (id, pallets, distance, cost) VALUES (1,'12' ,'270', '614.0
 INSERT INTO provider (id, pallets, distance, cost) VALUES (1,'12' ,'300', '655.05') ON CONFLICT DO NOTHING;
 INSERT INTO provider (id, pallets, distance, cost) VALUES (1,'12' ,'330', '695.95') ON CONFLICT DO NOTHING;
 INSERT INTO provider (id, pallets, distance, cost) VALUES (1,'12' ,'360', '736.90') ON CONFLICT DO NOTHING;
-
+*/
