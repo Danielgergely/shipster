@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 // Timo
 
@@ -59,7 +58,7 @@ public class OrderService {
 
 
     public List<OrderItem> getOrderItems(Order order) {
-        return oiService.oiRepository.getAllByOrderId(order.getId());
+        return oiService.orderItemRepository.getAllByOrderId(order.getId());
     }
 
     // ToDo: Handle optionals

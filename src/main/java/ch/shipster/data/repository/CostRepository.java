@@ -28,6 +28,4 @@ public interface CostRepository extends JpaRepository<Cost, Long> {
     List<Cost> findByProviderIdAndPalletOrderByKmDesc(Long providerId, int pallets);
 
     List<Cost> findAllByProviderIdAndKmAndPallet(Long providerId, int km, int pallet);
-
-    Boolean existsByProviderIdAndKmAndPallet(Long providerId, int km, int pallet);
 }

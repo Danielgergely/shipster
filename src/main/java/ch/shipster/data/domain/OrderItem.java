@@ -3,6 +3,7 @@ package ch.shipster.data.domain;
 import ch.shipster.data.repository.ArticleRepository;
 import ch.shipster.service.OrderItemService;
 import org.checkerframework.checker.units.qual.A;
+import org.jetbrains.annotations.ApiStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
@@ -24,9 +25,7 @@ public class OrderItem {
     private Long id;
 
     /// Attributes
-    @NotNull
     private long articleId;
-    @NotNull
     private long orderId;
     private int quantity;
 

@@ -18,7 +18,7 @@ import java.util.List;
 public class OrderItemService {
 
     @Autowired
-    OrderItemRepository oiRepository;
+    OrderItemRepository orderItemRepository;
 
     @Autowired
     OrderRepository orderRepository;
@@ -27,6 +27,11 @@ public class OrderItemService {
     ArticleRepository articleRepository;
 
     //Get OrderItem if not exists
+
+    public OrderItem getOrderItem(Order order, Article article) throws Exception {
+        return getOrderItem(order.getId(), article.getId());
+    }
+
     public OrderItem getOrderItem(Long articleId, Long orderId) throws Exception {
 
         if (articleRepository.getById(articleId) == null) {
@@ -36,13 +41,13 @@ public class OrderItemService {
         }
 
         OrderItem out = new OrderItem(articleId, orderId, 0);
-        List<OrderItem> existingOI = oiRepository.getAllByArticleIdAndAndOrderId(articleId, orderId);
+        List<OrderItem> existingOI = orderItemRepository.getAllByArticleIdAndAndOrderId(articleId, orderId);
 
         if (existingOI.size() == 0) {
             if (orderRepository.getById(orderId).getOrderStatus() != OrderStatus.BASKET) {
                 throw new Exception("Order Item for Article ID (" + articleId + ") does not exist for Order ID (" + orderId + ") and the order is not of the status BASKET");
             } else {
-                oiRepository.save(out);
+                orderItemRepository.save(out);
             }
         }
         if (existingOI.size() == 1) {
@@ -52,10 +57,6 @@ public class OrderItemService {
         }
 
         return out;
-    }
-
-    public OrderItem getOrderItem(Order order, Article article) throws Exception {
-        return getOrderItem(order.getId(), article.getId());
     }
 
 
@@ -70,7 +71,7 @@ public class OrderItemService {
         int newQuantity = oi.getQuantity() + inQuantity;
 
         if (newQuantity <= 0) {
-            oiRepository.delete(oi);
+            orderItemRepository.delete(oi);
         } else {
             oi.setQuantity(newQuantity);
         }
@@ -92,8 +93,8 @@ public class OrderItemService {
     }
 
     public void removeAll(Long articleId, Long orderId) throws Exception {
-        Order order = orderRepository.getById(orderId);
-        List<OrderItem> oiList = oiRepository.getAllByArticleIdAndAndOrderId(articleId, orderId);
+        Order order = orderRepository.findById(orderId).orElse(null);
+        List<OrderItem> oiList = orderItemRepository.getAllByArticleIdAndAndOrderId(articleId, orderId);
 
         if (order == null) {
             throw new Exception("Order ID (" + orderId + ") not found");
@@ -102,15 +103,25 @@ public class OrderItemService {
         } else if (order.getOrderStatus() != OrderStatus.BASKET) {
             throw new Exception("Order ID (" + orderId + ") is not of the Status BASKET. Quantity may not be changed");
         } else {
-            oiRepository.deleteAll(oiList);
+            orderItemRepository.deleteAll(oiList);
         }
     }
 
+    /// Get related Article and Order
+
+    public Article getArticle(Long orderItemId){
+        return  getArticle(orderItemRepository.findById(orderItemId).orElseThrow());
+    }
+
     public Article getArticle(OrderItem orderItem) {
-        return articleRepository.getById(orderItem.getArticleId());
+        return articleRepository.findById(orderItem.getArticleId()).orElseThrow();
+    }
+
+    public Order getOrder(Long orderItemId){
+        return getOrder(orderItemRepository.findById(orderItemId).orElseThrow());
     }
 
     public Order getOrder(OrderItem orderItem) {
-        return orderRepository.getById(orderItem.getOrderId());
+        return orderRepository.findById(orderItem.getOrderId()).orElseThrow();
     }
 }
