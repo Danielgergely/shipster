@@ -1,5 +1,6 @@
 package ch.shipster.controller;
 
+import ch.shipster.service.ShipsterLogger;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -21,12 +22,15 @@ public class ShipsterErrorController implements ErrorController {
             int statusCode = Integer.parseInt(status.toString());
 
             if(statusCode == HttpStatus.NOT_FOUND.value()) {
+                ShipsterLogger.logger.error("Error/404 occurred");
                 return "error/404";
             }
             else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
+                ShipsterLogger.logger.error("Error/500 occurred");
                 return "error/500";
             }
             else if(statusCode == HttpStatus.FORBIDDEN.value()) {
+                ShipsterLogger.logger.error("Error/403 occurred");
                 return "error/403";
             }
         }
