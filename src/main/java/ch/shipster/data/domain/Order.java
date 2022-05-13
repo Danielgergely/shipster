@@ -1,6 +1,9 @@
 package ch.shipster.data.domain;
 
 
+import ch.shipster.data.repository.OrderItemRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -17,7 +20,7 @@ public class Order {
 
     /// Attributes
     private Long userId;
-    private OrderStatus orderStatus;
+    private String orderStatus;
 
     private Date lastUpdateDate;
     private Date basketDate;
@@ -30,7 +33,7 @@ public class Order {
 
     public Order(User user){
         this.userId = user.getUserId();
-        this.orderStatus = OrderStatus.BASKET;
+        this.orderStatus = OrderStatus.BASKET.name();
         this.lastUpdateDate = new Date();
         this.basketDate = new Date();
         this.orderDate = new Date(0);
@@ -40,19 +43,20 @@ public class Order {
 
     }
 
-//    public Order(long userId){
-//        this.userId = userId;
-//        this.orderStatus = OrderStatus.BASKET;
-//        this.lastUpdateDate = new Date();
-//        this.basketDate = new Date();
-//        this.orderDate = new Date(0);
-//        this.shippingDate = new Date(0);
-//        this.deliveryDate = new Date(0);
-//        this.cancellationDate = new Date(0);
-//    }
+    public Order(long userId){
+        this.userId = userId;
+        this.orderStatus = OrderStatus.BASKET.name();
+        this.lastUpdateDate = new Date();
+        this.basketDate = new Date();
+        this.orderDate = new Date(0);
+        this.shippingDate = new Date(0);
+        this.deliveryDate = new Date(0);
+        this.cancellationDate = new Date(0);
+    }
     public Order(){}
 
     /// Methods
+
 
     /// Special Getter & Setter
     //TODO getUser (Instead of getUserId)
@@ -60,6 +64,10 @@ public class Order {
     /// Getter & Setter
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public long getUserId() {
@@ -70,12 +78,12 @@ public class Order {
         this.userId = userId;
     }
 
-    public OrderStatus getOrderStatus() {
+    public String getOrderStatus() {
         return orderStatus;
     }
 
     public void setOrderStatus(OrderStatus orderStatus) {
-        this.orderStatus = orderStatus;
+        this.orderStatus = orderStatus.name();
     }
 
     public Date getLastUpdateDate() {
