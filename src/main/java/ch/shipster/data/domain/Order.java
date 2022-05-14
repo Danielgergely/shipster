@@ -60,6 +60,15 @@ public class Order {
 
     /// Special Getter & Setter
     //TODO getUser (Instead of getUserId)
+    //Start Jonas
+    public OrderStatus getOrderStatus() /*throws IllegalArgumentException*/{
+        return OrderStatus.valueOf(orderStatus);
+    }
+
+    public void setOrderStatus(OrderStatus inOrderStatus) {
+        this.orderStatus = inOrderStatus.name();
+    }
+    //End Jonas
 
     /// Getter & Setter
     public Long getId() {
@@ -78,13 +87,6 @@ public class Order {
         this.userId = userId;
     }
 
-    public String getOrderStatus() {
-        return orderStatus;
-    }
-
-    public void setOrderStatus(OrderStatus orderStatus) {
-        this.orderStatus = orderStatus.name();
-    }
 
     public Date getLastUpdateDate() {
         return lastUpdateDate;
