@@ -34,4 +34,8 @@ public class ArticleService {
         return outList;
     }
 
+    public Article findById(Long articleId) {
+        return articleRepository.getById(articleId);
+    }
+
 }
