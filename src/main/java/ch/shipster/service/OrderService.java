@@ -45,6 +45,7 @@ public class OrderService {
         return oiService.oiRepository.getAllByOrderId(order.getId());
     }
 
+    // ToDo: Handle optionals
     public List<OrderItem> getOrderItems(Long orderId) {
         return getOrderItems(orderRepository.getById(orderId));
     }
