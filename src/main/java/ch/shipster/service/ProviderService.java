@@ -17,6 +17,10 @@ public class ProviderService {
     @Autowired
     ProviderRepository providerRepository;
 
+    public List<Provider> getAllProviders(){
+        return providerRepository.findAll();
+    }
+
     public Provider createProvider(String name) throws DuplicateMemberException {
         return saveProvider(new Provider(name));
     }
