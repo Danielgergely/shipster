@@ -39,6 +39,10 @@ public class Article {
 
     /// Special Getters & Setters
 
+    public float getPalletProductRatio(){
+        return (palletSpace / maxStack);
+    }
+
     /// Getter & Setter
 
     public Long getId() {

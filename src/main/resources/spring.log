@@ -1,0 +1,30 @@
+2022-05-14 08:10:11.102  INFO 114 --- [restartedMain] ch.shipster.ShipsterApplication          : Starting ShipsterApplication using Java 17.0.2 on d9ae89d4bee0 with PID 114 (/app/target/classes started by root in /app)
+2022-05-14 08:10:11.140 DEBUG 114 --- [restartedMain] ch.shipster.ShipsterApplication          : Running with Spring Boot v2.5.6, Spring v5.3.12
+2022-05-14 08:10:11.141  INFO 114 --- [restartedMain] ch.shipster.ShipsterApplication          : No active profile set, falling back to default profiles: default
+2022-05-14 08:10:23.278  WARN 114 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-05-14 08:10:27.326  INFO 114 --- [restartedMain] ch.shipster.ShipsterApplication          : Started ShipsterApplication in 17.488 seconds (JVM running for 18.286)
+2022-05-14 10:05:14.602  INFO 114 --- [restartedMain] ch.shipster.ShipsterApplication          : Starting ShipsterApplication using Java 17.0.2 on d9ae89d4bee0 with PID 114 (/app/target/classes started by root in /app)
+2022-05-14 10:05:14.603 DEBUG 114 --- [restartedMain] ch.shipster.ShipsterApplication          : Running with Spring Boot v2.5.6, Spring v5.3.12
+2022-05-14 10:05:14.603  INFO 114 --- [restartedMain] ch.shipster.ShipsterApplication          : No active profile set, falling back to default profiles: default
+2022-05-14 10:05:18.655  WARN 114 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-05-14 10:05:19.180  INFO 114 --- [restartedMain] ch.shipster.ShipsterApplication          : Started ShipsterApplication in 4.777 seconds (JVM running for 6910.141)
+2022-05-14 10:53:36.620  INFO 114 --- [restartedMain] ch.shipster.ShipsterApplication          : Starting ShipsterApplication using Java 17.0.2 on d9ae89d4bee0 with PID 114 (/app/target/classes started by root in /app)
+2022-05-14 10:53:36.620 DEBUG 114 --- [restartedMain] ch.shipster.ShipsterApplication          : Running with Spring Boot v2.5.6, Spring v5.3.12
+2022-05-14 10:53:36.620  INFO 114 --- [restartedMain] ch.shipster.ShipsterApplication          : No active profile set, falling back to default profiles: default
+2022-05-14 10:53:40.577  WARN 114 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-05-14 10:53:41.078  INFO 114 --- [restartedMain] ch.shipster.ShipsterApplication          : Started ShipsterApplication in 4.659 seconds (JVM running for 9812.039)
+2022-05-14 11:06:28.283  INFO 114 --- [restartedMain] ch.shipster.ShipsterApplication          : Starting ShipsterApplication using Java 17.0.2 on d9ae89d4bee0 with PID 114 (/app/target/classes started by root in /app)
+2022-05-14 11:06:28.283 DEBUG 114 --- [restartedMain] ch.shipster.ShipsterApplication          : Running with Spring Boot v2.5.6, Spring v5.3.12
+2022-05-14 11:06:28.284  INFO 114 --- [restartedMain] ch.shipster.ShipsterApplication          : No active profile set, falling back to default profiles: default
+2022-05-14 11:06:32.709  WARN 114 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-05-14 11:06:33.227  INFO 114 --- [restartedMain] ch.shipster.ShipsterApplication          : Started ShipsterApplication in 5.17 seconds (JVM running for 10584.188)
+2022-05-14 11:13:04.429  INFO 114 --- [restartedMain] ch.shipster.ShipsterApplication          : Starting ShipsterApplication using Java 17.0.2 on d9ae89d4bee0 with PID 114 (/app/target/classes started by root in /app)
+2022-05-14 11:13:04.429 DEBUG 114 --- [restartedMain] ch.shipster.ShipsterApplication          : Running with Spring Boot v2.5.6, Spring v5.3.12
+2022-05-14 11:13:04.430  INFO 114 --- [restartedMain] ch.shipster.ShipsterApplication          : No active profile set, falling back to default profiles: default
+2022-05-14 11:13:08.525  WARN 114 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-05-14 11:13:08.992  INFO 114 --- [restartedMain] ch.shipster.ShipsterApplication          : Started ShipsterApplication in 4.758 seconds (JVM running for 10979.953)
+2022-05-14 11:19:17.787  INFO 93 --- [restartedMain] ch.shipster.ShipsterApplication          : Starting ShipsterApplication using Java 17.0.2 on d9ae89d4bee0 with PID 93 (/app/target/classes started by root in /app)
+2022-05-14 11:19:17.789 DEBUG 93 --- [restartedMain] ch.shipster.ShipsterApplication          : Running with Spring Boot v2.5.6, Spring v5.3.12
+2022-05-14 11:19:17.789  INFO 93 --- [restartedMain] ch.shipster.ShipsterApplication          : No active profile set, falling back to default profiles: default
+2022-05-14 11:19:30.041  WARN 93 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-05-14 11:19:33.705  INFO 93 --- [restartedMain] ch.shipster.ShipsterApplication          : Started ShipsterApplication in 17.269 seconds (JVM running for 18.105)

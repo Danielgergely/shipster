@@ -1,16 +1,14 @@
 package ch.shipster.service;
 
-import ch.shipster.data.domain.Order;
-import ch.shipster.data.domain.OrderItem;
-import ch.shipster.data.domain.OrderStatus;
-import ch.shipster.data.domain.User;
-import ch.shipster.data.repository.OrderItemRepository;
+import ch.shipster.data.domain.*;
+import ch.shipster.data.repository.AddressRepository;
 import ch.shipster.data.repository.OrderRepository;
-import org.checkerframework.checker.units.qual.A;
+import ch.shipster.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 // Timo
 
@@ -22,6 +20,12 @@ public class OrderService {
 
     @Autowired
     OrderItemService oiService;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    AddressRepository addressRepository;
 
     public Order getBasketByUser(Long userId) throws Exception {
         Order outOrder = new Order(userId);
@@ -40,6 +44,19 @@ public class OrderService {
     public Order getBasketByUser(User user) throws Exception {
         return getBasketByUser(user.getUserId());
     }
+
+    public User getUser(Order order) throws  Exception {
+        return userRepository.getById(order.getUserId());
+    }
+
+    public Address getUserAddress(Order order) throws Exception {
+        return getUserAddress(order.getId());
+        }
+
+    public Address getUserAddress(Long orderId){
+        return addressRepository.findById(userRepository.getById(orderRepository.getById(orderId).getUserId()).getAddressId()).orElseThrow();
+    }
+
 
     public List<OrderItem> getOrderItems(Order order) {
         return oiService.oiRepository.getAllByOrderId(order.getId());
