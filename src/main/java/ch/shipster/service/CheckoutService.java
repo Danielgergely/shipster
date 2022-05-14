@@ -8,6 +8,7 @@ import ch.shipster.data.domain.OrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Date;
 
 //Jonas
@@ -18,6 +19,8 @@ public class CheckoutService {
     OrderService orderService;
     @Autowired
     OrderItemService orderItemService;
+    @Autowired
+    ShippingCostCalculator shippingCostCalculator;
 
     public void setOrderStatusCancel(Order order) throws Exception {
       if (order.getOrderStatus() == OrderStatus.BASKET || order.getOrderStatus() == OrderStatus.ORDERED){
@@ -77,9 +80,9 @@ public class CheckoutService {
 
         return price;
     }
-    public float calculateTotalOrderPriceWithShipping(Order order){
-       //TODO After merge from Manuel, activitate this method
-        float price = calculateTotalOrderPrice(order) +
+    public float calculateTotalOrderPriceWithShipping(Order order) throws IOException, InterruptedException {
+
+        float price = calculateTotalOrderPrice(order) + shippingCostCalculator.costCalculation(order.getId());
 
         return price;
     }
