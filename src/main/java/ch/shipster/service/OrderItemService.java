@@ -28,10 +28,6 @@ public class OrderItemService {
 
     //Get OrderItem if not exists
 
-    public OrderItem getOrderItem(Order order, Article article) throws Exception {
-        return getOrderItem(order.getId(), article.getId());
-    }
-
     public OrderItem getOrderItem(Long articleId, Long orderId) throws Exception {
 
         if (articleRepository.existsById(articleId)) {
@@ -59,15 +55,19 @@ public class OrderItemService {
         return out;
     }
 
+    public OrderItem getOrderItem(Order order, Article article) throws Exception {
+        return getOrderItem(order.getId(), article.getId());
+    }
+
 
     // Add (or remove if negative)
-    public void add(Long articleId, Long orderId, int inQuantity) throws Exception {
+    public void add(Article article, Order order, int inQuantity) throws Exception {
 
-        if (orderRepository.getById(orderId).getOrderStatus() != OrderStatus.BASKET) {
-            throw new Exception("Order ID (" + orderId + ") is not of the Status BASKET. Quantity may not be changed");
+        if (order.getOrderStatus() != OrderStatus.BASKET) {
+            throw new Exception("Order ID (" + order.getId() + ") is not of the Status BASKET. Quantity may not be changed");
         }
 
-        OrderItem oi = getOrderItem(articleId, orderId);
+        OrderItem oi = getOrderItem(order, article);
         int newQuantity = oi.getQuantity() + inQuantity;
 
         if (newQuantity <= 0) {
@@ -75,6 +75,13 @@ public class OrderItemService {
         } else {
             oi.setQuantity(newQuantity);
         }
+    }
+    public void add(Long articleId, Long orderId, int inQuantity) throws Exception {
+        add(articleRepository.getById(articleId), orderRepository.getById(orderId), inQuantity);
+    }
+
+    public void add(Article article, Order order) throws Exception {
+        add(article, order, 1);
     }
 
     public void add(Long articleId, Long orderId) throws Exception {

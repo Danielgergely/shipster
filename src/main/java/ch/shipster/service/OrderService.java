@@ -18,7 +18,7 @@ public class OrderService {
     OrderRepository orderRepository;
 
     @Autowired
-    OrderItemService oiService;
+    OrderItemService orderItemService;
 
     @Autowired
     UserRepository userRepository;
@@ -26,9 +26,19 @@ public class OrderService {
     @Autowired
     AddressRepository addressRepository;
 
+    /// Get Order Lists
+    public List<Order> getOrdersByUserId(Long userId) {
+        return orderRepository.getAllByUserId(userId);
+    }
+
+    public List<Order> getOrdersByStatus(OrderStatus orderStatus){
+        return orderRepository.getAllByOrderStatus(orderStatus.name());
+    }
+
+    /// Get Basket (order with state casket)
     public Order getBasketByUser(Long userId) throws Exception {
         Order outOrder = new Order(userId);
-        List<Order> existingBaskets = orderRepository.getAllByUserIdAndOrderStatus(userId, OrderStatus.BASKET);
+        List<Order> existingBaskets = orderRepository.getAllByUserIdAndOrderStatus(userId, OrderStatus.BASKET.name());
 
         if (existingBaskets.size() == 0) {
             orderRepository.save(outOrder);
@@ -44,33 +54,39 @@ public class OrderService {
         return getBasketByUser(user.getUserId());
     }
 
+    /// get related User
     public User getUser(Order order) {
         return userRepository.getById(order.getUserId());
     }
 
+    /// get related User Address
     public Address getUserAddress(Order order) {
-        return getUserAddress(order.getId());
-        }
+        return addressRepository.findById(userRepository.getById(order.getUserId()).getAddressId()).orElseThrow();
+    }
 
     public Address getUserAddress(Long orderId){
-        return addressRepository.findById(userRepository.getById(orderRepository.getById(orderId).getUserId()).getAddressId()).orElseThrow();
+        return getUserAddress(orderRepository.getById(orderId));
     }
 
-
+    /// Get related Order Items
     public List<OrderItem> getOrderItems(Order order) {
-        return oiService.orderItemRepository.getAllByOrderId(order.getId());
+        return orderItemService.orderItemRepository.getAllByOrderId(order.getId());
     }
 
-    // ToDo: Handle optionals
     public List<OrderItem> getOrderItems(Long orderId) {
         return getOrderItems(orderRepository.getById(orderId));
     }
 
-    public List<Order> getOrdersByUserId(Long userId) {
-        return orderRepository.getAllByUserId(userId);
+    public List<OrderItem> getOrderItemsInBasket(Long userId) throws Exception {
+        return getOrderItems(getBasketByUser(userId));
+    }
+
+    public List<OrderItem> getOrderItemsInBasket(User user) throws Exception {
+        return getOrderItems(getBasketByUser(user.getUserId()));
     }
 
     //Jonas
+    /// Save Orders
     public void saveOrder(Order order){
         orderRepository.save(order);
     }
