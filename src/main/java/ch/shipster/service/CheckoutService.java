@@ -87,12 +87,20 @@ public class CheckoutService {
         return price;
     }
 
+    public float calculateTotalOrderPriceWithShipping(Long orderId) throws IOException, InterruptedException {
+
+
+        return calculateTotalOrderPriceWithShipping(orderService.getOrderById(orderId));
+    }
+
     public float calculateTotalOrderPriceWithShipping(Order order, Long providerId) throws IOException, InterruptedException {
         float price = calculateTotalOrderPrice(order) + shippingCostCalculator.costCalculation(order.getId(), providerId);
         return price;
     }
 
-
+    public float calculateTotalOrderPriceWithShipping(Long orderId, Long providerId) throws IOException, InterruptedException {
+        return calculateTotalOrderPriceWithShipping(orderService.getOrderById(orderId), providerId);
+    }
 
 
 }
