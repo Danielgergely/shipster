@@ -2,6 +2,8 @@ package ch.shipster.service;
 
 import ch.shipster.data.domain.Address;
 import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.stereotype.Service;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -14,7 +16,7 @@ public class DistanceCalculator {
 
     public static Address warehouseAddress = new Address("Bahnhofstrasse", "6", "Windisch", "5210", "Switzerland");
 
-    public static int calculateDistance(Address deliveryAddress) throws IOException, InterruptedException, JSONException {
+    public static int calculateDistance(Address deliveryAddress) throws IOException, InterruptedException/*, JSONException*/ {
         // TODO: call google API and calculate distance between warehouse and to address
       String[] deliveryCoordinates = getCoordinates(deliveryAddress);
       String[] warehouseCoordinates = getCoordinates(warehouseAddress);

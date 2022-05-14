@@ -3,6 +3,7 @@ package ch.shipster.data.domain;
 import ch.shipster.data.repository.ArticleRepository;
 import ch.shipster.service.OrderItemService;
 import org.checkerframework.checker.units.qual.A;
+import org.jetbrains.annotations.ApiStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
@@ -11,12 +12,9 @@ import javax.validation.constraints.NotNull;
 // Timo
 // Intermediate Class for n:m relation between Order and Article
 
-
 @Entity
 @Table(name="order_item")
 public class OrderItem {
-
-
 
     /// ID
     @Id
@@ -24,9 +22,7 @@ public class OrderItem {
     private Long id;
 
     /// Attributes
-    @NotNull
     private long articleId;
-    @NotNull
     private long orderId;
     private int quantity;
 
@@ -47,9 +43,6 @@ public class OrderItem {
     /// Methods
 
     /// Special Getter & Setter
-    // TODO getArticle()
-    // TODO getOrder()
-    // @Daniel: How can I get other Classes inside of an Attribute, so That one can for example can simply get orderItem.getArticle().name
 
     /// Getter & Setter
     public Long getId() {

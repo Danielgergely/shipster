@@ -14,15 +14,6 @@ import java.util.Optional;
 @Repository
 public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
 
-    // Not necessary, already done by the JpaRepository
-    //@Override
-    //Optional<OrderItem> findById(Long orderItemId);
-
-    //@Override
-    //List<OrderItem> findAll();
-
-    //OrderItem save(OrderItem orderItem);
-
     List<OrderItem> getAllByArticleIdAndAndOrderId(Long articleId, Long orderId);
 
     List<OrderItem> getAllByArticleId(Long articleId);

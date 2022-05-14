@@ -13,13 +13,5 @@ import java.util.Optional;
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
-    // Not necessary, already done by the JpaRepository
-    //@Override
-    //Optional<Article> findById(Long articleId);
-
-    //@Override
-    //List<Article> findAll();
-
-    //public Article save(Article article);
-
+    List<Article> findAllByName();
 }

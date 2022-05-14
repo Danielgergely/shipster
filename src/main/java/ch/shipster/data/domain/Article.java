@@ -39,6 +39,10 @@ public class Article {
 
     /// Special Getters & Setters
 
+    public float getPalletProductRatio(){
+        return (palletSpace / maxStack);
+    }
+
     /// Getter & Setter
 
     public Long getId() {
@@ -63,6 +67,14 @@ public class Article {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public float getPrice() {

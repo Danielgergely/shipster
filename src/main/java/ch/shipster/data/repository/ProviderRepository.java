@@ -12,13 +12,5 @@ import java.util.Optional;
 
 @Repository
 public interface ProviderRepository extends JpaRepository<Provider, Long> {
-
-    // Not necessary, already done by the JpaRepository
-    //@Override
-    //Optional<Provider> findById(Long providerId);
-
-    //@Override
-    //List<Provider> findAll();
-
-    //Provider save(Provider order);
+    List<Provider> getAllByName(String name);
 }
