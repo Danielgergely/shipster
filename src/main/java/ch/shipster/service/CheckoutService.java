@@ -87,6 +87,11 @@ public class CheckoutService {
         return price;
     }
 
+    public float calculateTotalOrderPriceWithShipping(Order order, Long providerId) throws IOException, InterruptedException {
+        float price = calculateTotalOrderPrice(order) + shippingCostCalculator.costCalculation(order.getId(), providerId);
+        return price;
+    }
+
 
 
 
