@@ -11,16 +11,6 @@ import java.util.List;
 @Repository
 public interface CostRepository extends JpaRepository<Cost, Long> {
 
-    // Not necessary, already done by the JpaRepository
-    //@Override
-    //Optional<Cost> findById(Long costId);
-
-    //@Override
-    //List<Cost> findAll();
-
-    //@Override
-    //Cost save(Cost cost);
-
     List<Cost> findByProviderId(Long providerId);
 
     List<Cost> findByPallet(int pallets);

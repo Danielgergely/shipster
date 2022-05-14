@@ -12,12 +12,9 @@ import javax.validation.constraints.NotNull;
 // Timo
 // Intermediate Class for n:m relation between Order and Article
 
-
 @Entity
 @Table(name="order_item")
 public class OrderItem {
-
-
 
     /// ID
     @Id
@@ -46,9 +43,6 @@ public class OrderItem {
     /// Methods
 
     /// Special Getter & Setter
-    // TODO getArticle()
-    // TODO getOrder()
-    // @Daniel: How can I get other Classes inside of an Attribute, so That one can for example can simply get orderItem.getArticle().name
 
     /// Getter & Setter
     public Long getId() {

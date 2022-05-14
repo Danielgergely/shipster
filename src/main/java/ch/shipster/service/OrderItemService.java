@@ -34,9 +34,9 @@ public class OrderItemService {
 
     public OrderItem getOrderItem(Long articleId, Long orderId) throws Exception {
 
-        if (articleRepository.getById(articleId) == null) {
+        if (articleRepository.existsById(articleId)) {
             throw new Exception("Article ID (" + articleId + ") not found");
-        } else if (orderRepository.getById(orderId) == null) {
+        } else if (orderRepository.existsById(orderId)) {
             throw new Exception("Order ID (" + orderId + ") not found");
         }
 
@@ -51,7 +51,7 @@ public class OrderItemService {
             }
         }
         if (existingOI.size() == 1) {
-            out = existingOI.get(1);
+            out = existingOI.get(0);
         } else {
             throw new Exception("Multiple Order Items for same Article ID (" + articleId + ") and same Order ID (" + orderId + ")");
         }
@@ -84,7 +84,7 @@ public class OrderItemService {
 
     // Remove
     public void remove(Long articleId, Long orderId, int quantity) throws Exception {
-        add(articleId, orderId, (0 - quantity));
+        add(articleId, orderId, (- quantity));
     }
 
     Void remove(Long articleId, Long orderId) throws Exception {

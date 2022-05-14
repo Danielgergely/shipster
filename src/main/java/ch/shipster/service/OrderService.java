@@ -44,11 +44,11 @@ public class OrderService {
         return getBasketByUser(user.getUserId());
     }
 
-    public User getUser(Order order) throws  Exception {
+    public User getUser(Order order) {
         return userRepository.getById(order.getUserId());
     }
 
-    public Address getUserAddress(Order order) throws Exception {
+    public Address getUserAddress(Order order) {
         return getUserAddress(order.getId());
         }
 
