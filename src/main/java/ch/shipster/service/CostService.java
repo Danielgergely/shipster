@@ -19,6 +19,10 @@ public class CostService {
     @Autowired
     ProviderRepository providerRepository;
 
+    public Cost getCostById(Long costId){
+        return costRepository.getById(costId);
+    }
+
     public List<Cost> getCosts(Float km, int pallets) {
         List<Cost> inCost = costRepository.findByPallet(pallets);
         List<Long> providerIds = new ArrayList<Long>();
@@ -57,6 +61,46 @@ public class CostService {
         }
 
         return outCost;
+    }
+
+    /// Save
+    public Cost saveCost(Cost cost){
+        return costRepository.save(cost);
+    }
+
+    public Cost saveCost(Long providerId, int km, int pallet, float price) throws Exception {
+        Cost cost;
+        List<Cost> costList= costRepository.findAllByProviderIdAndKmAndPallet(providerId, km, pallet);
+
+        if (costList.size() == 0){
+            cost = new Cost(providerId, km, pallet, price);
+            cost.setProviderId(providerId);
+            cost.setKm(km);
+            cost.setPallet(pallet);
+            cost.setPrice(price);
+        } else if (costList.size() == 1) {
+            cost = costList.get(0);
+            cost.setPrice(price);
+        } else {
+            throw new Exception("There are Multiple entries with ");
+        }
+        return saveCost(cost);
+    }
+
+    public Cost saveCost(Long costId, Long providerId, int km, int pallet, float price){
+        Cost cost;
+
+        if (costRepository.existsById(costId)){
+            cost = costRepository.getById(costId);
+            cost.setProviderId(providerId);
+            cost.setKm(km);
+            cost.setPallet(pallet);
+            cost.setPrice(price);
+        } else {
+            cost = new Cost(providerId, km, pallet, price);
+        }
+
+        return saveCost(cost);
     }
 
 }
