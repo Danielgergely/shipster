@@ -39,7 +39,7 @@ public class OrderItemService {
         List<OrderItem> existingOI = oiRepository.getAllByArticleIdAndAndOrderId(articleId, orderId);
 
         if (existingOI.size() == 0) {
-            if (orderRepository.getById(orderId).getOrderStatus() != OrderStatus.BASKET.name()) {
+            if (orderRepository.getById(orderId).getOrderStatus() != OrderStatus.BASKET) {
                 throw new Exception("Order Item for Article ID (" + articleId + ") does not exist for Order ID (" + orderId + ") and the order is not of the status BASKET");
             } else {
                 oiRepository.save(out);
@@ -62,7 +62,7 @@ public class OrderItemService {
     // Add (or remove if negative)
     public void add(Long articleId, Long orderId, int inQuantity) throws Exception {
 
-        if (orderRepository.getById(orderId).getOrderStatus() != OrderStatus.BASKET.name()) {
+        if (orderRepository.getById(orderId).getOrderStatus() != OrderStatus.BASKET) {
             throw new Exception("Order ID (" + orderId + ") is not of the Status BASKET. Quantity may not be changed");
         }
 
@@ -99,7 +99,7 @@ public class OrderItemService {
             throw new Exception("Order ID (" + orderId + ") not found");
         } else if (oiList.size() == 0) {
 
-        } else if (order.getOrderStatus() != OrderStatus.BASKET.name()) {
+        } else if (order.getOrderStatus() != OrderStatus.BASKET) {
             throw new Exception("Order ID (" + orderId + ") is not of the Status BASKET. Quantity may not be changed");
         } else {
             oiRepository.deleteAll(oiList);
