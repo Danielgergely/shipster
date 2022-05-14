@@ -18,6 +18,9 @@ import java.net.MalformedURLException;
 
 public class CalculationTest {
 
+    @Autowired
+    static
+    ShippingCostCalculator shippingCostCalculator;
 
 //Testclass, to test Distance calculations run this main class
     public static void main(String[] args) throws IOException, InterruptedException, JSONException {
@@ -35,9 +38,12 @@ public class CalculationTest {
         System.out.println(shipsterUserDetails.getAuthorities());
         System.out.println(ShipsterUserRole.ADMIN.name());*/
 
-        ShippingCostCalculator shippingCostCalculator = new ShippingCostCalculator();
-        System.out.println(shippingCostCalculator.costCalculation(1));
+        System.out.println(test());
 
+    }
+
+    public static Float test () throws IOException, InterruptedException {
+        return shippingCostCalculator.costCalculation(1);
     }
 
 }

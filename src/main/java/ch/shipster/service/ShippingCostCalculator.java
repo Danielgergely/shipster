@@ -36,6 +36,7 @@ public class ShippingCostCalculator {
         return costService.getCheapestCost(distance, requiredPallets).getPrice();
     }
 
+    /*
     private float costCalculation (long orderid, Long providerId) throws IOException, InterruptedException {
         Address currentAddress = orderService.getUserAddress(orderid);
         List<OrderItem> sco = orderService.getOrderItems(orderid);
@@ -46,6 +47,7 @@ public class ShippingCostCalculator {
 
         return costService.getCost(providerId, distance, requiredPallets).getPrice();
     }
+    */
 
     //create total sum of requiredTotalSpace
     private float requiredSpace(List<OrderItem> sco){
@@ -79,14 +81,4 @@ public class ShippingCostCalculator {
         }
        return (int)Math.ceil(minPalletSpace);
         }
-
-    public static float calculateShippingCost(Integer distance, Integer pallets, Provider shippingProvider) {
-        float shippingCost = 1.0F;
-
-
-
-        // TODO: Calculate shipping cost
-
-        return shippingCost;
-    }
 }
