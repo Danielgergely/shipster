@@ -564,7 +564,7 @@ a:hover {
     color: #fe302f;
 }
 
-.product .single-product .part-2 .product-title {
+.product-title {
     font-size: 1.5rem;
 }
 
@@ -573,14 +573,13 @@ a:hover {
     font-size: 1rem;
 }
 
-.product .single-product .part-2 .product-old-price {
+.product-old-price {
     position: relative;
-    padding: 0 7px;
     margin-right: 2px;
     opacity: 0.6;
 }
 
-.product .single-product .part-2 .product-old-price::after {
+.product-old-price::after {
     position: absolute;
     content: "";
     top: 50%;

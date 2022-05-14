@@ -2,11 +2,9 @@ package ch.shipster.controller;
 
 import ch.shipster.data.domain.Address;
 import ch.shipster.data.domain.Article;
+import ch.shipster.data.domain.Cost;
 import ch.shipster.data.domain.User;
-import ch.shipster.service.AddressService;
-import ch.shipster.service.ArticleService;
-import ch.shipster.service.DistanceCalculator;
-import ch.shipster.service.UserService;
+import ch.shipster.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.stereotype.Controller;
@@ -34,6 +32,9 @@ public class ShopController {
 
     @Autowired
     AddressService addressService;
+
+    @Autowired
+    CostService costService;
 
     @GetMapping(path = "shop")
     public String getShopView(Model model) {
@@ -81,9 +82,10 @@ public class ShopController {
             Article product = articleService.findById(articleId);
             Address address = addressService.findAddressById(user.get().getAddressId());
             int distance = DistanceCalculator.calculateDistance(address);
-            float price = 23.5F;
+            int paletSpace = (int) Math.ceil(product.getPalletSpace());
+            Cost cost = costService.getCheapestCost(distance, paletSpace);
             model.addAttribute("distance", distance);
-            model.addAttribute("price", price);
+            model.addAttribute("price", cost.getPrice());
             model.addAttribute("product", product);
             model.addAttribute("user", user.get());
         }

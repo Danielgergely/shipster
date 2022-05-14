@@ -23,7 +23,7 @@ public class CostService {
         return costRepository.getById(costId);
     }
 
-    public List<Cost> getCosts(Float km, int pallets) {
+    public List<Cost> getCosts(int km, int pallets) {
         List<Cost> inCost = costRepository.findByPallet(pallets);
         List<Long> providerIds = new ArrayList<Long>();
         List<Cost> outCost = new ArrayList<Cost>();
@@ -41,7 +41,7 @@ public class CostService {
         return outCost;
     }
 
-    public Cost getCost(Long providerId, Float km, int pallets) {
+    public Cost getCost(Long providerId, int km, int pallets) {
         for (Cost c : costRepository.findByProviderIdAndPalletOrderByKmDesc(providerId, pallets)) {
             if (c.getKm() > km) {
                 return c;
@@ -50,7 +50,7 @@ public class CostService {
         return null;
     }
 
-    public Cost getCheapestCost(Float km, int pallets) {
+    public Cost getCheapestCost(int km, int pallets) {
         List<Cost> inCost = getCosts(km, pallets);
         Cost outCost = inCost.get(0);
 

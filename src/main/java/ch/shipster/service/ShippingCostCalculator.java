@@ -31,7 +31,7 @@ public class ShippingCostCalculator {
         float requiredTotalSpace = requiredSpace(sco);
         float minRequiredPallet = minRequiredPallet(sco);
         int requiredPallets = requiredPallets(requiredTotalSpace, minRequiredPallet);
-        float distance = DistanceCalculator.calculateDistance(currentAddress);
+        int distance = DistanceCalculator.calculateDistance(currentAddress);
 
         return costService.getCheapestCost(distance, requiredPallets).getPrice();
     }
@@ -43,7 +43,7 @@ public class ShippingCostCalculator {
         float requiredTotalSpace = requiredSpace(sco);
         float minRequiredPallet = minRequiredPallet(sco);
         int requiredPallets = requiredPallets(requiredTotalSpace, minRequiredPallet);
-        float distance = DistanceCalculator.calculateDistance(currentAddress);
+        int distance = DistanceCalculator.calculateDistance(currentAddress);
 
         return costService.getCost(providerId, distance, requiredPallets).getPrice();
     }
