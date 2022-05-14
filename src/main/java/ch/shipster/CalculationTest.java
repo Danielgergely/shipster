@@ -6,6 +6,7 @@ import ch.shipster.security.ShipsterUserRole;
 import ch.shipster.security.authentication.ShipsterUserDetails;
 import ch.shipster.security.authentication.ShipsterUserDetailsService;
 import ch.shipster.service.DistanceCalculator;
+import ch.shipster.service.ShippingCostCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.configurationprocessor.json.JSONException;
@@ -27,12 +28,16 @@ public class CalculationTest {
         //System.out.println(Output);
 
 
-        User user = new User("dani_01", "Daniel", "Gergely", "daniel.gergely@students.fhnw.ch", "password", 999L, "male");
+        /*User user = new User("dani_01", "Daniel", "Gergely", "daniel.gergely@students.fhnw.ch", "password", 999L, "male");
         user.setRoles(ShipsterUserRole.ADMIN);
         System.out.println(user.getRoles());
         ShipsterUserDetails shipsterUserDetails = new ShipsterUserDetails(user);
         System.out.println(shipsterUserDetails.getAuthorities());
-        System.out.println(ShipsterUserRole.ADMIN.name());
+        System.out.println(ShipsterUserRole.ADMIN.name());*/
+
+        ShippingCostCalculator shippingCostCalculator = new ShippingCostCalculator();
+        System.out.println(shippingCostCalculator.costCalculation(1));
+
     }
 
 }

@@ -1,50 +1,69 @@
 package ch.shipster.service;
+import ch.shipster.data.domain.Address;
+import ch.shipster.data.domain.Article;
+import ch.shipster.data.domain.OrderItem;
+import ch.shipster.service.CostService;
 
 
 import ch.shipster.data.domain.Provider;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.util.List;
 
 // Manuel
-
-//Object required to store articles from Basket in Array with additional information from Articles
-class ShippingCostObject {
-    int ArticleId;
-    int quantity;
-    float palletspace;
-    float maxstack;
-    float PalletProductRatio;
-
-    public ShippingCostObject(int articleId, int quantity, float palletspace, float maxstack, float palletProductRatio) {
-        ArticleId = articleId;
-        this.quantity = quantity;
-        this.palletspace = palletspace;
-        this.maxstack = maxstack;
-        PalletProductRatio = (palletspace / maxstack);
-    }
-}
-
+@Service
 public class ShippingCostCalculator {
-    int OrderId;
-    float minPalletSpace;
-    int requiredPallet;
-    float requiredTotalSpace;
-    int HashTableSize;
-    ShippingCostObject sco[] = new ShippingCostObject[HashTableSize];
+
+    @Autowired
+    CostService costService;
+
+    @Autowired
+    OrderService orderService;
+
+    @Autowired
+    OrderItemService orderItemService;
+
+    public float costCalculation (long orderid) throws IOException, InterruptedException {
+        Address currentAddress = orderService.getUserAddress(orderid);
+        List<OrderItem> sco = orderService.getOrderItems(orderid);
+        float requiredTotalSpace = requiredSpace(sco);
+        float minRequiredPallet = minRequiredPallet(sco);
+        int requiredPallets = requiredPallets(requiredTotalSpace, minRequiredPallet);
+        float distance = DistanceCalculator.calculateDistance(currentAddress);
+
+        return costService.getCheapestCost(distance, requiredPallets).getPrice();
+    }
+
+    private float costCalculation (long orderid, Long providerId) throws IOException, InterruptedException {
+        Address currentAddress = orderService.getUserAddress(orderid);
+        List<OrderItem> sco = orderService.getOrderItems(orderid);
+        float requiredTotalSpace = requiredSpace(sco);
+        float minRequiredPallet = minRequiredPallet(sco);
+        int requiredPallets = requiredPallets(requiredTotalSpace, minRequiredPallet);
+        float distance = DistanceCalculator.calculateDistance(currentAddress);
+
+        return costService.getCost(providerId, distance, requiredPallets).getPrice();
+    }
 
     //create total sum of requiredTotalSpace
-    private float requiredSpace(){
-        requiredTotalSpace = 0;
-        for (int i = 0; i < sco.length; i++) {
-            requiredTotalSpace = requiredTotalSpace + (sco[i].quantity * sco[i].PalletProductRatio);
+    private float requiredSpace(List<OrderItem> sco){
+        float requiredTotalSpace = 0;
+        for (OrderItem i : sco) {
+            requiredTotalSpace = requiredTotalSpace + (i.getQuantity() * orderItemService.getArticle(i).getPalletProductRatio());
         }
         return requiredTotalSpace;
     }
 
     //find max value of min required pallets
-   private float minRequiredPallet(){
-       minPalletSpace = 0;
-        for (int i = 0; i < sco.length; i++) {
-            if (minPalletSpace < sco[i].palletspace) {
-                minPalletSpace = sco[i].palletspace;
+   private float minRequiredPallet(List<OrderItem> sco){
+       float minPalletSpace = 0;
+       Article currentArticle;
+        for (OrderItem i : sco) {
+            currentArticle = orderItemService.getArticle(i);
+            if (minPalletSpace < currentArticle.getPalletSpace()) {
+                minPalletSpace = currentArticle.getPalletSpace();
             }
        }
        return minPalletSpace;
@@ -52,18 +71,18 @@ public class ShippingCostCalculator {
 
     //Calculate amount of required pallets
    private int requiredPallets(float requiredTotalSpace, float minPalletSpace) {
-        this.requiredTotalSpace = requiredTotalSpace;
-        this.minPalletSpace = minPalletSpace;
+        requiredTotalSpace = requiredTotalSpace;
+        minPalletSpace = minPalletSpace;
 
         while (requiredTotalSpace < minPalletSpace) {
             minPalletSpace = (minPalletSpace * 2);
         }
-       requiredPallet = (int) Math.ceil(minPalletSpace);
-       return requiredPallet;
+       return (int)Math.ceil(minPalletSpace);
         }
 
     public static float calculateShippingCost(Integer distance, Integer pallets, Provider shippingProvider) {
         float shippingCost = 1.0F;
+
 
 
         // TODO: Calculate shipping cost
