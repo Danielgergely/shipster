@@ -78,7 +78,6 @@ public class OrderItemService {
     }
 
     public void add(Long articleId, Long orderId) throws Exception {
-
         add(articleId, orderId, 1);
     }
 
@@ -87,9 +86,8 @@ public class OrderItemService {
         add(articleId, orderId, (- quantity));
     }
 
-    Void remove(Long articleId, Long orderId) throws Exception {
+    public void remove(Long articleId, Long orderId) throws Exception {
         add(articleId, orderId, 1);
-        return null;
     }
 
     public void removeAll(Long articleId, Long orderId) throws Exception {

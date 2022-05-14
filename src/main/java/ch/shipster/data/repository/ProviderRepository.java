@@ -12,5 +12,5 @@ import java.util.Optional;
 
 @Repository
 public interface ProviderRepository extends JpaRepository<Provider, Long> {
-
+    List<Provider> getAllByName(String name);
 }
