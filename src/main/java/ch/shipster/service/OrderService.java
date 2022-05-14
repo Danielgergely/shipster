@@ -52,5 +52,11 @@ public class OrderService {
     public List<Order> getOrdersByUserId(Long userId) {
         return orderRepository.getAllByUserId(userId);
     }
+    //Jonas
+    public void saveOrder(Order order){
+        orderRepository.save(order);
+    }
+
+
 
 }
