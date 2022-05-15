@@ -82,6 +82,7 @@ public class CostService {
             cost = costList.get(0);
             cost.setPrice(price);
         } else {
+            ShipsterLogger.logger.error("There are Multiple entries with ");
             throw new Exception("There are Multiple entries with ");
         }
         return saveCost(cost);

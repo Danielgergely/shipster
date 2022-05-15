@@ -89,6 +89,7 @@ public class ArticleService {
     public Article findById(Long articleId) {
         Optional<Article> article =  articleRepository.findById(articleId);
         if (article.isEmpty()) {
+            ShipsterLogger.logger.error("No article found for id: " + articleId);
             throw new NotFoundException("No article found for id: " + articleId);
         }
         return article.get();

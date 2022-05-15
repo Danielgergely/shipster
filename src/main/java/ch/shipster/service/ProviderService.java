@@ -43,6 +43,7 @@ public class ProviderService {
             } else if (sameName.get().getId().equals(provider.getId())){
                 return providerRepository.save(provider);
             } else {
+                ShipsterLogger.logger.error("Provider with name "+provider.getName()+"already exists under Id " + sameName.get().getId());
                 throw new DuplicateMemberException("Provider with name "+provider.getName()+"already exists under Id " + sameName.get().getId());
             }
         } else {
@@ -61,6 +62,7 @@ public class ProviderService {
         } else if (providerList.size() == 1){
             return Optional.ofNullable(providerList.get(0));
         } else  {
+            ShipsterLogger.logger.error("Multiple Provider under the Name" + name);
             throw new DuplicateMemberException("Multiple Provider under the Name" + name);
         }
     }

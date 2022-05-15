@@ -24,6 +24,7 @@ public class AddressService {
     public Address findAddressById(Long id) {
         Optional<Address> address = addressRepository.findById(id);
         if (address.isEmpty()) {
+            ShipsterLogger.logger.error("No address found for id: " + id);
             throw new NotFoundException("No address found for id: " + id);
         }
         return address.get();
@@ -44,6 +45,7 @@ public class AddressService {
     public void saveAddress(Address updatedAddress) {
         Optional<User> currentUser = userService.getCurrentUser();
         if (currentUser.isEmpty()) {
+            ShipsterLogger.logger.error("User is not logged in");
             throw new NotLoggedInException("User is not logged in");
         } else {
             Address address = findAddressById(currentUser.get().getAddressId());
