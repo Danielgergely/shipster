@@ -63,6 +63,19 @@ public class CostService {
         return outCost;
     }
 
+    public Cost getMostExpensiveCost(int km, int pallets) {
+        List<Cost> inCost = getCosts(km, pallets);
+        Cost outCost = inCost.get(0);
+
+        for (Cost c : getCosts(km, pallets)) {
+            if (c.getPrice() > outCost.getPrice()) {
+                outCost = c;
+            }
+        }
+
+        return outCost;
+    }
+
     /// Save
     public Cost saveCost(Cost cost){
         return costRepository.save(cost);

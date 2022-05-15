@@ -36,7 +36,7 @@ public class ShippingCostCalculator {
         return costService.getCheapestCost(distance, requiredPallets).getPrice();
     }
 
-    private float costCalculation (long orderid, Long providerId) throws IOException, InterruptedException {
+    public float costCalculation (long orderid, Long providerId) throws IOException, InterruptedException {
         Address currentAddress = orderService.getUserAddress(orderid);
         List<OrderItem> sco = orderService.getOrderItems(orderid);
         float requiredTotalSpace = requiredSpace(sco);
