@@ -136,17 +136,28 @@ public class ShopController {
         if(user.isEmpty()){
             return "user/login";
         } else {
-            Order order = orderService.getBasketByUser(user.get());
-            List<OrderItem> orderItems = orderService.getOrderItems(order);
-            List<Article> articles = new ArrayList<>();
-            for (OrderItem oI : orderItems) {
-                Article a = orderItemService.getArticle(oI.getArticleId());
-                articles.add(a);
-            }
-            model.addAttribute("order", order);
-            model.addAttribute("articles", articles);
             model.addAttribute("user", user.get());
             return "shop/basket";
         }
     }
+
+//    @GetMapping(path = "shop/basket")
+//    public String getBasket(Model model) throws Exception {
+//        Optional<User> user = userService.getCurrentUser();
+//        if(user.isEmpty()){
+//            return "user/login";
+//        } else {
+//            Order order = orderService.getBasketByUser(user.get());
+//            List<OrderItem> orderItems = orderService.getOrderItems(order);
+//            List<Article> articles = new ArrayList<>();
+//            for (OrderItem oI : orderItems) {
+//                Article a = orderItemService.getArticle(oI.getArticleId());
+//                articles.add(a);
+//            }
+//            model.addAttribute("order", order);
+//            model.addAttribute("articles", articles);
+//            model.addAttribute("user", user.get());
+//            return "shop/basket";
+//        }
+//    }
 }
