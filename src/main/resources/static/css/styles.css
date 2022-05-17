@@ -595,25 +595,8 @@ a:hover {
     transform: translateY(-50%);
 }
 
-@media screen and (max-width: 991px) {
-    .nav-menu {
-        flex-direction: column;
-    }
-
-    .nav-item .tooltiptext {
-        bottom: 135px!important;
-    }
-}
-
-@media screen and (max-width: 400px) {
-    .title_wrapper .h1-about {
-        font-size: 40px;
-    }
-
-    .home-title {
-        width: 90%;
-    }
-}
+/* Giacomo */
+/* Basket page */
 
 .basket column {
     float: left;
@@ -626,11 +609,11 @@ a:hover {
 }
 
 .product-basket {
-    width: 30%;
+    width: 40%;
 }
 
 .spacer {
-    width: 15%;
+    width: 5%;
 }
 
 .quantity {
@@ -663,4 +646,15 @@ hr.rounded {
     border-top: 4px solid #bbb;
     border-radius: 4px;
     width: 95%;
+}
+
+.counter-btn-group {
+    width: 15%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.counter-btn {
+    cursor: pointer;
 }

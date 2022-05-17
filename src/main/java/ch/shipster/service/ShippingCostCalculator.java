@@ -71,11 +71,12 @@ public class ShippingCostCalculator {
 
     //Calculate amount of required pallets
    private int requiredPallets(float requiredTotalSpace, float minPalletSpace) {
-        requiredTotalSpace = requiredTotalSpace;
-        minPalletSpace = minPalletSpace;
+//        requiredTotalSpace = requiredTotalSpace;
+//        minPalletSpace = minPalletSpace;
 
-        while (requiredTotalSpace < minPalletSpace) {
+        while (requiredTotalSpace > 1) {
             minPalletSpace = (minPalletSpace * 2);
+            requiredTotalSpace -= 1;
         }
        return (int)Math.ceil(minPalletSpace);
         }

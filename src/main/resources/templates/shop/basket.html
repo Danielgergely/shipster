@@ -16,27 +16,43 @@
                 <div class="card-body text-center">
                     <h4 class="basket-title">Shopping Basket</h4>
                 </div>
-<!--
-                th:each "Articles in Order Loop"
--->
-                <div class="row">
+                <!--
+                                th:each "Articles in Order Loop"
+                -->
+                <div class="row d-flex align-items-center border-bottom mb-2" th:each="article, iterator : ${articles}">
                     <div class="basket column thumbnail">
-                        <div class="thumb-img"><img class="w-100" th:src="@{~/images/box_1.png}"> <!-- GET product img -->
+                        <div class="thumb-img"><img class="w-100" th:src="@{${article.getUrl()}}">
+                            <!-- GET product img -->
                         </div>
                     </div>
                     <div class="basket column product-basket">
-                        <h6>GET Product Name</h6>
-                        <p>GET Description</p>
+                        <h6 th:text="${article.getName()}"></h6>
+                        <p th:text="${article.getDescription()}"></p>
                     </div>
                     <div class="basket column spacer">
                     </div>
                     <div class="basket column quantity">
-                        <form>
-                            <input class="quantity-selector" type="number" id="quantity" name="quantity" placeholder="3" min="0">
-                        </form>  <!--Quantity Selector -->
+                        <div class="counter-btn-group">
+                            <div class="counter-btn d-flex">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-dash-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                </svg>
+                            </div>
+                            <div class="m-2" th:text="${orderItems[iterator.index].getQuantity()}"></div>
+                            <div class="counter-btn d-flex">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                </svg>
+                            </div>
+                        </div> <!--Quantity Selector -->
                     </div>
                     <div class="basket column price">
-                        <h6>PRICE</h6> <!--GET Subtotal Price (Quantity * Product Price)-->
+                        <h6 th:text="${#numbers.formatDecimal(article.getPrice() * orderItems[iterator.index].getQuantity(), 0, 2)}" ></h6> <!--GET Subtotal Price (Quantity * Product Price)-->
                     </div>
                 </div>
 
@@ -57,9 +73,9 @@
                     <div class="basket column quantity">
                     </div>
                     <div class="basket column price">
-                        <h6>PRICE</h6> <!--GET Subtotal Product Price (Quantity * Product Price)-->
-                        <h6>SHIPPING</h6> <!--GET Shipping Function (Quantity * Product Price)-->
-                        <h4>TOTAL</h4> <!--GET Total Order Cost (Product Subtotal + Shipping)-->
+                        <h6 th:text="${articlesTotalPrice}" ></h6> <!--GET Subtotal Product Price (Quantity * Product Price)-->
+                        <h6 th:text="${#numbers.formatDecimal(totalPrice - articlesTotalPrice, 0, 2)}"></h6> <!--GET Shipping Function (Quantity * Product Price)-->
+                        <h4 th:text="${#numbers.formatDecimal(totalPrice, 0, 2)}" ></h4> <!--GET Total Order Cost (Product Subtotal + Shipping)-->
                     </div>
                 </div>
 

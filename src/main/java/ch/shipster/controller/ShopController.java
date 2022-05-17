@@ -134,28 +134,22 @@ public class ShopController {
 //    }
 
 
-//    @GetMapping(path = "shop/basket")
-//    public String getBasket(Model model) throws Exception {
-//        Optional<User> user = userService.getCurrentUser();
-//        if (user.isEmpty()) {
-//            return "user/login";
-//        } else {
-//            Order order = orderService.getBasketByUser(user.get());
-//            List<Article> articles = orderService.getArticlesInBasket(user.get().getUserId());
-//            List<OrderItem> orderItems = orderService.getOrderItems(order);
-//            model.addAttribute("order", order);
-//            model.addAttribute("articles", articles);
-//            model.addAttribute("user", user.get());
-//            return "shop/basket";
-//        }
-//    }
-
     @GetMapping(path = "shop/basket")
     public String getBasket(Model model) throws Exception {
         Optional<User> user = userService.getCurrentUser();
         if (user.isEmpty()) {
             return "user/login";
         } else {
+            Order order = orderService.getBasketByUser(user.get());
+            List<Article> articles = orderService.getArticlesInBasket(user.get().getUserId());
+            List<OrderItem> orderItems = orderService.getOrderItems(order);
+            Float articlesTotalPrice = checkoutService.calculateTotalOrderPrice(order);
+            Float totalPrice = checkoutService.calculateTotalOrderPriceWithShipping(order);
+            model.addAttribute("order", order);
+            model.addAttribute("articles", articles);
+            model.addAttribute("orderItems", orderItems);
+            model.addAttribute("articlesTotalPrice", articlesTotalPrice);
+            model.addAttribute("totalPrice", totalPrice);
             model.addAttribute("user", user.get());
             return "shop/basket";
         }
