@@ -341,6 +341,7 @@ a:hover {
     vertical-align: middle
 }
 
+
 /* about page */
 .about {
     height: 200vh;
@@ -612,4 +613,54 @@ a:hover {
     .home-title {
         width: 90%;
     }
+}
+
+.basket column {
+    float: left;
+    padding: 10px;
+    height: 125px;
+}
+
+.thumbnail {
+    width: 15%
+}
+
+.product {
+    width: 30%;
+}
+
+.spacer {
+    width: 15%;
+}
+
+.quantity {
+    width: 15%;
+}
+
+.price {
+    width: 25%;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.thumb-img {
+    display: table-cell;
+    width: 100%;
+    padding: 0px;
+    vertical-align: middle
+}
+
+.quantity-selector {
+    float: left;
+    width: 100%;
+}
+
+hr.rounded {
+    border-top: 4px solid #bbb;
+    border-radius: 4px;
+    width: 95%;
 }
