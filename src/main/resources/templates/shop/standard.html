@@ -80,8 +80,10 @@
     })
 
     function addArticleToBasket(articleId){
+        let url = "/shop/basket/add?articleId=" + articleId
+        console.log(url);
         $.ajax({
-            url: "/shop/basket/add?articleId=" + articleId,
+            url: url,
             type: "POST",
             success: function() {
                 console.log("added " + articleId);
