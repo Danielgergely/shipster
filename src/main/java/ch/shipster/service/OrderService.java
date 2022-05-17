@@ -46,6 +46,7 @@ public class OrderService {
         } else if (existingBaskets.size() == 1) {
             outOrder = existingBaskets.get(0);
         } else {
+            ShipsterLogger.logger.error("Multiple Baskets for same User with Id: " + userId);
             throw new Exception("Multiple Baskets for same User with Id: " + userId);
         }
         return outOrder;

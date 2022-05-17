@@ -32,8 +32,10 @@ public class OrderItemService {
     public OrderItem getOrderItem(Long articleId, Long orderId) throws Exception {
 
         if (articleRepository.existsById(articleId)) {
+            ShipsterLogger.logger.error("Article ID (" + articleId + ") not found");
             throw new Exception("Article ID (" + articleId + ") not found");
         } else if (orderRepository.existsById(orderId)) {
+            ShipsterLogger.logger.error("Order ID (" + orderId + ") not found");
             throw new Exception("Order ID (" + orderId + ") not found");
         }
 
@@ -42,6 +44,7 @@ public class OrderItemService {
 
         if (existingOI.size() == 0) {
             if (orderRepository.getById(orderId).getOrderStatus() != OrderStatus.BASKET) {
+                ShipsterLogger.logger.error("Order Item for Article ID (" + articleId + ") does not exist for Order ID (" + orderId + ") and the order is not of the status BASKET");
                 throw new Exception("Order Item for Article ID (" + articleId + ") does not exist for Order ID (" + orderId + ") and the order is not of the status BASKET");
             } else {
                 orderItemRepository.save(out);
@@ -50,6 +53,7 @@ public class OrderItemService {
         if (existingOI.size() == 1) {
             out = existingOI.get(0);
         } else {
+            ShipsterLogger.logger.error("Multiple Order Items for same Article ID (" + articleId + ") and same Order ID (" + orderId + ")");
             throw new Exception("Multiple Order Items for same Article ID (" + articleId + ") and same Order ID (" + orderId + ")");
         }
 
@@ -65,6 +69,7 @@ public class OrderItemService {
     public Optional<OrderItem> add(Article article, Order order, int inQuantity) throws Exception {
 
         if (order.getOrderStatus() != OrderStatus.BASKET) {
+            ShipsterLogger.logger.error("Order ID (" + order.getId() + ") is not of the Status BASKET. Quantity may not be changed");
             throw new Exception("Order ID (" + order.getId() + ") is not of the Status BASKET. Quantity may not be changed");
         }
 
@@ -127,10 +132,12 @@ public class OrderItemService {
         List<OrderItem> oiList = orderItemRepository.getAllByArticleIdAndAndOrderId(articleId, orderId);
 
         if (order == null) {
+            ShipsterLogger.logger.error("Order ID (" + orderId + ") not found");
             throw new Exception("Order ID (" + orderId + ") not found");
         } else if (oiList.size() == 0) {
 
         } else if (order.getOrderStatus() != OrderStatus.BASKET) {
+            ShipsterLogger.logger.error("Order ID (" + orderId + ") is not of the Status BASKET. Quantity may not be changed");
             throw new Exception("Order ID (" + orderId + ") is not of the Status BASKET. Quantity may not be changed");
         } else {
             orderItemRepository.deleteAll(oiList);

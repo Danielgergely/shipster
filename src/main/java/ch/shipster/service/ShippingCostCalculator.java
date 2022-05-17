@@ -31,11 +31,10 @@ public class ShippingCostCalculator {
         float requiredTotalSpace = requiredSpace(sco);
         float minRequiredPallet = minRequiredPallet(sco);
         int requiredPallets = requiredPallets(requiredTotalSpace, minRequiredPallet);
-        float distance = DistanceCalculator.calculateDistance(currentAddress);
+        int distance = DistanceCalculator.calculateDistance(currentAddress);
 
         return costService.getCheapestCost(distance, requiredPallets).getPrice();
     }
-
 
     public float costCalculation (long orderid, Long providerId) throws IOException, InterruptedException {
         Address currentAddress = orderService.getUserAddress(orderid);
@@ -43,11 +42,10 @@ public class ShippingCostCalculator {
         float requiredTotalSpace = requiredSpace(sco);
         float minRequiredPallet = minRequiredPallet(sco);
         int requiredPallets = requiredPallets(requiredTotalSpace, minRequiredPallet);
-        float distance = DistanceCalculator.calculateDistance(currentAddress);
+        int distance = DistanceCalculator.calculateDistance(currentAddress);
 
         return costService.getCost(providerId, distance, requiredPallets).getPrice();
     }
-
 
     //create total sum of requiredTotalSpace
     private float requiredSpace(List<OrderItem> sco){

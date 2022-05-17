@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+spring.log
+*.run.xml
+
+*.log

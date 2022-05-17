@@ -2,6 +2,7 @@ package ch.shipster.service;
 
 import ch.shipster.data.domain.Article;
 import ch.shipster.data.repository.ArticleRepository;
+import ch.shipster.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -82,6 +83,15 @@ public class ArticleService {
                     article.getMaxStack());
         }
 
+    }
+
+    public Article findById(Long articleId) {
+        Optional<Article> article =  articleRepository.findById(articleId);
+        if (article.isEmpty()) {
+            ShipsterLogger.logger.error("No article found for id: " + articleId);
+            throw new NotFoundException("No article found for id: " + articleId);
+        }
+        return article.get();
     }
 
 

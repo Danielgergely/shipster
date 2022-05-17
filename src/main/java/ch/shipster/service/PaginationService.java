@@ -14,14 +14,17 @@ public class PaginationService {
         List<O> outList = new ArrayList<O>();
 
         if (inList.isEmpty()) {
+            ShipsterLogger.logger.error("List is empty");
             throw new Exception("List is empty");
         }
 
         if (inList.size() < (page - 1) * perPage) {
+            ShipsterLogger.logger.error("Page to high. Only" + inList.size() + "items in List");
             throw new Exception("Page to high. Only" + inList.size() + "items in List");
         }
 
         if (page <= 0) {
+            ShipsterLogger.logger.error("Page must be 1 or higher");
             throw new Exception("Page must be 1 or higher");
         }
 

@@ -31,6 +31,7 @@ public class UserService {
     public User findByEmail(String email) {
         Optional<User> user = userRepository.findByEmailIgnoreCase(email);
         if (user.isEmpty()) {
+            ShipsterLogger.logger.error("No user found for email: " + email);
             throw new NotFoundException("No user found for email: " + email);
         }
         return user.get();
@@ -40,6 +41,7 @@ public class UserService {
         Optional<User> user = userRepository.findById(id);
 
         if (user.isEmpty()) {
+            ShipsterLogger.logger.error("User with id: " + id + " not found");
             throw new NotFoundException("User with id: " + id + " not found");
         }
         return user.get();
@@ -48,12 +50,15 @@ public class UserService {
     public void createUser(User user) throws Exception {
         if (user.getUserId() == null) {
             if (userRepository.findByEmailIgnoreCase(user.getEmail()).isPresent()) {
+                ShipsterLogger.logger.error("Email address " + user.getEmail() + " already assigned another user.");
                 throw new Exception("Email address " + user.getEmail() + " already assigned another user.");
             }
         } else if (userRepository.findByEmailAndUserIdNot(user.getEmail(), user.getUserId()) != null) {
+            ShipsterLogger.logger.error("Email address " + user.getEmail() + " already assigned another user.");
             throw new Exception("Email address " + user.getEmail() + " already assigned another user.");
         }
         if (userRepository.findByUserNameIgnoreCase(user.getUserName()).isPresent()) {
+            ShipsterLogger.logger.error("Username " + user.getUserName() + " already assigned another user.");
             throw new Exception("Username " + user.getUserName() + " already assigned another user.");
         }
         String userPassword = user.getPassword();
@@ -83,6 +88,7 @@ public class UserService {
     public void deleteUser(Long id) throws Exception {
         Optional<User> user = userRepository.findById(id);
         if (user.isEmpty()) {
+            ShipsterLogger.logger.error("User with id " + id + " not found.");
             throw new NotFoundException("User with id " + id + " not found.");
         } else {
             userRepository.delete(user.get());
@@ -106,6 +112,7 @@ public class UserService {
     public void changePassword(String password) throws Exception {
         Optional<User> user = getCurrentUser();
         if (user.isEmpty()){
+            ShipsterLogger.logger.error("User is not logged in");
             throw new NotLoggedInException("User is not logged in");
         } else {
             String encodedPassword = passwordEncoder.encode(password);
@@ -117,6 +124,7 @@ public class UserService {
     public void changeUserPassword(String password, Long userId) throws Exception {
         Optional<User> user = userRepository.findById(userId);
         if (user.isEmpty()){
+            ShipsterLogger.logger.error("User not found");
             throw new NotFoundException("User not found");
         } else {
             String encodedPassword = passwordEncoder.encode(password);
