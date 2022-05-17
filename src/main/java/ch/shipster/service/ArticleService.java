@@ -19,8 +19,7 @@ public class ArticleService {
     ArticleRepository articleRepository;
 
     public List<Article> getAllArticles() {
-        List<Article> outList = articleRepository.findAll();
-        return outList;
+        return articleRepository.findAll();
     }
 
     public List<Article> filterArticlesByPrize(float min, float max) {

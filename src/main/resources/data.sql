@@ -6,6 +6,10 @@ INSERT INTO shipster_user (user_id, user_name, first_name, last_name, email, pas
 INSERT INTO shipster_user (user_id, user_name, first_name, last_name, email, password, address_id, gender, roles) VALUES (998, 'est_01', 'Esther', 'Collins', 'esther.collins@students.fhnw.ch', '$2a$10$.oTsOd/w3Lx4xdr3LGC6qe6aYOSZpKIbDi4mq5AgmjT2j29KhT5Bi', '998', 'female', 'USER') ON CONFLICT DO NOTHING;
 INSERT INTO shipster_user (user_id, user_name, first_name, last_name, email, password, address_id, gender, roles) VALUES (997, 'admin', 'Admin', 'Admin', 'admin.admin@students.fhnw.ch', '$2a$10$.oTsOd/w3Lx4xdr3LGC6qe6aYOSZpKIbDi4mq5AgmjT2j29KhT5Bi', '997', 'male', 'USER,ADMIN') ON CONFLICT DO NOTHING;
 
+INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (9, 'Article P1', 'The first P', '/images/box_1.png', 56.95, 1.2,25) ON CONFLICT DO NOTHING;
+INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (10, 'Article P2', 'The funniest P', '/images/box_1.png', 12.95, 2,10) ON CONFLICT DO NOTHING;
+INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (11, 'Article P3', 'The most expensive P', '/images/box_1.png', 66.95, 2.5,15) ON CONFLICT DO NOTHING;
+INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (12, 'Article P4', 'The best P', '/images/box_1.png', 25.95, 0.8,1000) ON CONFLICT DO NOTHING;
 INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (1, 'Shipster box 1', 'A standard shipping box. 25cm - 80cm - 35cm', '/images/box_1.png', 12.95, 0.2,25) ON CONFLICT DO NOTHING;
 INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (2, 'Shipster box 2', 'A standard shipping box. 35cm - 90cm - 45cm', '/images/box_2.jpeg', 18.95, 0.3, 20) ON CONFLICT DO NOTHING;
 INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (3, 'Shipster box 3', 'A standard shipping box. 35cm - 120cm - 30cm', '/images/box_3.jpeg', 20.95, 0.4, 30) ON CONFLICT DO NOTHING;

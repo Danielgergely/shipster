@@ -7,6 +7,7 @@ import ch.shipster.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // Timo
@@ -35,7 +36,7 @@ public class OrderService {
         return orderRepository.getAllByOrderStatus(orderStatus.name());
     }
 
-    /// Get Basket (order with state casket)
+    /// Get Basket (order with state Basket)
     public Order getBasketByUser(Long userId) throws Exception {
         Order outOrder = new Order(userId);
         List<Order> existingBaskets = orderRepository.getAllByUserIdAndOrderStatus(userId, OrderStatus.BASKET.name());
@@ -58,6 +59,10 @@ public class OrderService {
     /// get related User
     public User getUser(Order order) {
         return userRepository.getById(order.getUserId());
+    }
+
+    public User getUser(Long orderId) {
+        return getUser(orderRepository.getById(orderId));
     }
 
     /// get related User Address
@@ -86,10 +91,20 @@ public class OrderService {
         return getOrderItems(getBasketByUser(user.getUserId()));
     }
 
+    public List<Article> getArticlesInBasket(Long userId) throws Exception {
+        List<Article> outArticles = new ArrayList<Article>();
+
+        for (OrderItem i : getOrderItemsInBasket(userId)){
+            outArticles.add(orderItemService.getArticle(i));
+        }
+
+        return outArticles;
+    }
+
     //Jonas
     /// Save Orders
-    public void saveOrder(Order order){
-        orderRepository.save(order);
+    public Order saveOrder(Order order){
+        return orderRepository.save(order);
     }
 
     public Order getOrderById(Long orderId){

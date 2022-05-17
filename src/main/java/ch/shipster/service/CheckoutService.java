@@ -80,6 +80,7 @@ public class CheckoutService {
 
     }
 
+    /// Calculate Total Order Price withOUT Shipping
     public float calculateTotalOrderPrice(Order order) {
         float price = 0;
         for(OrderItem o : orderService.getOrderItems(order)){
@@ -89,6 +90,12 @@ public class CheckoutService {
 
         return price;
     }
+
+    public float calculateTotalOrderPrice(Long orderId) {
+        return calculateTotalOrderPrice(orderService.getOrderById(orderId));
+    }
+
+    /// Calculate Total Order Price with Shipping
     public float calculateTotalOrderPriceWithShipping(Order order) throws IOException, InterruptedException {
 
         float price = calculateTotalOrderPrice(order) + shippingCostCalculator.costCalculation(order.getId());
