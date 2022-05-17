@@ -8,7 +8,46 @@
 <!-- Navigation-->
 <nav th:replace="general.html :: navigation(page='Shop', user=${user})"></nav>
 
+<div class="main-basket">
+    <div class="container">
+        <div class="row w-100 justify-content-center">
 
+            <div class="col-md-8 col-sm-10 bg-light border rounded m-2"
+                 style="min-width: 300px;">
+                <div class="card-body text-center">
+                    <h4 class="basket-title">Shopping Basket</h4>
+                </div>
+
+
+                //th:each "Articles in Order Loop"
+
+                <div class="row">
+                    <div class="column product">
+                        <h4>GET Product Name</h4>
+                        <p>GET Description</p>
+                    </div>
+                    <div class="column spacer">
+                    </div>
+                    <div class="column quantity">
+                                                     // Quantity Selector
+
+                    </div>
+                    <div class="column price">
+                        <h6>PRICE</h6> //GET Subtotal Price (Quantity * Product Price
+                    </div>
+                </div>
+
+                        <div class="inner">
+                           <div class="main-img"><img class="w-100" th:src="@{images/express_delivery.jpg}"
+                                                     alt="express delivery"></div>
+                        </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
