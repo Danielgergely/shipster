@@ -149,4 +149,67 @@ public class ShopController {
             return "shop/basket";
         }
     }
+
+    @GetMapping(path = "shop/standard/article")
+    public String getStandardArticleView(@RequestParam Long articleId, Model model) throws IOException, InterruptedException {
+        Optional<User> user = userService.getCurrentUser();
+        if (user.isEmpty()) {
+            return "user/login";
+        } else {
+            Article product = articleService.findById(articleId);
+            Address address = addressService.findAddressById(user.get().getAddressId());
+            int distance = DistanceCalculator.calculateDistance(address);
+            int paletSpace = (int) Math.ceil(product.getPalletSpace());
+            Cost cost = costService.getCheapestCost(distance, paletSpace);
+            model.addAttribute("distance", distance);
+            model.addAttribute("price", cost.getPrice());
+            model.addAttribute("product", product);
+            model.addAttribute("user", user.get());
+        }
+        return "shop/article";
+    }
+
+
+    @GetMapping(path = "shop/express/article")
+    public String getExpressArticleView(@RequestParam Long articleId, Model model) throws IOException, InterruptedException {
+        Optional<User> user = userService.getCurrentUser();
+        if (user.isEmpty()) {
+            return "user/login";
+        } else {
+            Article product = articleService.findById(articleId);
+            Address address = addressService.findAddressById(user.get().getAddressId());
+            int distance = DistanceCalculator.calculateDistance(address);
+            int paletSpace = (int) Math.ceil(product.getPalletSpace());
+            Cost cost = costService.getMostExpensiveCost(distance, paletSpace);
+            model.addAttribute("distance", distance);
+            model.addAttribute("price", cost.getPrice());
+            model.addAttribute("product", product);
+            model.addAttribute("user", user.get());
+        }
+        return "shop/article";
+    }
+
+    @PutMapping(path = "shop/article/order")
+    public void addItemToBasket(@RequestParam Long userId, @RequestParam Long articleId, Model model) throws Exception {
+        User user = userService.findById(userId);
+        Order order = orderService.getBasketByUser(user);
+        orderItemService.add(articleId, order.getId());
+    }
+
+
+    @GetMapping(path = "shop/basket")
+    public String getBasket(Model model) throws Exception {
+        Optional<User> user = userService.getCurrentUser();
+        if(user.isEmpty()){
+            return "user/login";
+        } else {
+            Order order = orderService.getBasketByUser(user.get());
+            List<Article> articles = orderService.getArticlesInBasket(user.get().getUserId());
+            List<OrderItem> orderItems = orderService.getOrderItems(order);
+            model.addAttribute("order", order);
+            model.addAttribute("articles", articles);
+            model.addAttribute("user", user.get());
+            return "shop/basket";
+        }
+    }
 }
