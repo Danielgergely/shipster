@@ -36,3 +36,5 @@ spring.log
 *.run.xml
 
 *.log
+.run/ShipsterApplication.run.xml
+*.log

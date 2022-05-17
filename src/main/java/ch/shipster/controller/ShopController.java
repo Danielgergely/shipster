@@ -126,13 +126,29 @@ public class ShopController {
         return "shop/article";
     }
 
-    @PutMapping(path = "shop/article/order")
-    public void addItemToBasket(@RequestParam Long userId, @RequestParam Long articleId, Model model) throws Exception {
-        User user = userService.findById(userId);
-        Order order = orderService.getBasketByUser(user);
-        orderItemService.add(articleId, order.getId());
-    }
+//    @PutMapping(path = "shop/article/order")
+//    public void addItemToBasket(@RequestParam Long userId, @RequestParam Long articleId, Model model) throws Exception {
+//        User user = userService.findById(userId);
+//        Order order = orderService.getBasketByUser(user);
+//        orderItemService.add(articleId, order.getId());
+//    }
 
+
+//    @GetMapping(path = "shop/basket")
+//    public String getBasket(Model model) throws Exception {
+//        Optional<User> user = userService.getCurrentUser();
+//        if (user.isEmpty()) {
+//            return "user/login";
+//        } else {
+//            Order order = orderService.getBasketByUser(user.get());
+//            List<Article> articles = orderService.getArticlesInBasket(user.get().getUserId());
+//            List<OrderItem> orderItems = orderService.getOrderItems(order);
+//            model.addAttribute("order", order);
+//            model.addAttribute("articles", articles);
+//            model.addAttribute("user", user.get());
+//            return "shop/basket";
+//        }
+//    }
 
     @GetMapping(path = "shop/basket")
     public String getBasket(Model model) throws Exception {
@@ -140,11 +156,6 @@ public class ShopController {
         if (user.isEmpty()) {
             return "user/login";
         } else {
-            Order order = orderService.getBasketByUser(user.get());
-            List<Article> articles = orderService.getArticlesInBasket(user.get().getUserId());
-            List<OrderItem> orderItems = orderService.getOrderItems(order);
-            model.addAttribute("order", order);
-            model.addAttribute("articles", articles);
             model.addAttribute("user", user.get());
             return "shop/basket";
         }
