@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 // Timo
 
@@ -61,7 +62,7 @@ public class OrderItemService {
 
 
     // Add (or remove if negative)
-    public void add(Article article, Order order, int inQuantity) throws Exception {
+    public Optional<OrderItem> add(Article article, Order order, int inQuantity) throws Exception {
 
         if (order.getOrderStatus() != OrderStatus.BASKET) {
             throw new Exception("Order ID (" + order.getId() + ") is not of the Status BASKET. Quantity may not be changed");
@@ -72,20 +73,44 @@ public class OrderItemService {
 
         if (newQuantity <= 0) {
             orderItemRepository.delete(oi);
+            return null;
         } else {
             oi.setQuantity(newQuantity);
+            return Optional.ofNullable(orderItemRepository.save(oi));
         }
     }
-    public void add(Long articleId, Long orderId, int inQuantity) throws Exception {
-        add(articleRepository.getById(articleId), orderRepository.getById(orderId), inQuantity);
+    public Optional<OrderItem> add(Long articleId, Long orderId, int inQuantity) throws Exception {
+        return add(articleRepository.getById(articleId), orderRepository.getById(orderId), inQuantity);
     }
 
-    public void add(Article article, Order order) throws Exception {
-        add(article, order, 1);
+    public Optional<OrderItem> add(Article article, Order order) throws Exception {
+        return add(article, order, 1);
     }
 
-    public void add(Long articleId, Long orderId) throws Exception {
-        add(articleId, orderId, 1);
+    public Optional<OrderItem> add(Long articleId, Long orderId) throws Exception {
+        return add(articleId, orderId, 1);
+    }
+
+    // Set
+    public Optional<OrderItem> set(Article article, Order order, int quantity) throws Exception {
+        if (order.getOrderStatus() != OrderStatus.BASKET) {
+            throw new Exception("Order ID (" + order.getId() + ") is not of the Status BASKET. Quantity may not be changed");
+        }
+
+        OrderItem orderItem = getOrderItem(order, article);
+
+        if (quantity <= 0) {
+            removeAll(article, order);
+            return null;
+        } else  {
+            orderItem.setQuantity(quantity);
+            return Optional.ofNullable(orderItemRepository.save(orderItem));
+        }
+
+    }
+
+    public Optional<OrderItem> set(Long articleId, Long orderId, int quantity) throws Exception {
+        return set(articleRepository.getById(articleId), orderRepository.getById(orderId), quantity);
     }
 
     // Remove
@@ -110,6 +135,10 @@ public class OrderItemService {
         } else {
             orderItemRepository.deleteAll(oiList);
         }
+    }
+
+    public void removeAll(Article article, Order order) throws Exception {
+        removeAll(article.getId(), order.getId());
     }
 
     /// Get related Article and Order
