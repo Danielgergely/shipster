@@ -4,11 +4,9 @@ import ch.shipster.data.domain.*;
 import ch.shipster.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ConcurrentModel;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -79,12 +77,17 @@ public class ShopController {
         return "shop/standard";
     }
 
-    @PutMapping(path = "shop/article/order")
-    public void createOrder(@RequestParam Long userId, @RequestParam Long articleId, Model model) throws Exception {
-        User user = userService.findById(userId);
-        Order order = orderService.getBasketByUser(user);
-        OrderItem orderItem = orderItemService.getOrderItem(articleId, order.getId());
-        orderItemService.add(articleId, order.getId());
+    @PostMapping(path = "shop/basket/add")
+    @ResponseBody
+    public String addToBasket(@RequestParam Long articleId) throws Exception {
+        Optional<User> user = userService.getCurrentUser();
+        if (user.isEmpty()) {
+            return "{\"user not logged in\":1}";
+        } else {
+            Order order = orderService.getBasketByUser(user.get());
+            orderItemService.add(articleId, order.getId());
+            return "{\"success\":1}";
+        }
     }
 
     @GetMapping(path = "shop/standard/article")
@@ -108,7 +111,8 @@ public class ShopController {
 
 
     @GetMapping(path = "shop/express/article")
-    public String getExpressArticleView(@RequestParam Long articleId, Model model) throws IOException, InterruptedException {
+    public String getExpressArticleView(@RequestParam Long articleId, Model model) throws
+            IOException, InterruptedException {
         Optional<User> user = userService.getCurrentUser();
         if (user.isEmpty()) {
             return "user/login";
@@ -132,6 +136,18 @@ public class ShopController {
 //        Order order = orderService.getBasketByUser(user);
 //        orderItemService.add(articleId, order.getId());
 //    }
+
+    @GetMapping(path = "shop/article/add")
+    public String addArticle(@RequestParam Long articleId, @RequestParam Long orderId) throws Exception {
+        orderItemService.add(articleId, orderId);
+        return "redirect:/shop/basket";
+    }
+
+    @GetMapping(path = "shop/article/remove")
+    public String removeArticle(@RequestParam Long articleId, @RequestParam Long orderId) throws Exception {
+        orderItemService.remove(articleId, orderId);
+        return "redirect:/shop/basket";
+    }
 
 
     @GetMapping(path = "shop/basket")

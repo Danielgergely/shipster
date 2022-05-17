@@ -1,13 +1,15 @@
 package ch.shipster.data.domain;
 
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.persistence.*;
 
 //Timo
 
 @Entity
 @Table(name="article")
-public class Article {
+public class Article{
 
     /// ID
     @Id
@@ -108,4 +110,5 @@ public class Article {
     public void setUrl(String url) {
         this.imageUrl = url;
     }
+
 }

@@ -7,8 +7,8 @@ import ch.shipster.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.security.cert.CollectionCertStoreParameters;
+import java.util.*;
 
 // Timo
 
@@ -32,7 +32,7 @@ public class OrderService {
         return orderRepository.getAllByUserId(userId);
     }
 
-    public List<Order> getOrdersByStatus(OrderStatus orderStatus){
+    public List<Order> getOrdersByStatus(OrderStatus orderStatus) {
         return orderRepository.getAllByOrderStatus(orderStatus.name());
     }
 
@@ -70,13 +70,15 @@ public class OrderService {
         return addressRepository.findById(userRepository.getById(order.getUserId()).getAddressId()).orElseThrow();
     }
 
-    public Address getUserAddress(Long orderId){
+    public Address getUserAddress(Long orderId) {
         return getUserAddress(orderRepository.getById(orderId));
     }
 
     /// Get related Order Items
     public List<OrderItem> getOrderItems(Order order) {
-        return orderItemService.orderItemRepository.getAllByOrderId(order.getId());
+        List<OrderItem> orderItems = orderItemService.getAllByOrderId(order.getId());
+        orderItems.sort(Comparator.comparing(OrderItem::getArticleId));
+        return orderItems;
     }
 
     public List<OrderItem> getOrderItems(Long orderId) {
@@ -92,22 +94,22 @@ public class OrderService {
     }
 
     public List<Article> getArticlesInBasket(Long userId) throws Exception {
-        List<Article> outArticles = new ArrayList<Article>();
+        List<Article> outArticles = new ArrayList<>();
 
-        for (OrderItem i : getOrderItemsInBasket(userId)){
+        for (OrderItem i : getOrderItemsInBasket(userId)) {
             outArticles.add(orderItemService.getArticle(i));
         }
-
+        outArticles.sort(Comparator.comparing(Article::getId));
         return outArticles;
     }
 
     //Jonas
     /// Save Orders
-    public Order saveOrder(Order order){
+    public Order saveOrder(Order order) {
         return orderRepository.save(order);
     }
 
-    public Order getOrderById(Long orderId){
+    public Order getOrderById(Long orderId) {
         return orderRepository.getById(orderId);
     }
 

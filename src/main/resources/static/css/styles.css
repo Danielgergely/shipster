@@ -74,6 +74,11 @@
     background-size: cover;
 }
 
+.bg-basket {
+    background: url("../images/basket.jpg") no-repeat center center fixed;
+    background-size: cover;
+}
+
 a:hover {
     color:#ffc800;
 }

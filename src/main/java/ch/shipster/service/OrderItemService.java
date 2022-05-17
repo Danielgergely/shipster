@@ -7,10 +7,12 @@ import ch.shipster.data.domain.OrderStatus;
 import ch.shipster.data.repository.ArticleRepository;
 import ch.shipster.data.repository.OrderItemRepository;
 import ch.shipster.data.repository.OrderRepository;
+import ch.shipster.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 // Timo
 
@@ -26,14 +28,19 @@ public class OrderItemService {
     @Autowired
     ArticleRepository articleRepository;
 
+
+    public List<OrderItem> getAllByOrderId(Long orderId){
+        return orderItemRepository.getAllByOrderId(orderId);
+    }
+
     //Get OrderItem if not exists
 
     public OrderItem getOrderItem(Long articleId, Long orderId) throws Exception {
 
-        if (articleRepository.existsById(articleId)) {
+        if (!articleRepository.existsById(articleId)) {
             ShipsterLogger.logger.error("Article ID (" + articleId + ") not found");
             throw new Exception("Article ID (" + articleId + ") not found");
-        } else if (orderRepository.existsById(orderId)) {
+        } else if (!orderRepository.existsById(orderId)) {
             ShipsterLogger.logger.error("Order ID (" + orderId + ") not found");
             throw new Exception("Order ID (" + orderId + ") not found");
         }
@@ -60,7 +67,7 @@ public class OrderItemService {
     }
 
     public OrderItem getOrderItem(Order order, Article article) throws Exception {
-        return getOrderItem(order.getId(), article.getId());
+        return getOrderItem(article.getId(), order.getId());
     }
 
 
@@ -79,8 +86,10 @@ public class OrderItemService {
             orderItemRepository.delete(oi);
         } else {
             oi.setQuantity(newQuantity);
+            orderItemRepository.save(oi);
         }
     }
+
     public void add(Long articleId, Long orderId, int inQuantity) throws Exception {
         add(articleRepository.getById(articleId), orderRepository.getById(orderId), inQuantity);
     }
@@ -99,7 +108,7 @@ public class OrderItemService {
     }
 
     public void remove(Long articleId, Long orderId) throws Exception {
-        add(articleId, orderId, 1);
+        add(articleId, orderId, -1);
     }
 
     public void removeAll(Long articleId, Long orderId) throws Exception {

@@ -19,7 +19,9 @@ public class ArticleService {
     ArticleRepository articleRepository;
 
     public List<Article> getAllArticles() {
-        return articleRepository.findAll();
+        List<Article> articles = articleRepository.findAll();
+        articles.sort(Comparator.comparing(Article::getId));
+        return articles;
     }
 
     public List<Article> filterArticlesByPrize(float min, float max) {
@@ -31,7 +33,7 @@ public class ArticleService {
                 outList.add(a);
             }
         }
-
+        outList.sort(Comparator.comparing(Article::getId));
         return outList;
     }
 

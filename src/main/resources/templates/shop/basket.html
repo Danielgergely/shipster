@@ -3,7 +3,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="general.html :: headerfiles(title='Shop')"></head>
-<body class="bg-article">
+<body class="bg-basket">
 
 <!-- Navigation-->
 <nav th:replace="general.html :: navigation(page='Shop', user=${user})"></nav>
@@ -16,13 +16,9 @@
                 <div class="card-body text-center">
                     <h4 class="basket-title">Shopping Basket</h4>
                 </div>
-                <!--
-                                th:each "Articles in Order Loop"
-                -->
                 <div class="row d-flex align-items-center border-bottom mb-2" th:each="article, iterator : ${articles}">
                     <div class="basket column thumbnail">
                         <div class="thumb-img"><img class="w-100" th:src="@{${article.getUrl()}}">
-                            <!-- GET product img -->
                         </div>
                     </div>
                     <div class="basket column product-basket">
@@ -33,7 +29,7 @@
                     </div>
                     <div class="basket column quantity">
                         <div class="counter-btn-group">
-                            <div class="counter-btn d-flex">
+                            <div class="counter-btn d-flex" th:onclick="'window.location.href=\'article/remove?articleId=' + ${article.getId()} + '&orderId=' + ${order.getId()} + '\''">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                      class="bi bi-dash-circle" viewBox="0 0 16 16">
                                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
@@ -41,15 +37,14 @@
                                 </svg>
                             </div>
                             <div class="m-2" th:text="${orderItems[iterator.index].getQuantity()}"></div>
-                            <div class="counter-btn d-flex">
-
+                            <div class="counter-btn d-flex" th:onclick="'window.location.href=\'article/add?articleId=' + ${article.getId()} + '&orderId=' + ${order.getId()} + '\''">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                      class="bi bi-plus-circle" viewBox="0 0 16 16">
                                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                                     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                                 </svg>
                             </div>
-                        </div> <!--Quantity Selector -->
+                        </div>
                     </div>
                     <div class="basket column price">
                         <h6 th:text="${#numbers.formatDecimal(article.getPrice() * orderItems[iterator.index].getQuantity(), 0, 2)}" ></h6> <!--GET Subtotal Price (Quantity * Product Price)-->
@@ -73,9 +68,9 @@
                     <div class="basket column quantity">
                     </div>
                     <div class="basket column price">
-                        <h6 th:text="${articlesTotalPrice}" ></h6> <!--GET Subtotal Product Price (Quantity * Product Price)-->
-                        <h6 th:text="${#numbers.formatDecimal(totalPrice - articlesTotalPrice, 0, 2)}"></h6> <!--GET Shipping Function (Quantity * Product Price)-->
-                        <h4 th:text="${#numbers.formatDecimal(totalPrice, 0, 2)}" ></h4> <!--GET Total Order Cost (Product Subtotal + Shipping)-->
+                        <h6 th:text="${#numbers.formatDecimal(articlesTotalPrice, 0, 2)}" ></h6>
+                        <h6 th:text="${#numbers.formatDecimal(totalPrice - articlesTotalPrice, 0, 2)}"></h6>
+                        <h4 th:text="${#numbers.formatDecimal(totalPrice, 0, 2)}" ></h4>
                     </div>
                 </div>
 
