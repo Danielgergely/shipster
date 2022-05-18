@@ -29,14 +29,15 @@ INSERT INTO shipster_order (id, user_id, order_status) VALUES (5, 999, 'ORDERED'
 INSERT INTO order_item (id, article_id, order_id, quantity) VALUES (1, 1, 1, 3) ON CONFLICT DO NOTHING;
 INSERT INTO order_item (id, article_id, order_id, quantity) VALUES (2, 3, 1, 10) ON CONFLICT DO NOTHING;
 INSERT INTO order_item (id, article_id, order_id, quantity) VALUES (3, 2, 2, 1) ON CONFLICT DO NOTHING;
-INSERT INTO order_item (id, article_id, order_id, quantity) VALUES (5, 4, 2, 2) ON CONFLICT DO NOTHING;
-INSERT INTO order_item (id, article_id, order_id, quantity) VALUES (6, 5, 3, 12) ON CONFLICT DO NOTHING;
-INSERT INTO order_item (id, article_id, order_id, quantity) VALUES (7, 1, 4, 3) ON CONFLICT DO NOTHING;
-INSERT INTO order_item (id, article_id, order_id, quantity) VALUES (8, 1, 5, 8) ON CONFLICT DO NOTHING;
-INSERT INTO order_item (id, article_id, order_id, quantity) VALUES (9, 2, 5, 1) ON CONFLICT DO NOTHING;
-INSERT INTO order_item (id, article_id, order_id, quantity) VALUES (10, 3, 5, 1) ON CONFLICT DO NOTHING;
-INSERT INTO order_item (id, article_id, order_id, quantity) VALUES (12, 4, 5, 5) ON CONFLICT DO NOTHING;
-INSERT INTO order_item (id, article_id, order_id, quantity) VALUES (13, 5, 5, 28) ON CONFLICT DO NOTHING;
+INSERT INTO order_item (id, article_id, order_id, quantity) VALUES (4, 4, 2, 2) ON CONFLICT DO NOTHING;
+INSERT INTO order_item (id, article_id, order_id, quantity) VALUES (5, 5, 3, 12) ON CONFLICT DO NOTHING;
+INSERT INTO order_item (id, article_id, order_id, quantity) VALUES (6, 1, 4, 3) ON CONFLICT DO NOTHING;
+INSERT INTO order_item (id, article_id, order_id, quantity) VALUES (7, 1, 5, 8) ON CONFLICT DO NOTHING;
+INSERT INTO order_item (id, article_id, order_id, quantity) VALUES (8, 2, 5, 1) ON CONFLICT DO NOTHING;
+INSERT INTO order_item (id, article_id, order_id, quantity) VALUES (9, 3, 5, 1) ON CONFLICT DO NOTHING;
+INSERT INTO order_item (id, article_id, order_id, quantity) VALUES (10, 4, 5, 5) ON CONFLICT DO NOTHING;
+INSERT INTO order_item (id, article_id, order_id, quantity) VALUES (11, 5, 5, 28) ON CONFLICT DO NOTHING;
+
 
 INSERT INTO provider (id, name) VALUES (1, 'DHL') ON CONFLICT DO NOTHING;
 
