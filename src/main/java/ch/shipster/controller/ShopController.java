@@ -40,6 +40,9 @@ public class ShopController {
     @Autowired
     CheckoutService checkoutService;
 
+    @Autowired
+    ProviderService providerService;
+
     @GetMapping(path = "shop")
     public String getShopView(Model model) {
         Optional<User> user = userService.getCurrentUser();
@@ -101,17 +104,19 @@ public class ShopController {
             int distance = DistanceCalculator.calculateDistance(address);
             int paletSpace = (int) Math.ceil(product.getPalletSpace());
             Cost cost = costService.getCheapestCost(distance, paletSpace);
+            Provider provider = providerService.getProviderById(cost.getProviderId());
             model.addAttribute("distance", distance);
             model.addAttribute("price", cost.getPrice());
             model.addAttribute("product", product);
             model.addAttribute("user", user.get());
+            model.addAttribute("provider_id", provider.getId());
         }
         return "shop/article";
     }
 
 
     @GetMapping(path = "shop/express/article")
-    public String getExpressArticleView(@RequestParam Long articleId, @RequestParam(required = false, name = "message") String message, Model model) throws
+    public String getExpressArticleView(@RequestParam Long articleId, Model model) throws
             IOException, InterruptedException {
         Optional<User> user = userService.getCurrentUser();
         if (user.isEmpty()) {
@@ -122,49 +127,54 @@ public class ShopController {
             int distance = DistanceCalculator.calculateDistance(address);
             int paletSpace = (int) Math.ceil(product.getPalletSpace());
             Cost cost = costService.getMostExpensiveCost(distance, paletSpace);
+            Provider provider = providerService.getProviderById(cost.getProviderId());
             model.addAttribute("distance", distance);
             model.addAttribute("price", cost.getPrice());
             model.addAttribute("product", product);
             model.addAttribute("user", user.get());
-            if(message != null) {
-                model.addAttribute("message", message);
-            }
-
+            model.addAttribute("provider_id", provider.getId());
         }
         return "shop/article";
     }
 
     @GetMapping(path = "shop/article/add")
-    public String addArticle(@RequestParam Long articleId, @RequestParam Long orderId, RedirectAttributes redirectAttributes) throws Exception {
+    public String addArticle(@RequestParam Long articleId, @RequestParam Long orderId, @RequestParam(name = "provider_id", required = false) Long providerId, RedirectAttributes redirectAttributes) throws Exception {
         orderItemService.add(articleId, orderId);
         redirectAttributes.addAttribute("message", "Product added to basket");
+        redirectAttributes.addAttribute("provider_id", providerId);
         return "redirect:/shop/basket";
     }
 
     @GetMapping(path = "shop/article/remove")
-    public String removeArticle(@RequestParam Long articleId, @RequestParam Long orderId, RedirectAttributes redirectAttributes) throws Exception {
+    public String removeArticle(@RequestParam Long articleId, @RequestParam Long orderId, @RequestParam(name = "provider_id", required = false) Long providerId, RedirectAttributes redirectAttributes) throws Exception {
         orderItemService.remove(articleId, orderId);
         redirectAttributes.addAttribute("message", "Product removed from basket");
+        redirectAttributes.addAttribute("provider_id", providerId);
         return "redirect:/shop/basket";
     }
 
 
     @GetMapping(path = "shop/basket")
-    public String getBasket(Model model) throws Exception {
+    public String getBasket(@RequestParam(name = "provider_id", required = false) Long providerId, Model model) throws Exception {
         Optional<User> user = userService.getCurrentUser();
         if (user.isEmpty()) {
             return "user/login";
         } else {
+            if(providerId == null) {
+                providerId = 2L;
+            }
             Order order = orderService.getBasketByUser(user.get());
             List<Article> articles = orderService.getArticlesInBasket(user.get().getUserId());
             List<OrderItem> orderItems = orderService.getOrderItems(order);
             Float articlesTotalPrice = checkoutService.calculateTotalOrderPrice(order);
-            Float totalPrice = checkoutService.calculateTotalOrderPriceWithShipping(order);
+            Float totalPrice = checkoutService.calculateTotalOrderPriceWithShipping(order, providerId);
+            Provider provider = providerService.getProviderById(providerId);
             model.addAttribute("order", order);
             model.addAttribute("articles", articles);
             model.addAttribute("orderItems", orderItems);
             model.addAttribute("articlesTotalPrice", articlesTotalPrice);
             model.addAttribute("totalPrice", totalPrice);
+            model.addAttribute("provider", provider);
             model.addAttribute("user", user.get());
             return "shop/basket";
         }

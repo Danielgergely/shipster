@@ -679,3 +679,9 @@ hr.rounded {
     padding: 5px;
     color: #ffc800;
 }
+
+.provider {
+    font-style: italic;
+    margin-top: -8px;
+    margin-bottom: 5px;
+}

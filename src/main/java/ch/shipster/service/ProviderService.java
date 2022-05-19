@@ -4,6 +4,7 @@ import ch.shipster.data.domain.Provider;
 import ch.shipster.data.repository.ProviderRepository;
 import javassist.bytecode.DuplicateMemberException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.core.support.PropertiesBasedNamedQueries;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -65,5 +66,9 @@ public class ProviderService {
             ShipsterLogger.logger.error("Multiple Provider under the Name" + name);
             throw new DuplicateMemberException("Multiple Provider under the Name" + name);
         }
+    }
+
+    public Provider getProviderById(Long id) {
+        return providerRepository.getById(id);
     }
 }

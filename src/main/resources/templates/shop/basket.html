@@ -29,7 +29,8 @@
                     </div>
                     <div class="basket column quantity">
                         <div class="counter-btn-group">
-                            <div class="counter-btn d-flex" th:onclick="'window.location.href=\'article/remove?articleId=' + ${article.getId()} + '&orderId=' + ${order.getId()} + '\''">
+                            <div class="counter-btn d-flex"
+                                 th:onclick="'window.location.href=\'article/remove?articleId=' + ${article.getId()} + '&orderId=' + ${order.getId()} + '\''">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                      class="bi bi-dash-circle" viewBox="0 0 16 16">
                                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
@@ -37,7 +38,8 @@
                                 </svg>
                             </div>
                             <div class="m-2" th:text="${orderItems[iterator.index].getQuantity()}"></div>
-                            <div class="counter-btn d-flex" th:onclick="'window.location.href=\'article/add?articleId=' + ${article.getId()} + '&orderId=' + ${order.getId()} + '\''">
+                            <div class="counter-btn d-flex"
+                                 th:onclick="'window.location.href=\'article/add?articleId=' + ${article.getId()} + '&orderId=' + ${order.getId()} + '\''">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                      class="bi bi-plus-circle" viewBox="0 0 16 16">
                                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
@@ -47,12 +49,12 @@
                         </div>
                     </div>
                     <div class="basket column price">
-                        <h6 th:text="${#numbers.formatDecimal(article.getPrice() * orderItems[iterator.index].getQuantity(), 0, 2)}" ></h6> <!--GET Subtotal Price (Quantity * Product Price)-->
+                        <h6 th:text="${#numbers.formatDecimal(article.getPrice() * orderItems[iterator.index].getQuantity(), 0, 2)}"></h6>
+                        <!--GET Subtotal Price (Quantity * Product Price)-->
                     </div>
                 </div>
 
                 <p></p> <!-- division line -->
-                <hr class="rounded">
 
                 <!-- Shipping Total, Product Subtotal, Order Total" -->
                 <div class="row">
@@ -61,6 +63,7 @@
                     <div class="basket column product-basket">
                         <h6>Product Total</h6>
                         <h6>Shipping Total</h6>
+                        <div class="provider">Provider</div>
                         <h4>Total</h4>
                     </div>
                     <div class="basket column spacer">
@@ -68,9 +71,25 @@
                     <div class="basket column quantity">
                     </div>
                     <div class="basket column price">
-                        <h6 th:text="${#numbers.formatDecimal(articlesTotalPrice, 0, 2)}" ></h6>
+                        <h6 th:text="${#numbers.formatDecimal(articlesTotalPrice, 0, 2)}"></h6>
                         <h6 th:text="${#numbers.formatDecimal(totalPrice - articlesTotalPrice, 0, 2)}"></h6>
-                        <h4 th:text="${#numbers.formatDecimal(totalPrice, 0, 2)}" ></h4>
+                        <div>
+                            <fieldset>
+                                <div class="provider d-flex justify-content-around">
+                                    <div th:onclick="'window.location.href=\'/shop/basket?provider_id=2'+ '\''">
+                                        <input type="radio" name="provider_id" value="2" id="post"
+                                               th:checked="${provider.getId() eq 2}"/>
+                                        <label for="post">Post</label>
+                                    </div>
+                                    <div th:onclick="'window.location.href=\'/shop/basket?provider_id=1'+ '\''">
+                                        <input type="radio" name="provider_id" value="1" id="dhl"
+                                               th:checked="${provider.getId() eq 1}"/>
+                                        <label for="dhl">DHL</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <h4 th:text="${#numbers.formatDecimal(totalPrice, 0, 2)}"></h4>
                     </div>
                 </div>
 
@@ -81,4 +100,14 @@
 </div>
 
 </body>
+
+<script>
+
+    function provider(id) {
+        let url = "/shop/basket?provider_id=" + id
+        $.ajax(
+
+        )
+    }
+</script>
 </html>
