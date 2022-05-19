@@ -8,6 +8,7 @@ import ch.shipster.data.repository.ArticleRepository;
 import ch.shipster.data.repository.OrderItemRepository;
 import ch.shipster.data.repository.OrderRepository;
 import ch.shipster.exceptions.NotFoundException;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,13 +30,13 @@ public class OrderItemService {
     ArticleRepository articleRepository;
 
 
-    public List<OrderItem> getAllByOrderId(String orderId){
+    public List<OrderItem> getAllByOrderId(Long orderId){
         return orderItemRepository.getAllByOrderId(orderId);
     }
 
     //Get OrderItem if not exists
 
-    public OrderItem getOrderItem(String articleId, String orderId) throws Exception {
+    public OrderItem getOrderItem(Long articleId, Long orderId) throws Exception {
 
         if (!articleRepository.existsById(articleId)) {
             ShipsterLogger.logger.error("Article ID (" + articleId + ") not found");
@@ -45,11 +46,11 @@ public class OrderItemService {
             throw new Exception("Order ID (" + orderId + ") not found");
         }
 
-        OrderItem out = new OrderItem(articleId, orderId, 1);
-        List<OrderItem> existingOI = orderItemRepository.getAllByArticleIdAndAndOrderId("AI_" + articleId, "OI_" +orderId);
+        OrderItem out = new OrderItem(articleId, orderId, 0);
+        List<OrderItem> existingOI = orderItemRepository.getAllByArticleIdAndAndOrderId(articleId, orderId);
 
         if (existingOI.size() == 0) {
-            if (orderRepository.findById(orderId).orElseThrow().getOrderStatus() != OrderStatus.BASKET) {
+            if (orderRepository.getById(orderId).getOrderStatus() != OrderStatus.BASKET) {
                 ShipsterLogger.logger.error("Order Item for Article ID (" + articleId + ") does not exist for Order ID (" + orderId + ") and the order is not of the status BASKET");
                 throw new Exception("Order Item for Article ID (" + articleId + ") does not exist for Order ID (" + orderId + ") and the order is not of the status BASKET");
             } else {
@@ -67,7 +68,7 @@ public class OrderItemService {
     }
 
     public OrderItem getOrderItem(Order order, Article article) throws Exception {
-        return getOrderItem(article.getFullId(), order.getFullId());
+        return getOrderItem(article.getId(), order.getId());
     }
 
 
@@ -91,9 +92,8 @@ public class OrderItemService {
     }
 
     public void add(Long articleId, Long orderId, int inQuantity) throws Exception {
-        Article article = articleRepository.findById("AI_" + articleId).orElseThrow();
-        Order order = orderRepository.findById("OI_" + orderId).orElseThrow();
-        add(article, order, inQuantity);
+        Article article = articleRepository.getById(articleId);
+        add(article, orderRepository.getById(orderId), inQuantity);
     }
 
     public void add(Article article, Order order) throws Exception {
@@ -115,7 +115,7 @@ public class OrderItemService {
 
     public void removeAll(Long articleId, Long orderId) throws Exception {
         Order order = orderRepository.findById(orderId).orElse(null);
-        List<OrderItem> oiList = orderItemRepository.getAllByArticleIdAndAndOrderId("AI_" + articleId, "OI_" + orderId);
+        List<OrderItem> oiList = orderItemRepository.getAllByArticleIdAndAndOrderId(articleId, orderId);
 
         if (order == null) {
             ShipsterLogger.logger.error("Order ID (" + orderId + ") not found");
