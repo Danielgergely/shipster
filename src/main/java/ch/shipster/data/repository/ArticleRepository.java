@@ -14,8 +14,6 @@ import java.util.Optional;
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
-    @Override
-    @NotNull
-    Article getById(@NotNull Long id);
+    Article getArticleById(Long id);
     List<Article> findAllByName(String name);
 }

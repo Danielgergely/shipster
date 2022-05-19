@@ -10,7 +10,7 @@ public class Address {
 
     /// ID
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /// Attributes

@@ -11,8 +11,7 @@ public class Article{
 
     /// ID
     @Id
-    @SequenceGenerator(name = "article_id_seq", sequenceName = "article_id_seq", allocationSize = 1)
-    @GeneratedValue(generator = "article_id_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /// Attributes

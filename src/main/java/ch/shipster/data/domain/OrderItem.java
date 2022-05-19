@@ -18,8 +18,7 @@ public class OrderItem {
 
     /// ID
     @Id
-    @SequenceGenerator(name = "order_item_id_seq", sequenceName = "order_item_id_seq", allocationSize = 1)
-    @GeneratedValue(generator = "order_item_id_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /// Attributes

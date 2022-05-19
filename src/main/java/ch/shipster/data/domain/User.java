@@ -14,7 +14,7 @@ public class User {
 
     /// ID
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
     /// Attributes

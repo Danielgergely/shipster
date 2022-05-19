@@ -11,8 +11,7 @@ public class Order {
 
     /// ID
     @Id
-    @SequenceGenerator(name = "order_id_seq", sequenceName = "order_id_seq", allocationSize = 1)
-    @GeneratedValue(generator = "order_id_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /// Attributes
