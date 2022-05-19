@@ -25,7 +25,7 @@ public class ShippingCostCalculator {
     @Autowired
     OrderItemService orderItemService;
 
-    public float costCalculation (long orderid) throws IOException, InterruptedException {
+    public float costCalculation(long orderid) throws IOException, InterruptedException {
         Address currentAddress = orderService.getUserAddress(orderid);
         List<OrderItem> sco = orderService.getOrderItems(orderid);
         /*
@@ -40,7 +40,7 @@ public class ShippingCostCalculator {
         return costService.getCheapestCost(distance, requiredPallets).getPrice();
     }
 
-    public float costCalculation (long orderid, Long providerId) throws IOException, InterruptedException {
+    public float costCalculation(long orderid, Long providerId) throws IOException, InterruptedException {
         Address currentAddress = orderService.getUserAddress(orderid);
         List<OrderItem> sco = orderService.getOrderItems(orderid);
         /*
@@ -91,33 +91,45 @@ public class ShippingCostCalculator {
         }
 */
 
-   //New version of pallet calculation
-   private int requiredPallets2(List <OrderItem> sco){
-       Article currentArticle;
-       float palletsRequired = 0;
-       float spaceLeft = 0;
-       float tempMinPalletSpace = 0;
+    //New version of pallet calculation
+    private int requiredPallets2(List<OrderItem> sco) {
+        float palletsRequired = 0;
+        float spaceLeft = 0;
+        float tempMinPalletSpace = 0;
 
-       while (sco == null){
-           for (OrderItem i : sco) {
-               currentArticle = orderItemService.getArticle(i);
-               if (tempMinPalletSpace < currentArticle.getPalletSpace()) {
-                   tempMinPalletSpace = currentArticle.getPalletSpace();
-               }
-               else {
-                   palletsRequired = palletsRequired + tempMinPalletSpace;
-                   spaceLeft = palletsRequired - (i.getQuantity() * orderItemService.getArticle(i).getPalletProductRatio());
-                   sco.remove(i);
-               }
-               for (OrderItem j : sco){
-                   //currentArticle = orderItemService.getArticle(j);
-                   if (spaceLeft <= (j.getQuantity() * orderItemService.getArticle(i).getPalletProductRatio())){
-                       palletsRequired = palletsRequired + (j.getQuantity() * orderItemService.getArticle(i).getPalletProductRatio());
-                       sco.remove(j);
-                   }
-               }
-           }
-       }
-       return (int)Math.ceil(palletsRequired);
-   }
+        // while (sco == null){
+        for (OrderItem i : sco) {
+            Article currentArticle = orderItemService.getArticle(i);
+            if (tempMinPalletSpace < currentArticle.getPalletSpace()) {
+                tempMinPalletSpace = currentArticle.getPalletSpace();
+            } else {
+                palletsRequired = palletsRequired + tempMinPalletSpace;
+                spaceLeft = palletsRequired - (i.getQuantity() * orderItemService.getArticle(i).getPalletProductRatio());
+                sco.remove(i);
+            }
+            palletsRequired = palletsRequired(sco, i, spaceLeft);
+//            for (OrderItem j : sco) {
+//                //currentArticle = orderItemService.getArticle(j);
+//                float spaceNeeded = j.getQuantity() * orderItemService.getArticle(i).getPalletProductRatio();
+//                if (spaceLeft <= spaceNeeded) {
+//                    palletsRequired = palletsRequired + (j.getQuantity() * orderItemService.getArticle(i).getPalletProductRatio());
+//                    sco.remove(j);
+//                }
+//            }
+        }
+        //  }
+        return (int) Math.ceil(palletsRequired);
+    }
+
+
+    public float palletsRequired(List<OrderItem> orderItems, OrderItem oI, float spaceLeft) {
+        float palletsRequired = 0;
+        for(OrderItem orderItem : orderItems){
+            float spaceNeeded = orderItem.getQuantity() * orderItemService.getArticle(oI).getPalletProductRatio();
+            if(spaceLeft <= spaceNeeded) {
+                palletsRequired = palletsRequired + spaceNeeded;
+            }
+        }
+        return palletsRequired;
+    }
 }

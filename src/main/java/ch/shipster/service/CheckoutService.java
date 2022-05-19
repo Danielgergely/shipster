@@ -1,7 +1,6 @@
 package ch.shipster.service;
 
 
-
 import ch.shipster.data.domain.Order;
 import ch.shipster.data.domain.OrderItem;
 import ch.shipster.data.domain.OrderStatus;
@@ -23,21 +22,22 @@ public class CheckoutService {
     ShippingCostCalculator shippingCostCalculator;
 
     public void setOrderStatusCancel(Order order) throws Exception {
-      if (order.getOrderStatus() == OrderStatus.BASKET || order.getOrderStatus() == OrderStatus.ORDERED){
-          order.setOrderStatus(OrderStatus.CANCELED);
-          order.setCancellationDate(new Date());
-          order.setLastUpdateDate(new Date());
-          orderService.saveOrder(order);
-      } else{
-          ShipsterLogger.logger.error("The Order " + order.getId() + " in Status " + order.getOrderStatus().name() +
-                  " from User with ID " + order.getUserId() + "cannot be set to cancelled as the current Status is" + order.getOrderStatus().name());
-          throw new Exception("The Order " + order.getId() + " in Status " + order.getOrderStatus().name() +
-                  " from User with ID " + order.getUserId() + "cannot be set to cancelled as the current Status is" + order.getOrderStatus().name());
+        if (order.getOrderStatus() == OrderStatus.BASKET || order.getOrderStatus() == OrderStatus.ORDERED) {
+            order.setOrderStatus(OrderStatus.CANCELED);
+            order.setCancellationDate(new Date());
+            order.setLastUpdateDate(new Date());
+            orderService.saveOrder(order);
+        } else {
+            ShipsterLogger.logger.error("The Order " + order.getId() + " in Status " + order.getOrderStatus().name() +
+                    " from User with ID " + order.getUserId() + "cannot be set to cancelled as the current Status is" + order.getOrderStatus().name());
+            throw new Exception("The Order " + order.getId() + " in Status " + order.getOrderStatus().name() +
+                    " from User with ID " + order.getUserId() + "cannot be set to cancelled as the current Status is" + order.getOrderStatus().name());
 
-      }
+        }
     }
+
     public void setOrderStatusOrdered(Order order) throws Exception {
-        if (order.getOrderStatus() == OrderStatus.BASKET){
+        if (order.getOrderStatus() == OrderStatus.BASKET) {
             order.setOrderStatus(OrderStatus.ORDERED);
             order.setOrderDate(new Date());
             order.setLastUpdateDate(new Date());
@@ -51,7 +51,7 @@ public class CheckoutService {
     }
 
     public void setOrderStatusShipped(Order order) throws Exception {
-        if (order.getOrderStatus() == OrderStatus.ORDERED){
+        if (order.getOrderStatus() == OrderStatus.ORDERED) {
             order.setOrderStatus(OrderStatus.SHIPPED);
             order.setShippingDate(new Date());
             order.setLastUpdateDate(new Date());
@@ -63,14 +63,15 @@ public class CheckoutService {
                     " from User with ID " + order.getUserId() + "cannot be set to Shipped as the current Status is" + order.getOrderStatus().name());
         }
     }
+
     public void setOrderStatusDelivered(Order order) throws Exception {
-        if (order.getOrderStatus() == OrderStatus.SHIPPED){
+        if (order.getOrderStatus() == OrderStatus.SHIPPED) {
             order.setOrderStatus(OrderStatus.DELIVERED);
             order.setDeliveryDate(new Date());
             order.setLastUpdateDate(new Date());
             orderService.saveOrder(order);
 
-        }else{
+        } else {
             ShipsterLogger.logger.error("The Order " + order.getId() + " in Status " + order.getOrderStatus().name() +
                     " from User with ID " + order.getUserId() + "cannot be set to Delivered as the current Status is" + order.getOrderStatus().name());
             throw new Exception("The Order " + order.getId() + " in Status " + order.getOrderStatus().name() +
@@ -83,7 +84,7 @@ public class CheckoutService {
     /// Calculate Total Order Price withOUT Shipping
     public float calculateTotalOrderPrice(Order order) {
         float price = 0;
-        for(OrderItem o : orderService.getOrderItems(order)){
+        for (OrderItem o : orderService.getOrderItems(order)) {
             float intermediary = orderItemService.getArticle(o).getPrice() * o.getQuantity();
             price = price + intermediary;
         }
@@ -98,14 +99,12 @@ public class CheckoutService {
     /// Calculate Total Order Price with Shipping
     public float calculateTotalOrderPriceWithShipping(Order order) throws IOException, InterruptedException {
 
-        float price = calculateTotalOrderPrice(order) + shippingCostCalculator.costCalculation(order.getId());
-
-        return price;
+        float price = calculateTotalOrderPrice(order);
+        float shippingCost = shippingCostCalculator.costCalculation(order.getId());
+        return price + shippingCost;
     }
 
     public float calculateTotalOrderPriceWithShipping(Long orderId) throws IOException, InterruptedException {
-
-
         return calculateTotalOrderPriceWithShipping(orderService.getOrderById(orderId));
     }
 
