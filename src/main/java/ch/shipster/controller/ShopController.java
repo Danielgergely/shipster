@@ -4,9 +4,9 @@ import ch.shipster.data.domain.*;
 import ch.shipster.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ConcurrentModel;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.List;
@@ -86,7 +86,7 @@ public class ShopController {
         } else {
             Order order = orderService.getBasketByUser(user.get());
             orderItemService.add(articleId, order.getId());
-            return "{\"success\":1}";
+            return "{\"message\":\"Product removed from basket\"}";
         }
     }
 
@@ -111,7 +111,7 @@ public class ShopController {
 
 
     @GetMapping(path = "shop/express/article")
-    public String getExpressArticleView(@RequestParam Long articleId, Model model) throws
+    public String getExpressArticleView(@RequestParam Long articleId, @RequestParam(required = false, name = "message") String message, Model model) throws
             IOException, InterruptedException {
         Optional<User> user = userService.getCurrentUser();
         if (user.isEmpty()) {
@@ -126,26 +126,25 @@ public class ShopController {
             model.addAttribute("price", cost.getPrice());
             model.addAttribute("product", product);
             model.addAttribute("user", user.get());
+            if(message != null) {
+                model.addAttribute("message", message);
+            }
+
         }
         return "shop/article";
     }
 
-//    @PutMapping(path = "shop/article/order")
-//    public void addItemToBasket(@RequestParam Long userId, @RequestParam Long articleId, Model model) throws Exception {
-//        User user = userService.findById(userId);
-//        Order order = orderService.getBasketByUser(user);
-//        orderItemService.add(articleId, order.getId());
-//    }
-
     @GetMapping(path = "shop/article/add")
-    public String addArticle(@RequestParam Long articleId, @RequestParam Long orderId) throws Exception {
+    public String addArticle(@RequestParam Long articleId, @RequestParam Long orderId, RedirectAttributes redirectAttributes) throws Exception {
         orderItemService.add(articleId, orderId);
+        redirectAttributes.addAttribute("message", "Product added to basket");
         return "redirect:/shop/basket";
     }
 
     @GetMapping(path = "shop/article/remove")
-    public String removeArticle(@RequestParam Long articleId, @RequestParam Long orderId) throws Exception {
+    public String removeArticle(@RequestParam Long articleId, @RequestParam Long orderId, RedirectAttributes redirectAttributes) throws Exception {
         orderItemService.remove(articleId, orderId);
+        redirectAttributes.addAttribute("message", "Product removed from basket");
         return "redirect:/shop/basket";
     }
 

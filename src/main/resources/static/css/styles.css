@@ -663,3 +663,12 @@ hr.rounded {
 .counter-btn {
     cursor: pointer;
 }
+
+.fade-message {
+    position: absolute;
+    top: 20vh;
+    font-size: xx-large;
+    display: flex;
+    justify-content: center;
+    background-color: #bbbbbb;
+}
