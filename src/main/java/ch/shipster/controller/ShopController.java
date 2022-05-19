@@ -130,6 +130,13 @@ public class ShopController {
         return "shop/article";
     }
 
+//    @PutMapping(path = "shop/article/order")
+//    public void addItemToBasket(@RequestParam Long userId, @RequestParam Long articleId, Model model) throws Exception {
+//        User user = userService.findById(userId);
+//        Order order = orderService.getBasketByUser(user);
+//        orderItemService.add(articleId, order.getId());
+//    }
+
     @GetMapping(path = "shop/article/add")
     public String addArticle(@RequestParam Long articleId, @RequestParam Long orderId) throws Exception {
         orderItemService.add(articleId, orderId);
@@ -150,7 +157,7 @@ public class ShopController {
             return "user/login";
         } else {
             Order order = orderService.getBasketByUser(user.get());
-            List<Article> articles = orderService.getArticlesInBasket(user.get().getFullUserId());
+            List<Article> articles = orderService.getArticlesInBasket(user.get().getUserId());
             List<OrderItem> orderItems = orderService.getOrderItems(order);
             Float articlesTotalPrice = checkoutService.calculateTotalOrderPrice(order);
             Float totalPrice = checkoutService.calculateTotalOrderPriceWithShipping(order);

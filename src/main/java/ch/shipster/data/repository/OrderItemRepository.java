@@ -14,10 +14,10 @@ import java.util.Optional;
 @Repository
 public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
 
-    List<OrderItem> getAllByArticleIdAndAndOrderId(String articleId, String orderId);
+    List<OrderItem> getAllByArticleIdAndAndOrderId(Long articleId, Long orderId);
 
-    List<OrderItem> getAllByArticleId(String articleId);
+    List<OrderItem> getAllByArticleId(Long articleId);
 
-    List<OrderItem> getAllByOrderId(String orderId);
+    List<OrderItem> getAllByOrderId(Long orderId);
 
 }

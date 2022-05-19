@@ -21,8 +21,8 @@ public class AddressService {
     @Autowired
     UserService userService;
 
-    public Address findAddressById(String id) {
-        Optional<Address> address = addressRepository.findAddressById(id);
+    public Address findAddressById(Long id) {
+        Optional<Address> address = addressRepository.findById(id);
         if (address.isEmpty()) {
             ShipsterLogger.logger.error("No address found for id: " + id);
             throw new NotFoundException("No address found for id: " + id);

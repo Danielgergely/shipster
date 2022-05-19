@@ -2,8 +2,6 @@ package ch.shipster.data.domain;
 
 //Timo
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 
 @Entity
@@ -12,14 +10,11 @@ public class Cost {
 
     /// ID
     @Id
-    @GeneratedValue(generator = "costId-generator")
-    @GenericGenerator(name = "costId-generator",
-            parameters = @org.hibernate.annotations.Parameter(name = "prefix", value = "CI"),
-            strategy = "ch.shipster.util.ShipsterIdGenerator")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     /// Attributes
-    private String providerId;
+    private Long providerId;
     private int km;
     private int pallet;
     private float price;
@@ -27,14 +22,14 @@ public class Cost {
     /// Constructor
 
     public Cost(Long providerId, int km, int pallet, float price) {
-        this.providerId = "PI_" + providerId;
+        this.providerId = providerId;
         this.km = km;
         this.pallet = pallet;
         this.price = price;
     }
 
     public Cost(Provider provider, int km, int pallet, float price) {
-        this.providerId = "PI_" + provider.getId();
+        this.providerId = provider.getId();
         this.km = km;
         this.pallet = pallet;
         this.price = price;
@@ -49,19 +44,19 @@ public class Cost {
     /// Getters & Setters
 
     public Long getId() {
-        return Long.parseLong(id.substring(id.indexOf("_")+1));
-    }
-
-    public String getFullId() {
         return id;
     }
 
-    public String getProviderId() {
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getProviderId() {
         return providerId;
     }
 
     public void setProviderId(Long providerId) {
-        this.providerId = "PI_" + providerId;
+        this.providerId = providerId;
     }
 
     public int getKm() {

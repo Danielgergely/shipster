@@ -5,7 +5,6 @@ package ch.shipster.data.domain;
 import javax.persistence.*;
 
 import ch.shipster.security.ShipsterUserRole;
-import org.hibernate.annotations.GenericGenerator;
 
 //Timo
 
@@ -15,11 +14,8 @@ public class User {
 
     /// ID
     @Id
-    @GeneratedValue(generator = "userId-generator")
-    @GenericGenerator(name = "userId-generator",
-            parameters = @org.hibernate.annotations.Parameter(name = "prefix", value = "UI"),
-            strategy = "ch.shipster.util.ShipsterIdGenerator")
-    private String userId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userId;
 
     /// Attributes
     private String userName;
@@ -27,7 +23,7 @@ public class User {
     private String lastName;
     private String email;
     private String password;
-    private String addressId;
+    private Long addressId;
     private String gender;
     private String roles;
 
@@ -44,23 +40,6 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.addressId = "ADI" + addressId;
-        this.gender = gender;
-        this.roles = "USER";
-    }
-
-    public User(String userName,
-                String firstName,
-                String lastName,
-                String email,
-                String password,
-                String addressId,
-                String gender) {
-        this.userName = userName;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
         this.addressId = addressId;
         this.gender = gender;
         this.roles = "USER";
@@ -71,14 +50,6 @@ public class User {
 
     /// Getters & Setters
     public Long getUserId() {
-        if(userId == null) {
-            return null;
-        }else {
-            return Long.parseLong(userId.substring(userId.indexOf("_") + 1));
-        }
-    }
-
-    public String getFullUserId() {
         return userId;
     }
 
@@ -122,12 +93,12 @@ public class User {
         this.password = password;
     }
 
-    public String getAddressId() {
+    public Long getAddressId() {
         return addressId;
     }
 
     public void setAddressId(Long addressId) {
-        this.addressId = "ADI" + addressId;
+        this.addressId = addressId;
     }
 
     public String getGender() {

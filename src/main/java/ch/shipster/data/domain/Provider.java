@@ -1,7 +1,5 @@
 package ch.shipster.data.domain;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 
 //Timo
@@ -12,11 +10,8 @@ public class Provider {
 
     /// ID
     @Id
-    @GeneratedValue(generator = "providerId-generator")
-    @GenericGenerator(name = "providerId-generator",
-            parameters = @org.hibernate.annotations.Parameter(name = "prefix", value = "PI"),
-            strategy = "ch.shipster.util.ShipsterIdGenerator")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     /// Attributes
     private String name;
@@ -36,11 +31,11 @@ public class Provider {
     /// Getters & Setters
 
     public Long getId() {
-        return Long.parseLong(id.substring(id.indexOf("_")+1));
+        return id;
     }
 
-    public String getFullId() {
-        return id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

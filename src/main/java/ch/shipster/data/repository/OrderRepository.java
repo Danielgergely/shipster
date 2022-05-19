@@ -15,13 +15,9 @@ import java.util.Optional;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    boolean existsById(String id);
+    List<Order> getAllByUserId(Long Id);
 
-    Optional<Order> findById(String orderId);
-
-    List<Order> getAllByUserId(String Id);
-
-    List<Order> getAllByUserIdAndOrderStatus(String userId, String orderStatus);
+    List<Order> getAllByUserIdAndOrderStatus(Long orderId, String orderStatus);
 
     List<Order> getAllByOrderStatus(String orderStatus);
 
