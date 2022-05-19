@@ -1,6 +1,7 @@
 package ch.shipster.data.domain;
 
 
+import org.hibernate.annotations.GenericGenerator;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -13,8 +14,11 @@ public class Article{
 
     /// ID
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "articleId-generator")
+    @GenericGenerator(name = "articleId-generator",
+            parameters = @org.hibernate.annotations.Parameter(name = "prefix", value = "AI"),
+            strategy = "ch.shipster.util.ShipsterIdGenerator")
+    private String id;
 
     /// Attributes
     private String name;
@@ -48,12 +52,13 @@ public class Article{
     /// Getter & Setter
 
     public Long getId() {
+        return Long.parseLong(id.substring(id.indexOf("_")+1));
+    }
+
+    public String getFullId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

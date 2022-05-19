@@ -28,7 +28,7 @@ public class OrderService {
     AddressRepository addressRepository;
 
     /// Get Order Lists
-    public List<Order> getOrdersByUserId(Long userId) {
+    public List<Order> getOrdersByUserId(String userId) {
         return orderRepository.getAllByUserId(userId);
     }
 
@@ -37,7 +37,7 @@ public class OrderService {
     }
 
     /// Get Basket (order with state Basket)
-    public Order getBasketByUser(Long userId) throws Exception {
+    public Order getBasketByUser(String userId) throws Exception {
         Order outOrder = new Order(userId);
         List<Order> existingBaskets = orderRepository.getAllByUserIdAndOrderStatus(userId, OrderStatus.BASKET.name());
 
@@ -53,12 +53,12 @@ public class OrderService {
     }
 
     public Order getBasketByUser(User user) throws Exception {
-        return getBasketByUser(user.getUserId());
+        return getBasketByUser(user.getFullUserId());
     }
 
     /// get related User
     public User getUser(Order order) {
-        return userRepository.getById(order.getUserId());
+        return userRepository.getByUserId(order.getUserId());
     }
 
     public User getUser(Long orderId) {
@@ -67,33 +67,33 @@ public class OrderService {
 
     /// get related User Address
     public Address getUserAddress(Order order) {
-        return addressRepository.findById(userRepository.getById(order.getUserId()).getAddressId()).orElseThrow();
+        return addressRepository.findAddressById(userRepository.getByUserId(order.getUserId()).getAddressId()).orElseThrow();
     }
 
-    public Address getUserAddress(Long orderId) {
-        return getUserAddress(orderRepository.getById(orderId));
+    public Address getUserAddress(String orderId) {
+        return getUserAddress(orderRepository.findById(orderId).orElseThrow());
     }
 
     /// Get related Order Items
     public List<OrderItem> getOrderItems(Order order) {
-        List<OrderItem> orderItems = orderItemService.getAllByOrderId(order.getId());
+        List<OrderItem> orderItems = orderItemService.getAllByOrderId(order.getFullId());
         orderItems.sort(Comparator.comparing(OrderItem::getArticleId));
         return orderItems;
     }
 
-    public List<OrderItem> getOrderItems(Long orderId) {
-        return getOrderItems(orderRepository.getById(orderId));
+    public List<OrderItem> getOrderItems(String orderId) {
+        return getOrderItems(orderRepository.findById(orderId).orElseThrow());
     }
 
-    public List<OrderItem> getOrderItemsInBasket(Long userId) throws Exception {
+    public List<OrderItem> getOrderItemsInBasket(String userId) throws Exception {
         return getOrderItems(getBasketByUser(userId));
     }
 
     public List<OrderItem> getOrderItemsInBasket(User user) throws Exception {
-        return getOrderItems(getBasketByUser(user.getUserId()));
+        return getOrderItems(getBasketByUser(user.getFullUserId()));
     }
 
-    public List<Article> getArticlesInBasket(Long userId) throws Exception {
+    public List<Article> getArticlesInBasket(String userId) throws Exception {
         List<Article> outArticles = new ArrayList<>();
 
         for (OrderItem i : getOrderItemsInBasket(userId)) {

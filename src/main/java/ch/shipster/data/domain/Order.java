@@ -2,6 +2,7 @@ package ch.shipster.data.domain;
 
 
 import ch.shipster.data.repository.OrderItemRepository;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
@@ -15,11 +16,14 @@ public class Order {
 
     /// ID
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "orderId-generator")
+    @GenericGenerator(name = "orderId-generator",
+            parameters = @org.hibernate.annotations.Parameter(name = "prefix", value = "OI"),
+            strategy = "ch.shipster.util.ShipsterIdGenerator")
+    private String id;
 
     /// Attributes
-    private Long userId;
+    private String userId;
     private String orderStatus;
 
     private Date lastUpdateDate;
@@ -32,7 +36,7 @@ public class Order {
     /// Constructor
 
     public Order(User user){
-        this.userId = user.getUserId();
+        this.userId = "UI_" + user.getUserId();
         this.orderStatus = OrderStatus.BASKET.name();
         this.lastUpdateDate = new Date();
         this.basketDate = new Date();
@@ -43,7 +47,18 @@ public class Order {
 
     }
 
-    public Order(long userId){
+    public Order(Long userId){
+        this.userId = "UI_" + userId;
+        this.orderStatus = OrderStatus.BASKET.name();
+        this.lastUpdateDate = new Date();
+        this.basketDate = new Date();
+        this.orderDate = new Date(0);
+        this.shippingDate = new Date(0);
+        this.deliveryDate = new Date(0);
+        this.cancellationDate = new Date(0);
+    }
+
+    public Order(String userId){
         this.userId = userId;
         this.orderStatus = OrderStatus.BASKET.name();
         this.lastUpdateDate = new Date();
@@ -72,19 +87,19 @@ public class Order {
 
     /// Getter & Setter
     public Long getId() {
+        return Long.parseLong(id.substring(id.indexOf("_")+1));
+    }
+
+    public String getFullId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setUserId(Long userId) {
+        this.userId = "UI_" + userId;
     }
 
 

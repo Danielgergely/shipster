@@ -25,16 +25,26 @@ public class CostService {
 
     public List<Cost> getCosts(int km, int pallets) {
         List<Cost> inCost = costRepository.findByPallet(pallets);
-        List<Long> providerIds = new ArrayList<Long>();
-        List<Cost> outCost = new ArrayList<Cost>();
+        List<Provider> providers = new ArrayList<>();
+        List<Cost> outCost = new ArrayList<>();
+
 
         for (Cost c : inCost) {
-            if (!(providerIds.contains(c.getProviderId()))) {
-                providerIds.add(c.getProviderId());
+            Provider provider = providerRepository.findById(c.getProviderId());
+            boolean providerPresent = false;
+            if(providers.size() == 0) {
+                providers.add(provider);
+            } else {
+                for(Provider p : providers) {
+                    providerPresent = p.getId().equals(provider.getId());
+                }
+                if (!providerPresent) {
+                    providers.add(provider);
+                }
             }
         }
 
-        for (Provider p : providerRepository.findAllById(providerIds)) {
+        for (Provider p : providers) {
             outCost.add(getCost(p.getId(), km, pallets));
         }
 
@@ -42,7 +52,7 @@ public class CostService {
     }
 
     public Cost getCost(Long providerId, int km, int pallets) {
-        for (Cost c : costRepository.findByProviderIdAndPalletOrderByKmDesc(providerId, pallets)) {
+        for (Cost c : costRepository.findByProviderIdAndPalletOrderByKmDesc("PI_" + providerId, pallets)) {
             if (c.getKm() > km) {
                 return c;
             }
@@ -83,7 +93,7 @@ public class CostService {
 
     public Cost saveCost(Long providerId, int km, int pallet, float price) throws Exception {
         Cost cost;
-        List<Cost> costList= costRepository.findAllByProviderIdAndKmAndPallet(providerId, km, pallet);
+        List<Cost> costList= costRepository.findAllByProviderIdAndKmAndPallet("PI_" + providerId, km, pallet);
 
         if (costList.size() == 0){
             cost = new Cost(providerId, km, pallet, price);

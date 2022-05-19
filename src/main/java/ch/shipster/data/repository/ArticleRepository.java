@@ -13,5 +13,8 @@ import java.util.Optional;
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
+    boolean existsById(String id);
+
+    Optional<Article> findById(String id);
     List<Article> findAllByName(String name);
 }

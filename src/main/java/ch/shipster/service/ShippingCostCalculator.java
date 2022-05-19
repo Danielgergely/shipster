@@ -25,9 +25,9 @@ public class ShippingCostCalculator {
     @Autowired
     OrderItemService orderItemService;
 
-    public float costCalculation (long orderid) throws IOException, InterruptedException {
-        Address currentAddress = orderService.getUserAddress(orderid);
-        List<OrderItem> sco = orderService.getOrderItems(orderid);
+    public float costCalculation (Long orderid) throws IOException, InterruptedException {
+        Address currentAddress = orderService.getUserAddress("OI_" + orderid);
+        List<OrderItem> sco = orderService.getOrderItems("OI_" +orderid);
         float requiredTotalSpace = requiredSpace(sco);
         float minRequiredPallet = minRequiredPallet(sco);
         int requiredPallets = requiredPallets(requiredTotalSpace, minRequiredPallet);
@@ -36,9 +36,9 @@ public class ShippingCostCalculator {
         return costService.getCheapestCost(distance, requiredPallets).getPrice();
     }
 
-    public float costCalculation (long orderid, Long providerId) throws IOException, InterruptedException {
-        Address currentAddress = orderService.getUserAddress(orderid);
-        List<OrderItem> sco = orderService.getOrderItems(orderid);
+    public float costCalculation (Long orderid, Long providerId) throws IOException, InterruptedException {
+        Address currentAddress = orderService.getUserAddress("OI_" + orderid);
+        List<OrderItem> sco = orderService.getOrderItems("OI_" +orderid);
         float requiredTotalSpace = requiredSpace(sco);
         float minRequiredPallet = minRequiredPallet(sco);
         int requiredPallets = requiredPallets(requiredTotalSpace, minRequiredPallet);
