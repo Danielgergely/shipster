@@ -56,7 +56,7 @@ public class OrderItemService {
                 orderItemRepository.save(out);
             }
         }
-        if (existingOI.size() == 1) {
+        else if (existingOI.size() == 1) {
             out = existingOI.get(0);
         } else {
             ShipsterLogger.logger.error("Multiple Order Items for same Article ID (" + articleId + ") and same Order ID (" + orderId + ")");
@@ -91,7 +91,8 @@ public class OrderItemService {
     }
 
     public void add(Long articleId, Long orderId, int inQuantity) throws Exception {
-        add(articleRepository.getById(articleId), orderRepository.getById(orderId), inQuantity);
+        Article article = articleRepository.getById(articleId);
+        add(article, orderRepository.getById(orderId), inQuantity);
     }
 
     public void add(Article article, Order order) throws Exception {

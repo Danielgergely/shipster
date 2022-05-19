@@ -1,9 +1,7 @@
 package ch.shipster.data.domain;
 
-
-import org.jetbrains.annotations.NotNull;
-
 import javax.persistence.*;
+import javax.transaction.Transactional;
 
 //Timo
 
@@ -13,7 +11,8 @@ public class Article{
 
     /// ID
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "article_id_seq", sequenceName = "article_id_seq", allocationSize = 1)
+    @GeneratedValue(generator = "article_id_seq")
     private Long id;
 
     /// Attributes

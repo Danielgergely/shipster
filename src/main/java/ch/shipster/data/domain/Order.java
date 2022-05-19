@@ -1,9 +1,5 @@
 package ch.shipster.data.domain;
 
-
-import ch.shipster.data.repository.OrderItemRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -15,7 +11,8 @@ public class Order {
 
     /// ID
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "order_id_seq", sequenceName = "order_id_seq", allocationSize = 1)
+    @GeneratedValue(generator = "order_id_seq")
     private Long id;
 
     /// Attributes
