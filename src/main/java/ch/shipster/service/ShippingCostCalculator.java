@@ -28,9 +28,13 @@ public class ShippingCostCalculator {
     public float costCalculation (long orderid) throws IOException, InterruptedException {
         Address currentAddress = orderService.getUserAddress(orderid);
         List<OrderItem> sco = orderService.getOrderItems(orderid);
+        /*
         float requiredTotalSpace = requiredSpace(sco);
         float minRequiredPallet = minRequiredPallet(sco);
         int requiredPallets = requiredPallets(requiredTotalSpace, minRequiredPallet);
+        */
+        int requiredPallets = requiredPallets2(sco);
+        //float distance = DistanceCalculator.calculateDistance(currentAddress);
         int distance = DistanceCalculator.calculateDistance(currentAddress);
 
         return costService.getCheapestCost(distance, requiredPallets).getPrice();
@@ -39,14 +43,19 @@ public class ShippingCostCalculator {
     public float costCalculation (long orderid, Long providerId) throws IOException, InterruptedException {
         Address currentAddress = orderService.getUserAddress(orderid);
         List<OrderItem> sco = orderService.getOrderItems(orderid);
+        /*
         float requiredTotalSpace = requiredSpace(sco);
         float minRequiredPallet = minRequiredPallet(sco);
         int requiredPallets = requiredPallets(requiredTotalSpace, minRequiredPallet);
+        */
+        int requiredPallets = requiredPallets2(sco);
+        //float distance = DistanceCalculator.calculateDistance(currentAddress);
         int distance = DistanceCalculator.calculateDistance(currentAddress);
 
         return costService.getCost(providerId, distance, requiredPallets).getPrice();
     }
 
+    /*
     //create total sum of requiredTotalSpace
     private float requiredSpace(List<OrderItem> sco){
         float requiredTotalSpace = 0;
@@ -80,4 +89,35 @@ public class ShippingCostCalculator {
         }
        return (int)Math.ceil(minPalletSpace);
         }
+*/
+
+   //New version of pallet calculation
+   private int requiredPallets2(List <OrderItem> sco){
+       Article currentArticle;
+       float palletsRequired = 0;
+       float spaceLeft = 0;
+       float tempMinPalletSpace = 0;
+
+       while (sco == null){
+           for (OrderItem i : sco) {
+               currentArticle = orderItemService.getArticle(i);
+               if (tempMinPalletSpace < currentArticle.getPalletSpace()) {
+                   tempMinPalletSpace = currentArticle.getPalletSpace();
+               }
+               else {
+                   palletsRequired = palletsRequired + tempMinPalletSpace;
+                   spaceLeft = palletsRequired - (i.getQuantity() * orderItemService.getArticle(i).getPalletProductRatio());
+                   sco.remove(i);
+               }
+               for (OrderItem j : sco){
+                   //currentArticle = orderItemService.getArticle(j);
+                   if (spaceLeft <= (j.getQuantity() * orderItemService.getArticle(i).getPalletProductRatio())){
+                       palletsRequired = palletsRequired + (j.getQuantity() * orderItemService.getArticle(i).getPalletProductRatio());
+                       sco.remove(j);
+                   }
+               }
+           }
+       }
+       return (int)Math.ceil(palletsRequired);
+   }
 }
