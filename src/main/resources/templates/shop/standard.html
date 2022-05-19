@@ -68,8 +68,7 @@
             </div>
         </section>
     </div>
-    <div th:if="${message != null}" class="fade-message w-100" id="hide-me">
-        <div class="text-centered text-success" style="font-size: xx-large!important" th:text="${message}"></div>
+    <div class="fade-message" id="hide-me" style="display: none;">
     </div>
 </div>
 </body>
@@ -80,8 +79,6 @@
         $('.disableParentClick').click(function (e) {
             e.stopPropagation();
         })
-
-        $('#hide-me').delay(5000).fadeOut('slow');
     })
 
     function addArticleToBasket(articleId) {
@@ -92,8 +89,10 @@
             type: "POST",
             success: function (data) {
                 console.log(data);
-                console.log(data['message']);
-                console.log("added " + articleId);
+                let message = jQuery.parseJSON(data);
+                let div = $('#hide-me')
+                div.text(message.message);
+                div.show().delay(4000).hide("slow");
             },
             error: function () {
                 console.log("error");

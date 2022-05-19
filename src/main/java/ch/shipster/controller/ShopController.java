@@ -86,7 +86,7 @@ public class ShopController {
         } else {
             Order order = orderService.getBasketByUser(user.get());
             orderItemService.add(articleId, order.getId());
-            return "{\"message\":\"Product removed from basket\"}";
+            return "{\"message\":\"Product added to basket\"}";
         }
     }
 

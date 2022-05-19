@@ -666,9 +666,16 @@ hr.rounded {
 
 .fade-message {
     position: absolute;
-    top: 20vh;
+    bottom: 0vh;
     font-size: xx-large;
     display: flex;
     justify-content: center;
-    background-color: #bbbbbb;
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 100px;
+    border: 1px solid #ffc800;
+    border-bottom: 0px;
+    border-left: 0px;
+    border-radius: 5px;
+    padding: 5px;
+    color: #ffc800;
 }
