@@ -13,7 +13,7 @@ public class Article{
 
     /// ID
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     /// Attributes

@@ -39,3 +39,4 @@ spring.log
 .run/ShipsterApplication.run.xml
 *.log
 /src/main/resources/spring.log.2022-05-15.0.gz
+src/main/resources/spring.log.2022-05-17.0.gz
