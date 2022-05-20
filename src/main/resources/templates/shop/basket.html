@@ -9,19 +9,19 @@
 <nav th:replace="general.html :: navigation(page='Shop', user=${user})"></nav>
 
 <div class="main-basket">
-    <div class="container">
-        <div class="row w-100 justify-content-center">
+    <div class="row">
+        <div class="w-100 d-flex justify-content-center">
             <div class="col-md-8 col-sm-10 shipster-text-light border rounded m-2"
                  style="min-width: 300px; background-color: black;">
                 <div class="card-body text-center border-bottom mb-2">
                     <h4 class="basket-title">Shopping Basket</h4>
                 </div>
-                <div class="row d-flex align-items-center border-bottom mb-2" th:each="article, iterator : ${articles}">
-                    <div class="basket column thumbnail">
+                <div class="d-flex align-items-center border-bottom mb-2 p-2" th:each="article, iterator : ${articles}">
+                    <div class="basket column thumbnail" th:onclick="@{/shop/standard/article?articleId=(${article.getId})}">
                         <div class="thumb-img"><img class="w-100" th:src="@{${article.getUrl()}}">
                         </div>
                     </div>
-                    <div class="basket column product-basket">
+                    <div class="basket column product-basket ps-3">
                         <h6 th:text="${article.getName()}"></h6>
                         <p th:text="${article.getDescription()}"></p>
                     </div>

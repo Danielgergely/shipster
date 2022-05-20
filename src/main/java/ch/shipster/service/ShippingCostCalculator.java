@@ -107,7 +107,7 @@ public class ShippingCostCalculator {
                 spaceLeft = palletsRequired - (i.getQuantity() * orderItemService.getArticle(i).getPalletProductRatio());
                 sco.remove(i);
             }
-            palletsRequired = palletsRequired(sco, i, spaceLeft);
+            palletsRequired =  palletsRequired + palletsRequired(sco, i, spaceLeft);
 //            for (OrderItem j : sco) {
 //                //currentArticle = orderItemService.getArticle(j);
 //                float spaceNeeded = j.getQuantity() * orderItemService.getArticle(i).getPalletProductRatio();

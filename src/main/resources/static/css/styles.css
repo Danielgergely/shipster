@@ -16,7 +16,7 @@
 }
 
 .form-signin {
-    max-width: 400px!important;
+    max-width: 400px !important;
 }
 
 .bg-team {
@@ -80,11 +80,11 @@
 }
 
 a:hover {
-    color:#ffc800;
+    color: #ffc800;
 }
 
 .error-text {
-    color: black!important;
+    color: black !important;
     font-weight: bold;
     font-size: xxx-large;
     text-align: center;
@@ -272,6 +272,10 @@ a:hover {
     transform: scale(1.25);
 }
 
+.nav-item {
+    margin-left: 5px;
+}
+
 .nav-item .tooltiptext {
     opacity: 0;
     transition: opacity 0.5s ease;
@@ -300,15 +304,15 @@ a:hover {
 }
 
 .profile-start {
-    margin-top: 150px!important;
+    margin-top: 150px !important;
 }
 
 .shop-start {
-    margin-top:210px!important;
+    margin-top: 210px !important;
 }
 
 .main-basket {
-    margin-top:150px!important;
+    margin-top: 150px !important;
 }
 
 .error {
@@ -317,7 +321,7 @@ a:hover {
 
 .text-success {
     color: green;
-    font-size: small!important;
+    font-size: small !important;
     padding-top: 3px;
 }
 
@@ -326,7 +330,7 @@ a:hover {
     color: green;
     background-color: rgba(0, 0, 0, 0.7);
     margin-top: 5px;
-    font-size: initial!important;
+    font-size: initial !important;
 }
 
 .email {
@@ -401,22 +405,22 @@ a:hover {
     font-weight: 900;
 }
 
-.h3-about{
+.h3-about {
     color: #ffc800;
 }
 
-.h3-about-second{
+.h3-about-second {
     color: black;
 }
 
 .h4-about {
     text-align: center;
-    color: rgb(0,0,0,0.1);
+    color: rgb(0, 0, 0, 0.1);
     transition: color 3s ease;
 }
 
 .h4-about:hover {
-    color: rgb(0,0,0,0.6);
+    color: rgb(0, 0, 0, 0.6);
 }
 
 .title_wrapper .h3-about {
@@ -467,11 +471,11 @@ a:hover {
 /* shop page */
 
 .border-primary {
-    border-color: black!important;
+    border-color: black !important;
 }
 
 .border-secondary {
-    border-color: #ffc800!important;
+    border-color: #ffc800 !important;
 }
 
 .single-product {
@@ -534,7 +538,7 @@ a:hover {
 }
 
 .product .single-product:hover .part-1::before {
-    transform: scale(1.2,1.2) rotate(5deg);
+    transform: scale(1.2, 1.2) rotate(5deg);
 }
 
 .product .single-product .part-1 ul {
@@ -603,14 +607,15 @@ a:hover {
 /* Giacomo */
 /* Basket page */
 
-.basket column {
+.basket .column {
     float: left;
     padding: 10px;
     height: 125px;
 }
 
 .thumbnail {
-    width: 15%
+    width: 15%;
+    cursor: pointer;
 }
 
 .product-basket {
@@ -618,7 +623,7 @@ a:hover {
 }
 
 .spacer {
-    width: 5%;
+    width: 15%;
 }
 
 .quantity {
@@ -626,7 +631,7 @@ a:hover {
 }
 
 .price {
-    width: 25%;
+    width: 15%;
 }
 
 .row:after {
@@ -690,4 +695,38 @@ hr.rounded {
     height: 100vh;
     top: 0px;
     background-color: rgba(0, 0, 0, 0.5);
+}
+
+.cart {
+    border: 1px solid #ffc800;
+    margin-left: 5px;
+    max-height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    max-width: 40px;
+    width: 40px;
+    height: 40px;
+    margin-top: 5px;
+    cursor: pointer;
+    background-color: black;
+}
+
+.cart:hover {
+    background-color: #ffc800;
+}
+
+.cart:hover .cart-icon {
+    fill: black;
+}
+
+@media (max-width: 992px) {
+    .nav-menu {
+        display: block;
+        margin-left: auto;
+    }
+    .cart {
+        margin-left: auto;
+    }
 }
