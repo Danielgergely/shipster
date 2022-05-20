@@ -85,10 +85,10 @@ public class OrderItemService {
 
         if (newQuantity <= 0) {
             orderItemRepository.delete(oi);
-            return null;
+            return Optional.empty();
         } else {
             oi.setQuantity(newQuantity);
-            return Optional.ofNullable(orderItemRepository.save(oi));
+            return Optional.of(orderItemRepository.save(oi));
         }
     }
     public Optional<OrderItem> add(Long articleId, Long orderId, int inQuantity) throws Exception {
@@ -113,10 +113,10 @@ public class OrderItemService {
 
         if (quantity <= 0) {
             removeAll(article, order);
-            return null;
+            return Optional.empty();
         } else  {
             orderItem.setQuantity(quantity);
-            return Optional.ofNullable(orderItemRepository.save(orderItem));
+            return Optional.of(orderItemRepository.save(orderItem));
         }
 
     }
