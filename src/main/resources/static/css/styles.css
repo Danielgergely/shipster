@@ -730,3 +730,8 @@ hr.rounded {
         margin-left: auto;
     }
 }
+
+.red-fill {
+    fill: red;
+    display: inherit!important;
+}

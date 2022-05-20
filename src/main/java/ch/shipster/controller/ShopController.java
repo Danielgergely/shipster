@@ -49,35 +49,11 @@ public class ShopController {
         if (user.isEmpty()) {
             model.addAttribute("user", "no_user");
         } else {
+            List<Article> products = articleService.getAllArticles();
+            model.addAttribute("products", products);
             model.addAttribute("user", user.get());
         }
         return "shop/shop";
-    }
-
-    @GetMapping(path = "shop/express")
-    public String getExpressView(Model model) {
-        Optional<User> user = userService.getCurrentUser();
-        if (user.isEmpty()) {
-            model.addAttribute("user", "no_user");
-        } else {
-            List<Article> products = articleService.getAllArticles();
-            model.addAttribute("products", products);
-            model.addAttribute("user", user.get());
-        }
-        return "shop/express";
-    }
-
-    @GetMapping(path = "shop/standard")
-    public String getStandardView(Model model) {
-        Optional<User> user = userService.getCurrentUser();
-        if (user.isEmpty()) {
-            model.addAttribute("user", "no_user");
-        } else {
-            List<Article> products = articleService.getAllArticles();
-            model.addAttribute("products", products);
-            model.addAttribute("user", user.get());
-        }
-        return "shop/standard";
     }
 
     @PostMapping(path = "shop/basket/add")
@@ -93,8 +69,8 @@ public class ShopController {
         }
     }
 
-    @GetMapping(path = "shop/standard/article")
-    public String getStandardArticleView(@RequestParam Long articleId, Model model) throws IOException, InterruptedException {
+    @GetMapping(path = "shop/article")
+    public String getArticleView(@RequestParam Long articleId, Model model) throws IOException, InterruptedException {
         Optional<User> user = userService.getCurrentUser();
         if (user.isEmpty()) {
             return "user/login";
@@ -104,29 +80,6 @@ public class ShopController {
             int distance = DistanceCalculator.calculateDistance(address);
             int paletSpace = (int) Math.ceil(product.getPalletSpace());
             Cost cost = costService.getCheapestCost(distance, paletSpace);
-            Provider provider = providerService.getProviderById(cost.getProviderId());
-            model.addAttribute("distance", distance);
-            model.addAttribute("price", cost.getPrice());
-            model.addAttribute("product", product);
-            model.addAttribute("user", user.get());
-            model.addAttribute("provider_id", provider.getId());
-        }
-        return "shop/article";
-    }
-
-
-    @GetMapping(path = "shop/express/article")
-    public String getExpressArticleView(@RequestParam Long articleId, Model model) throws
-            IOException, InterruptedException {
-        Optional<User> user = userService.getCurrentUser();
-        if (user.isEmpty()) {
-            return "user/login";
-        } else {
-            Article product = articleService.findById(articleId);
-            Address address = addressService.findAddressById(user.get().getAddressId());
-            int distance = DistanceCalculator.calculateDistance(address);
-            int paletSpace = (int) Math.ceil(product.getPalletSpace());
-            Cost cost = costService.getMostExpensiveCost(distance, paletSpace);
             Provider provider = providerService.getProviderById(cost.getProviderId());
             model.addAttribute("distance", distance);
             model.addAttribute("price", cost.getPrice());
@@ -160,7 +113,7 @@ public class ShopController {
         if (user.isEmpty()) {
             return "user/login";
         } else {
-            if(providerId == null) {
+            if (providerId == null) {
                 providerId = 2L;
             }
             Order order = orderService.getBasketByUser(user.get());
