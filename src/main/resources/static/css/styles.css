@@ -731,7 +731,23 @@ hr.rounded {
     }
 }
 
+@media (max-width: 600px) {
+    .price-article {
+        margin-top: 100px;
+    }
+}
+
 .red-fill {
     fill: red;
     display: inherit!important;
+}
+
+.price-total {
+    float: right;
+    margin-right: 18%;
+    margin-left: 50%;
+}
+
+.product-basket-50 {
+    width: 50%;
 }

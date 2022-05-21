@@ -17,7 +17,8 @@
                     <h4 class="basket-title">Shopping Basket</h4>
                 </div>
                 <div class="d-flex align-items-center border-bottom mb-2 p-2" th:each="article, iterator : ${articles}">
-                    <div class="basket column thumbnail" th:onclick="'window.location.href = \'/shop/article?articleId=' + ${article.getId} + '\''">
+                    <div class="basket column thumbnail"
+                         th:onclick="'window.location.href = \'/shop/article?articleId=' + ${article.getId} + '\''">
                         <div class="thumb-img"><img class="w-100" th:src="@{${article.getUrl()}}">
                         </div>
                     </div>
@@ -49,7 +50,7 @@
                         </div>
                     </div>
                     <div class="basket column price">
-                        <h6 th:text="${#numbers.formatDecimal(article.getPrice() * orderItems[iterator.index].getQuantity(), 0, 2)}"></h6>
+                        <h6 class="price-article" th:text="${#numbers.formatDecimal(article.getPrice() * orderItems[iterator.index].getQuantity(), 0, 2)}"></h6>
                         <!--GET Subtotal Price (Quantity * Product Price)-->
                     </div>
                 </div>
@@ -58,30 +59,36 @@
 
                 <!-- Shipping Total, Product Subtotal, Order Total" -->
                 <div class="row justify-content-around">
-                    <div class="basket column product-basket">
-                        <h6>Product Total</h6>
-                        <div class="provider">Provider</div>
-                        <h6>Shipping Total</h6>
-                        <h4>Total</h4>
+                    <div class="col-6 d-flex justify-content-center">
+                        <div>
+                            <h6>Product Total</h6>
+                            <div class="provider">Provider</div>
+                            <h6>Shipping Total</h6>
+                            <h4>Total</h4>
+                        </div>
                     </div>
-                    <div class="basket column price">
-                        <h6 th:text="${#numbers.formatDecimal(articlesTotalPrice, 0, 2)}"></h6>
-                        <div id="provider-list">
-                            <div class="provider d-flex justify-content-around">
-                                <div th:onclick="'window.location.href=\'/shop/basket?provider_id=2'+ '\''">
-                                    <input type="radio" name="provider_id" value="2" id="post"
-                                           th:checked="${provider.getId() eq 2}"/>
-                                    <label for="post">Post</label>
-                                </div>
-                                <div th:onclick="'window.location.href=\'/shop/basket?provider_id=1'+ '\''">
-                                    <input type="radio" name="provider_id" value="1" id="dhl"
-                                           th:checked="${provider.getId() eq 1}"/>
-                                    <label for="dhl">DHL</label>
+                    <div class="col-6 d-flex justify-content-center">
+                        <div>
+                            <h6 th:text="${#numbers.formatDecimal(articlesTotalPrice, 0, 2)}"></h6>
+                            <div id="provider-list">
+                                <div class="provider d-flex">
+                                    <div class="me-3"
+                                         th:onclick="'window.location.href=\'/shop/basket?provider_id=2'+ '\''">
+                                        <input type="radio" name="provider_id" value="2" id="post"
+                                               th:checked="${provider.getId() eq 2}"/>
+                                        <label for="post">Post</label>
+                                    </div>
+                                    <div th:onclick="'window.location.href=\'/shop/basket?provider_id=1'+ '\''">
+                                        <input type="radio" name="provider_id" value="1" id="dhl"
+                                               th:checked="${provider.getId() eq 1}"/>
+                                        <label for="dhl">DHL</label>
+                                    </div>
                                 </div>
                             </div>
+                            <h6
+                                th:text="${#numbers.formatDecimal(totalPrice - articlesTotalPrice, 0, 2)}"></h6>
+                            <h4 th:text="${#numbers.formatDecimal(totalPrice, 0, 2)}"></h4>
                         </div>
-                        <h6 th:text="${#numbers.formatDecimal(totalPrice - articlesTotalPrice, 0, 2)}"></h6>
-                        <h4 th:text="${#numbers.formatDecimal(totalPrice, 0, 2)}"></h4>
                     </div>
                 </div>
 
@@ -103,7 +110,7 @@
 
 <script>
 
-    $('#provider-list').click(function(){
+    $('#provider-list').click(function () {
         showLoading();
     })
 
