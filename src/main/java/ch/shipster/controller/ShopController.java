@@ -43,6 +43,9 @@ public class ShopController {
     @Autowired
     ProviderService providerService;
 
+    @Autowired
+    ShippingCostCalculator shippingCostCalculator;
+
     @GetMapping(path = "shop")
     public String getShopView(Model model) {
         Optional<User> user = userService.getCurrentUser();
@@ -122,14 +125,28 @@ public class ShopController {
             Float articlesTotalPrice = checkoutService.calculateTotalOrderPrice(order);
             Float totalPrice = checkoutService.calculateTotalOrderPriceWithShipping(order, providerId);
             Provider provider = providerService.getProviderById(providerId);
+            float palletSpace = shippingCostCalculator.palletCalculation(order.getId());
             model.addAttribute("order", order);
             model.addAttribute("articles", articles);
             model.addAttribute("orderItems", orderItems);
             model.addAttribute("articlesTotalPrice", articlesTotalPrice);
             model.addAttribute("totalPrice", totalPrice);
             model.addAttribute("provider", provider);
+            model.addAttribute("palletSpace", palletSpace);
             model.addAttribute("user", user.get());
             return "shop/basket";
+        }
+    }
+
+    @PostMapping(path = "order")
+    @ResponseBody
+    public String placeOrder(@RequestParam Long orderId) {
+        Order order = orderService.getOrderById(orderId);
+        try {
+            checkoutService.setOrderStatusOrdered(order);
+            return "{\"message\":\"Order successful\"}";
+        } catch (Exception e) {
+            return "{\"error\":\"Order could not be placed. Please try again. If the issue is not resolved, please contact our team for support.\"}";
         }
     }
 }

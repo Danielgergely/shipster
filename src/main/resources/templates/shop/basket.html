@@ -50,7 +50,8 @@
                         </div>
                     </div>
                     <div class="basket column price">
-                        <h6 class="price-article" th:text="${#numbers.formatDecimal(article.getPrice() * orderItems[iterator.index].getQuantity(), 0, 2)}"></h6>
+                        <h6 class="price-article"
+                            th:text="${#numbers.formatDecimal(article.getPrice() * orderItems[iterator.index].getQuantity(), 0, 2)}"></h6>
                         <!--GET Subtotal Price (Quantity * Product Price)-->
                     </div>
                 </div>
@@ -63,6 +64,7 @@
                         <div>
                             <h6>Product Total</h6>
                             <div class="provider">Provider</div>
+                            <h6>Total pallet space used</h6>
                             <h6>Shipping Total</h6>
                             <h4>Total</h4>
                         </div>
@@ -85,17 +87,20 @@
                                     </div>
                                 </div>
                             </div>
-                            <h6
-                                th:text="${#numbers.formatDecimal(totalPrice - articlesTotalPrice, 0, 2)}"></h6>
+                            <h6 th:text="${#numbers.formatDecimal(palletSpace, 0, 2)}"></h6>
+                            <h6 th:text="${#numbers.formatDecimal(totalPrice - articlesTotalPrice, 0, 2)}"></h6>
                             <h4 th:text="${#numbers.formatDecimal(totalPrice, 0, 2)}"></h4>
                         </div>
                     </div>
                 </div>
 
                 <div class="m-2 d-flex justify-content-center">
-                    <div class="btn btn-outline-secondary" style="width:100px">Order</div>
+                    <button id="order" class="btn btn-outline-secondary" th:onclick="|placeOrder(${order.getId()})|"
+                         style="width:100px" th:disabled="${articles.size() == 0}" >Order
+                    </button>
                 </div>
-
+                <h5 id="order-failure" class="fst-italic text-centered error-text"></h5>
+                <h5 id="order-success" class="fst-italic text-centered text-success"></h5>
             </div>
 
         </div>
@@ -116,6 +121,26 @@
 
     function showLoading() {
         $('#loading').attr("style", "display:flex !important");
+    }
+
+    function placeOrder(orderId) {
+        let url = "/order?orderId=" + orderId
+        $.ajax({
+            url: url,
+            type: "POST",
+            success: function (response) {
+                console.log(response);
+                let message = jQuery.parseJSON(response);
+                console.log(message);
+                if (!message.message) {
+                    $('#order-failure').text(message.error)
+                    $('#order').attr("disabled", false);
+                } else {
+                    $('#order-success').text(message.message)
+                    $('#order').attr("disabled", true);
+                }
+            }
+        })
     }
 
 </script>
