@@ -25,6 +25,22 @@ public class ShippingCostCalculator {
     @Autowired
     OrderItemService orderItemService;
 
+    public float palletCalculation(Long orderid) throws IOException, InterruptedException {
+        List<OrderItem> sco = orderService.getOrderItems(orderid);
+        int requiredPallets = requiredPallets2(sco);
+        return requiredPallets;
+    }
+
+    public boolean spaceLimit(float requiredPallets){
+        boolean spaceLimit;
+        if (requiredPallets >= 12){
+            return spaceLimit = false;
+        }
+        else {
+            return spaceLimit = false;
+        }
+    }
+
     public float costCalculation(Long orderid) throws IOException, InterruptedException {
         Address currentAddress = orderService.getUserAddress(orderid);
         List<OrderItem> sco = orderService.getOrderItems(orderid);
