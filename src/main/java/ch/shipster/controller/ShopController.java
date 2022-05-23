@@ -139,19 +139,16 @@ public class ShopController {
     }
 
     @PostMapping(path = "order")
-    @ResponseBody
-    public String placeOrder(@RequestParam Long orderId) {
+    public String placeOrder(@RequestParam Long orderId, @RequestParam Long providerId, RedirectAttributes redirectAttributes) throws Exception {
         Order order = orderService.getOrderById(orderId);
-        try {
-            checkoutService.setOrderStatusOrdered(order);
-            return "{\"message\":\"Order successful\"}";
-        } catch (Exception e) {
-            return "{\"error\":\"Order could not be placed. Please try again. If the issue is not resolved, please contact our team for support.\"}";
-        }
+        checkoutService.setOrderStatusOrdered(order);
+        redirectAttributes.addAttribute("orderId", orderId);
+        redirectAttributes.addAttribute("providerId", providerId);
+        return "redirect:/order/confirmation";
     }
 
     @GetMapping(path = "order/confirmation")
-    public String getOrderConfirmation(@RequestParam Long orderId, @RequestParam Long providerId, Model model) throws IOException, InterruptedException {
+    public String getOrderConfirmation(@RequestParam(name = "orderId") Long orderId, @RequestParam(name = "providerId") Long providerId, Model model) throws IOException, InterruptedException {
         Optional<User> user = userService.getCurrentUser();
         if (user.isEmpty()) {
             return "user/login";
