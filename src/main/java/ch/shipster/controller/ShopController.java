@@ -139,12 +139,15 @@ public class ShopController {
     }
 
     @PostMapping(path = "order")
-    public String placeOrder(@RequestParam Long orderId, @RequestParam Long providerId, RedirectAttributes redirectAttributes) throws Exception {
-        Order order = orderService.getOrderById(orderId);
-        checkoutService.setOrderStatusOrdered(order);
-        redirectAttributes.addAttribute("orderId", orderId);
-        redirectAttributes.addAttribute("providerId", providerId);
-        return "redirect:/order/confirmation";
+    @ResponseBody
+    public String placeOrder(@RequestParam Long orderId) {
+        try {
+            Order order = orderService.getOrderById(orderId);
+            checkoutService.setOrderStatusOrdered(order);
+        } catch (Exception e) {
+            return "{\"message\": \"" + e.getMessage() + "\"}";
+        }
+        return "{\"message\": \"Basket with id: " + orderId + " ordered\"}";
     }
 
     @GetMapping(path = "order/confirmation")

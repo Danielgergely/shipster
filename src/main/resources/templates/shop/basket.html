@@ -128,22 +128,22 @@
         if ($('#dhl').is(':checked')) {
             providerId = 1
         }
-        let url = "/order?orderId=" + orderId + "&providerId=" + providerId;
+        let url = "/order?orderId=" + orderId;
         console.log(url);
         $.ajax({
             url: url,
             type: "POST",
             success: function (response) {
-                console.log(response);
                 let message = jQuery.parseJSON(response);
                 console.log(message);
                 if (!message.message) {
-                    $('#order-failure').text(message.error)
+                    $('#order-failure').text(message.error);
                     $('#order').attr("disabled", false);
 
                 } else {
-                    $('#order-success').text(message.message)
+                    $('#order-success').text(message.message);
                     $('#order').attr("disabled", true);
+                    window.location.replace("/order/confirmation?orderId=" + orderId + "&providerId=" + providerId);
                 }
             }
         })

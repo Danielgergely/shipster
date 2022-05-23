@@ -22,7 +22,6 @@ import java.util.Optional;
 @Controller
 @RequestMapping(path = "/")
 public class UserController {
-    //Logger logger = LoggerFactory.getLogger(UserController.class);
     @Autowired
     UserService userService;
 
