@@ -52,6 +52,18 @@ public class OrderService {
         return outOrder;
     }
 
+    public Order getOrderByUserIdAndOrderedStatus(Long userId) {
+        return getOrderByUserIdAndStatus(userId, OrderStatus.ORDERED.name());
+    }
+
+    public Order getOrderByUserIdAndStatus(Long userId, String orderStatus) {
+        return orderRepository.getOrderByUserIdAndOrderStatus(userId, orderStatus);
+    }
+
+    public List<Order> getAllOrdersByUserAndStatus(Long userId, String orderStatus) {
+        return orderRepository.getAllByUserIdAndOrderStatus(userId, orderStatus);
+    }
+
     public Order getBasketByUser(User user) throws Exception {
         return getBasketByUser(user.getUserId());
     }
@@ -97,6 +109,16 @@ public class OrderService {
         List<Article> outArticles = new ArrayList<>();
 
         for (OrderItem i : getOrderItemsInBasket(userId)) {
+            outArticles.add(orderItemService.getArticle(i));
+        }
+        outArticles.sort(Comparator.comparing(Article::getId));
+        return outArticles;
+    }
+
+    public List<Article> getArticlesInOrder(Long userId) {
+        List<Article> outArticles = new ArrayList<>();
+
+        for (OrderItem i : getOrderItems(userId)) {
             outArticles.add(orderItemService.getArticle(i));
         }
         outArticles.sort(Comparator.comparing(Article::getId));

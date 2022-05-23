@@ -16,10 +16,10 @@ INSERT INTO article (id, name, description, image_url, price, pallet_space, max_
 INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (6, 'Shipster big box 2', 'A large shipping box. 50cm - 70cm - 120cm', '/images/box_6.jpeg', 49.95, 0.9, 4) ON CONFLICT DO NOTHING;
 INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (7, 'Shipster wooden box', 'A wooden shipping box. 40cm - 50cm - 30cm', '/images/box_7.jpeg', 80.95, 1, 6) ON CONFLICT DO NOTHING;
 INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (8, 'Shipster premium box', 'A premium shipping box. 40cm - 50cm - 40cm', '/images/box_8.jpg', 99.95, 1, 5) ON CONFLICT DO NOTHING;
-INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (9, 'Article P1', 'The first P', '/images/box_1.png', 56.95, 1.2,25) ON CONFLICT DO NOTHING;
-INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (10, 'Article P2', 'The funniest P', '/images/box_1.png', 12.95, 2,10) ON CONFLICT DO NOTHING;
-INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (11, 'Article P3', 'The most expensive P', '/images/box_1.png', 66.95, 2.5,15) ON CONFLICT DO NOTHING;
-INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (12, 'Article P4', 'The best P', '/images/box_1.png', 25.95, 0.8,1000) ON CONFLICT DO NOTHING;
+INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (9, 'Shipster clear box 1', 'The first P', '/images/plastic_box_1.jpg', 56.95, 1.2,25) ON CONFLICT DO NOTHING;
+INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (10, 'Shipster clear box 2', 'The funniest P', '/images/plastic_box_2.jpg', 12.95, 2,10) ON CONFLICT DO NOTHING;
+INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (11, 'Shipster bamboo box', 'The most expensive P', '/images/bamboo_boxes.jpg', 66.95, 2.5,15) ON CONFLICT DO NOTHING;
+INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (12, 'Shipster cool box', 'The best P', '/images/cool_box.jpg', 25.95, 0.8,1000) ON CONFLICT DO NOTHING;
 SELECT setval('article_id_seq', (SELECT MAX(id) FROM article));
 
 INSERT INTO shipster_order (id, user_id, order_status) VALUES (1, 1, 'BASKET') ON CONFLICT DO NOTHING;
