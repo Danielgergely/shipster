@@ -10,24 +10,50 @@ import java.io.IOException;
 @Service
 public class ReceiptGenerator {
     public void createPDF(HttpServletResponse response) throws IOException {
-        Document receipt = new Document(PageSize.A4);
+        Document document = new Document(PageSize.A4);
         PdfWriter.getInstance(receipt, response.getOutputStream());
 
-        receipt.open();
+        document.open();
+
+        //Types of text and fonts
         Font fontTitle = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
         fontTitle.setSize(18);
-
-        Paragraph title = new Paragraph("Shipster Receipt", fontTitle);
-        title.setAlignment(Paragraph.ALIGN_CENTER);
 
         Font fontText = FontFactory.getFont(FontFactory.HELVETICA);
         fontText.setSize(12);
 
-        Paragraph text = new Paragraph("This is a test", fontText);
-        text.setAlignment(Paragraph.ALIGN_LEFT);
+        //Title
+        Paragraph title = new Paragraph("Shipster Receipt / Order Nr. " + "XXXX Order Number", fontTitle);
+        title.setAlignment(Paragraph.ALIGN_CENTER);
 
-        receipt.add(title);
-        receipt.add(text);
-        receipt.close();
+        //Company logo
+        document.add(new Paragraph("Shipster Logo"));
+        Image shipster_logo = Image.getInstance("shipster.jpeg");
+        //Alignment missing
+
+        //Company Infos
+        Paragraph company = new Paragraph("Shipster Shipping Company:", fontText);
+        company.add("Shipping Street 123");
+        company.add("Shipping City");
+        company.add("info@shipster.ch");
+        company.add("+41 62 888 77 66");
+        company.setAlignment(Paragraph.ALIGN_LEFT);
+
+        //Customer information
+        Paragraph customer = new Paragraph("Customer Information:", fontText);
+        customer.add("Customer Name");
+        customer.add("Street");
+        customer.add("ZIP + City");
+        customer.add("Country");
+        customer.add("email");
+
+
+
+        //Creating PDF
+        document.add(title);
+        document.add(shipster_logo);
+        document.add(company);
+        document.add(customer);
+        document.close();
     }
 }
