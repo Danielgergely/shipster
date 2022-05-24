@@ -25,8 +25,8 @@ public class ShippingCostCalculator {
     OrderItemService orderItemService;
 
     public float palletCalculation(Long orderId) {
-        List<OrderItem> sco = orderService.getOrderItems(orderId);
-        return requiredPallets(sco);
+        List<OrderItem> basketItems = orderService.getOrderItems(orderId);
+        return requiredPallets(basketItems);
     }
 
     public boolean spaceLimit(float requiredPallets) {
@@ -39,8 +39,8 @@ public class ShippingCostCalculator {
 
     public float costCalculation(Long orderId) throws IOException, InterruptedException {
         Address currentAddress = orderService.getUserAddress(orderId);
-        List<OrderItem> sco = orderService.getOrderItems(orderId);
-        int requiredPallets = requiredPallets(sco);
+        List<OrderItem> basketItems = orderService.getOrderItems(orderId);
+        int requiredPallets = requiredPallets(basketItems);
         int distance = DistanceCalculator.calculateDistance(currentAddress);
 
         return costService.getCheapestCost(distance, requiredPallets).getPrice();
@@ -48,8 +48,8 @@ public class ShippingCostCalculator {
 
     public float costCalculation(Long orderId, Long providerId) throws IOException, InterruptedException {
         Address currentAddress = orderService.getUserAddress(orderId);
-        List<OrderItem> sco = orderService.getOrderItems(orderId);
-        int requiredPallets = requiredPallets(sco);
+        List<OrderItem> basketItems = orderService.getOrderItems(orderId);
+        int requiredPallets = requiredPallets(basketItems);
         int distance = DistanceCalculator.calculateDistance(currentAddress);
         return costService.getCost(providerId, distance, requiredPallets).getPrice();
     }
