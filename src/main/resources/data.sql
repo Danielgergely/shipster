@@ -22,7 +22,7 @@ INSERT INTO article (id, name, description, image_url, price, pallet_space, max_
 INSERT INTO article (id, name, description, image_url, price, pallet_space, max_stack) VALUES (12, 'Shipster cool box', 'A cool-box for perishable goods. 40cm - 150cm - 50cm', '/images/cool_box.jpg', 82.95, 0.8, 10) ON CONFLICT DO NOTHING;
 SELECT setval('article_id_seq', (SELECT MAX(id) FROM article));
 
-INSERT INTO shipster_order (id, user_id, order_status) VALUES (1, 1, 'BASKET') ON CONFLICT DO NOTHING;
+INSERT INTO shipster_order (id, user_id, order_status, order_date, delivery_date, basket_date, shipping_date, last_update_date ) VALUES (1, 1, 'BASKET', '2022-05-23 22:49:54.636000', '2022-05-27 12:00:00.000000', '2022-05-23 21:24:35.369000', '2022-05-24 08:22:59.497100', '2022-05-23 22:59:12.602500') ON CONFLICT DO NOTHING;
 INSERT INTO shipster_order (id, user_id, order_status) VALUES (2, 2, 'ORDERED') ON CONFLICT DO NOTHING;
 INSERT INTO shipster_order (id, user_id, order_status) VALUES (3, 1, 'ORDERED') ON CONFLICT DO NOTHING;
 INSERT INTO shipster_order (id, user_id, order_status) VALUES (4, 1, 'ORDERED') ON CONFLICT DO NOTHING;

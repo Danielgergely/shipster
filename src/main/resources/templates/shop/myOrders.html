@@ -1,0 +1,39 @@
+<!-- Daniel-->
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="general.html :: headerfiles(title='Shop')"></head>
+<body class="bg-article">
+
+<!-- Navigation-->
+<nav th:replace="general.html :: navigation(page='Shop', user=${user})"></nav>
+
+<div class="shop-start">
+    <div class="w-100 d-flex justify-content-center">
+        <table class="table shipster-user-tbl m-2">
+            <thead class="shipster-user-tbl-header">
+            <tr>
+                <td>Id</td>
+                <td>Order date</td>
+                <td>Shipping date</td>
+                <td>Delivery date</td>
+                <td>Cancellation date</td>
+                <td>Status</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="user-row" th:each="order : ${orders}"
+                th:onclick="'window.location.href=\'order?orderId=' + ${order.getId()} + '\''">
+                <td th:text="'#' + ${order.getId()}"></td>
+                <td th:text="${order.getOrderDate() != null} ? ${order.getOrderDate()} : '-'"></td>
+                <td th:text="${order.getShippingDate()!= null} ? ${order.getShippingDate()} : '-'"></td>
+                <td th:text="${order.getDeliveryDate()!= null} ? ${order.getDeliveryDate()} : '-'"></td>
+                <td th:text="${order.getCancellationDate()!= null} ? ${order.getCancellationDate()} : '-'"></td>
+                <td th:text="${order.getOrderStatus()!= null} ? ${order.getOrderStatus()} : '-'"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

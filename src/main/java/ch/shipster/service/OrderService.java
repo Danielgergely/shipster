@@ -29,7 +29,9 @@ public class OrderService {
 
     /// Get Order Lists
     public List<Order> getOrdersByUserId(Long userId) {
-        return orderRepository.getAllByUserId(userId);
+        List<Order> orders = orderRepository.getAllByUserId(userId);
+        orders.sort(Comparator.comparing(Order::getId));
+        return orders;
     }
 
     public List<Order> getOrdersByStatus(OrderStatus orderStatus) {

@@ -177,4 +177,17 @@ public class ShopController {
             return "shop/orderConfirmation";
         }
     }
+
+    @GetMapping(path = "/myOrders")
+    public String getUserOrders(Model model) {
+        Optional<User> user = userService.getCurrentUser();
+        if (user.isEmpty()) {
+            return "user/login";
+        } else {
+            List<Order> orders = orderService.getOrdersByUserId(user.get().getUserId());
+            model.addAttribute("orders", orders);
+            model.addAttribute("user", user.get());
+            return "shop/myOrders";
+        }
+    }
 }

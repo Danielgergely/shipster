@@ -45,7 +45,7 @@
                     </div>
                     <div class="col-md-12"><label for="email" class="labels">Email</label>
                         <input type="text" class="form-control" id="email" onkeyup="enableUpdateBtn()"
-                               th:field="*{user.email}" th:placeholder="${user.email}">
+                               th:field="*{user.email}" th:placeholder="${user.email}" disabled>
                     </div>
                     <div class="col-md-12 mt-2 mb-2"><label class="labels">Gender: </label>
                         <input type="radio" id="male" name="gender" value="male" onchange="enableUpdateBtn()"
@@ -93,7 +93,7 @@
             </div>
             <button id="update_btn" class="btn btn-outline-secondary mb-4" type="submit" disabled>Update</button>
         </form>
-        <form class="col-md-4" id="password_change" method="post" action="#" th:action="@{/admin/updatePassword(userId=${user.getUserId()})}">
+        <form class="col-md-4" id="password_change" method="post" action="#" th:action="@{/updatePassword(userId=${user.getUserId()})}">
             <div class="p-3 py-5">
                 <h4 class="form-signin-heading ">Change password</h4>
                 <div class="col-md-12"><label for="new_psw" class="labels">New password</label>

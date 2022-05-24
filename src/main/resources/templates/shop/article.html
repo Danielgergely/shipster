@@ -36,26 +36,49 @@
                                     <b th:text="'Shipping distance: ' + ${distance}"></b>
                                     <b th:text="'Shipping price: ' + ${price}"></b>
                                     <b class="product-old-price ms-2 w-auto"
-                                        th:text="'Old price: CHF ' + ${#numbers.formatDecimal(product.getPrice()  * 1.1, 0, 2)}"></b>
-                                    <b class="product-price ms-2" th:text="'New price: CHF ' + ${product.getPrice()}"></b>
-                                    <h3 class="mt-2" th:text="'Total price: ' + ${#numbers.formatDecimal(product.getPrice() + price, 0, 2)}"></h3>
+                                       th:text="'Old price: CHF ' + ${#numbers.formatDecimal(product.getPrice()  * 1.1, 0, 2)}"></b>
+                                    <b class="product-price ms-2"
+                                       th:text="'New price: CHF ' + ${product.getPrice()}"></b>
+                                    <h3 class="mt-2"
+                                        th:text="'Total price: ' + ${#numbers.formatDecimal(product.getPrice() + price, 0, 2)}"></h3>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row lower">
-                        <div class="col"><a class="carousel-control-prev" href="#demo" data-slide="prev"><i
-                                class="fa fa-arrow-left"></i></a> <a class="carousel-control-next"
-                                                                     href="#demo" data-slide="next"><i
-                                class="fa fa-arrow-right"></i></a></div>
-                        <div class="col text-right align-self-center">
-                            <button class="btn text-secondary">Add to cart</button>
-                        </div>
+                    <div class="col text-right align-self-center">
+                        <button class="btn btn btn-outline-secondary"
+                                th:onclick="|addArticleToBasket(${product.getId()})|">Add to cart
+                        </button>
                     </div>
+
                 </div>
             </div>
         </section>
     </div>
-</div>
+    <div class="fade-message" id="hide-me" style="display: none;">
+    </div>
 </body>
 </html>
+
+<script>
+
+    function addArticleToBasket(articleId) {
+        let url = "/shop/basket/add?articleId=" + articleId
+        console.log(url);
+        $.ajax({
+            url: url,
+            type: "POST",
+            success: function (data) {
+                console.log(data);
+                let message = jQuery.parseJSON(data);
+                let div = $('#hide-me')
+                div.text(message.message);
+                div.show().delay(4000).hide("slow");
+            },
+            error: function () {
+                console.log("error");
+            }
+        })
+    }
+
+</script>
