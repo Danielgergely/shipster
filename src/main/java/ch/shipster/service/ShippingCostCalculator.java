@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 // Manuel
@@ -74,13 +75,15 @@ public class ShippingCostCalculator {
             basketItems.remove(currentBasketItem);
 
             if (!basketItems.isEmpty()){
+                List toRemove = new ArrayList();
                 for (OrderItem i : basketItems){
                     float spaceRequired = (i.getQuantity() * orderItemService.getArticle(i).getPalletProductRatio());
                     if (spaceLeft <= spaceRequired){
                         palletsRequired = palletsRequired + spaceRequired;
-                        basketItems.remove(i);
+                        toRemove.add(i);
                     }
                 }
+                basketItems.removeAll(toRemove);
             }
         }
         return (int) Math.ceil(palletsRequired);
@@ -99,38 +102,5 @@ public class ShippingCostCalculator {
         }
         return largestBasketItem;
     }
-
-    /*
-    private int requiredPallets(List<OrderItem> sco) {
-        float palletsRequired = 0;
-        float spaceLeft = 0;
-        float tempMinPalletSpace = 0;
-        while (sco.isEmpty() == false)
-        for (OrderItem i : sco) {
-            Article currentArticle = orderItemService.getArticle(i);
-            if (tempMinPalletSpace < currentArticle.getPalletSpace()) {
-                tempMinPalletSpace = currentArticle.getPalletSpace();
-            } else {
-                palletsRequired = palletsRequired + tempMinPalletSpace;
-                spaceLeft = palletsRequired - (i.getQuantity() * orderItemService.getArticle(i).getPalletProductRatio());
-                sco.remove(i);
-            }
-            palletsRequired = palletsRequired + palletsRequired(sco, i, spaceLeft, palletsRequired);
-        }
-        return (int) Math.ceil(palletsRequired);
-    }
-
-
-    public float palletsRequired(List<OrderItem> orderItems, OrderItem oI, float spaceLeft, float palletsRequired) {
-        for (OrderItem orderItem : orderItems) {
-            float spaceNeeded = orderItem.getQuantity() * orderItemService.getArticle(oI).getPalletProductRatio();
-            if (spaceLeft <= spaceNeeded) {
-                palletsRequired = palletsRequired + spaceNeeded;
-            }
-        }
-        return palletsRequired;
-    }
-
-     */
 }
 
