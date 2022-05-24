@@ -1,7 +1,9 @@
 package ch.shipster.service;
 
+import ch.shipster.data.repository.OrderRepository;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfWriter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
@@ -9,7 +11,18 @@ import java.io.IOException;
 
 @Service
 public class ReceiptGenerator {
-    public void createPDF(HttpServletResponse response) throws IOException {
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    OrderService orderService;
+
+    @Autowired
+    OrderItemService orderItemService;
+
+
+    public void createPDF(HttpServletResponse response, Long orderId) throws IOException {
         Document document = new Document(PageSize.A4);
         PdfWriter.getInstance(receipt, response.getOutputStream());
 
@@ -23,7 +36,7 @@ public class ReceiptGenerator {
         fontText.setSize(12);
 
         //Title
-        Paragraph title = new Paragraph("Shipster Receipt / Order Nr. " + "XXXX Order Number", fontTitle);
+        Paragraph title = new Paragraph("Shipster Receipt / Order Nr. " + orderId, fontTitle);
         title.setAlignment(Paragraph.ALIGN_CENTER);
 
         //Company logo
@@ -46,8 +59,6 @@ public class ReceiptGenerator {
         customer.add("ZIP + City");
         customer.add("Country");
         customer.add("email");
-
-
 
         //Creating PDF
         document.add(title);

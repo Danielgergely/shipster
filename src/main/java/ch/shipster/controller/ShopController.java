@@ -187,13 +187,14 @@ public class ShopController {
     }
 
     @GetMapping(path = "order/receipt")
-    public void generateReceipt(HttpServletResponse response) throws IOException {
+    public void generateReceipt(HttpServletResponse response, @RequestParam Long orderId) throws IOException {
+        //Also get userId
         response.setContentType("application/pdf");
         String headerKey = "Content-Disposition";
         String headerValue = "inline; filename:shipster_receipt" + ".pdf";
         response.setHeader(headerKey, headerValue);
 
-        this.receiptGenerator.createPDF(response);
+        this.receiptGenerator.createPDF(response, orderId);
     }
 
 }
