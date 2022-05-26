@@ -20,7 +20,7 @@
                 <span th:text="${user.getEmail()}"></span><span> </span>
             </div>
             <div id="basket" class="btn btn-outline-secondary mt-2 mb-4" onclick="window.location.replace('shop/basket')">Shopping basket</div>
-            <button id="orders" class="btn btn-outline-secondary mt-2 mb-4" disabled>Previous orders</button>
+            <button id="orders" class="btn btn-outline-secondary mt-2 mb-4" onclick="window.location.replace('/myOrders')">Previous orders</button>
         </div>
         <form class="col-md-5 border-right border-right-shipster pb-2" id="profile" method="post" action="#"
               th:action="@{/updateProfile}">

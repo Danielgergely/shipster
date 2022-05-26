@@ -32,10 +32,10 @@ public class Order {
         this.orderStatus = OrderStatus.BASKET.name();
         this.lastUpdateDate = new Date();
         this.basketDate = new Date();
-        this.orderDate = new Date(0);
-        this.shippingDate = new Date(0);
-        this.deliveryDate = new Date(0);
-        this.cancellationDate = new Date(0);
+        this.orderDate = new Date();
+        this.shippingDate = new Date();
+        this.deliveryDate = new Date();
+        this.cancellationDate = new Date();
 
     }
 
