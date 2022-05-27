@@ -94,32 +94,28 @@ public class ShopController {
     }
 
     @GetMapping(path = "shop/article/add")
-    public String addArticle(@RequestParam Long articleId, @RequestParam Long orderId, @RequestParam(name = "provider_id", required = false) Long providerId, RedirectAttributes redirectAttributes) throws Exception {
+    public String addArticle(@RequestParam Long articleId, @RequestParam Long orderId, RedirectAttributes redirectAttributes) throws Exception {
         orderItemService.add(articleId, orderId);
         redirectAttributes.addAttribute("message", "Product added to basket");
-        redirectAttributes.addAttribute("provider_id", providerId);
         return "redirect:/shop/basket";
     }
 
     @GetMapping(path = "shop/article/remove")
-    public String removeArticle(@RequestParam Long articleId, @RequestParam Long orderId, @RequestParam(name = "provider_id", required = false) Long providerId, RedirectAttributes redirectAttributes) throws Exception {
+    public String removeArticle(@RequestParam Long articleId, @RequestParam Long orderId, RedirectAttributes redirectAttributes) throws Exception {
         orderItemService.remove(articleId, orderId);
         redirectAttributes.addAttribute("message", "Product removed from basket");
-        redirectAttributes.addAttribute("provider_id", providerId);
         return "redirect:/shop/basket";
     }
 
 
     @GetMapping(path = "shop/basket")
-    public String getBasket(@RequestParam(name = "provider_id", required = false) Long providerId, Model model) throws Exception {
+    public String getBasket(Model model) throws Exception {
         Optional<User> user = userService.getCurrentUser();
         if (user.isEmpty()) {
             return "user/login";
         } else {
-            if (providerId == null) {
-                providerId = 2L;
-            }
             Order order = orderService.getBasketByUser(user.get());
+            Long providerId = order.getProviderId();
             List<Article> articles = orderService.getArticlesInBasket(user.get().getUserId());
             List<OrderItem> orderItems = orderService.getOrderItems(order);
             Float articlesTotalPrice = checkoutService.calculateTotalOrderPrice(order);
@@ -150,16 +146,21 @@ public class ShopController {
         return "{\"message\": \"Basket with id: " + orderId + " ordered\"}";
     }
 
+    @GetMapping(path = "/shop/provider")
+    public String changeProvider(@RequestParam Long providerId, @RequestParam Long orderId) {
+        orderService.changeProvider(orderId, providerId);
+        return "redirect:/shop/basket";
+    }
+
     @GetMapping(path = "order/confirmation")
-    public String getOrderConfirmation(@RequestParam(name = "orderId") Long orderId, @RequestParam(name = "providerId") Long providerId, Model model) throws IOException, InterruptedException {
+    public String getOrderConfirmation(@RequestParam(name = "orderId") Long orderId, Model model) throws IOException, InterruptedException {
         Optional<User> user = userService.getCurrentUser();
         if (user.isEmpty()) {
             return "user/login";
         } else {
-            if (providerId == null) {
-                providerId = 2L;
-            }
+
             Order order = orderService.getOrderById(orderId);
+            Long providerId = order.getProviderId();
             List<Article> articles = orderService.getArticlesInOrder(user.get().getUserId());
             List<OrderItem> orderItems = orderService.getOrderItems(order);
             Float articlesTotalPrice = checkoutService.calculateTotalOrderPrice(order);
@@ -188,6 +189,29 @@ public class ShopController {
             model.addAttribute("orders", orders);
             model.addAttribute("user", user.get());
             return "shop/myOrders";
+        }
+    }
+
+    @GetMapping(path = "/order")
+    public String getOrderDetails(@RequestParam Long orderId, Model model) throws IOException, InterruptedException {
+        Optional<User> user = userService.getCurrentUser();
+        if (user.isEmpty()) {
+            return "user/login";
+        } else {
+            Order order = orderService.getOrderById(orderId);
+            List<OrderItem> orderItems = orderItemService.getAllByOrderId(orderId);
+            List<Article> articles = orderService.getArticlesInOrder(orderId);
+            Provider provider = providerService.getProviderById(order.getProviderId());
+            Float articlesTotalPrice = checkoutService.calculateTotalOrderPrice(order);
+            Float totalPrice = checkoutService.calculateTotalOrderPriceWithShipping(order, order.getProviderId());
+            model.addAttribute("user", user.get());
+            model.addAttribute("provider", provider);
+            model.addAttribute("order", order);
+            model.addAttribute("orderItems", orderItems);
+            model.addAttribute("articles", articles);
+            model.addAttribute("articlesTotalPrice", articlesTotalPrice);
+            model.addAttribute("totalPrice", totalPrice);
+            return "shop/order";
         }
     }
 }

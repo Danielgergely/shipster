@@ -1,0 +1,80 @@
+<!-- Daniel -->
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="general.html :: headerfiles(title='Order #' + ${order.getId()})"></head>
+<body class="bg-basket">
+
+<!-- Navigation-->
+<nav th:replace="general.html :: navigation(page='', user=${user})"></nav>
+
+<div class="main-basket">
+    <div class="row">
+        <div class="w-100 d-flex justify-content-center">
+            <div class="col-md-8 col-sm-10 shipster-text-light border rounded m-2"
+                 style="min-width: 300px; background-color: black;">
+                <div class="card-body text-center border-bottom mb-2">
+                    <h4 class="basket-title mb-5" th:text="'Order #' + ${order.getId()}"></h4>
+                    <div class="d-flex justify-content-around"><h6>Order date:</h6><h6 th:text="${order.getOrderDate() != null} ? ${#dates.format(order.getOrderDate(), 'dd-MM-yyyy HH:mm')} : '-'"></h6></div>
+                    <div class="d-flex justify-content-around"><h6>Order status:</h6><h6 th:text="${order.getOrderStatus()}"></h6></div>
+                    <div class="d-flex justify-content-around"><h6>Delivery date:</h6><h6 th:text="${order.getDeliveryDate()!= null} ? ${#dates.format(order.getDeliveryDate(), 'dd-MM-yyyy HH:mm')} : '-'"></h6></div>
+                </div>
+                <div class="d-flex align-items-center border-bottom mb-2 p-2" th:each="article, iterator : ${articles}">
+                    <div class="basket column thumbnail"
+                         th:onclick="'window.location.href = \'/shop/article?articleId=' + ${article.getId} + '\''">
+                        <div class="thumb-img"><img class="w-100" th:src="@{${article.getUrl()}}">
+                        </div>
+                    </div>
+                    <div class="basket column product-basket ps-3">
+                        <h6 th:text="${article.getName()}"></h6>
+                        <p th:text="${article.getDescription()}"></p>
+                    </div>
+                    <div class="basket column spacer">
+                    </div>
+                    <div class="basket column quantity">
+                            <div class="m-2" th:text="${orderItems[iterator.index].getQuantity()}"></div>
+                    </div>
+                    <div class="basket column price">
+                        <h6 class="price-article"
+                            th:text="${#numbers.formatDecimal(article.getPrice() * orderItems[iterator.index].getQuantity(), 0, 2)}"></h6>
+                        <!--GET Subtotal Price (Quantity * Product Price)-->
+                    </div>
+                </div>
+
+                <p></p> <!-- division line -->
+
+                <!-- Shipping Total, Product Subtotal, Order Total" -->
+                <div class="row justify-content-around">
+                    <div class="col-6 d-flex justify-content-center">
+                        <div>
+                            <h6>Products Total</h6>
+                            <h6>Shipping provider</h6>
+                            <h6>Total pallet space used</h6>
+                            <h6>Shipping Total</h6>
+                            <h4>Total</h4>
+                        </div>
+                    </div>
+                    <div class="col-6 d-flex justify-content-center">
+                        <div>
+                            <h6 th:text="${#numbers.formatDecimal(articlesTotalPrice, 0, 2)}"></h6>
+                            <h6 th:text="${provider.getName()}"></h6>
+                            <h6 th:text="${#numbers.formatDecimal(palletSpace, 0, 2)}"></h6>
+                            <h6 th:text="${#numbers.formatDecimal(totalPrice - articlesTotalPrice, 0, 2)}"></h6>
+                            <h4 th:text="${#numbers.formatDecimal(totalPrice, 0, 2)}"></h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="m-2 d-flex justify-content-center">
+                    <button id="order" class="btn btn-outline-secondary mb-5" th:onclick="'window.location.href = \'/myOrders' + '\''"
+                         style="max-width:200px" >My orders
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

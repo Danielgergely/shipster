@@ -127,6 +127,11 @@ public class OrderService {
         return outArticles;
     }
 
+    public void changeProvider(Long orderId, Long providerId) {
+        Order order = orderRepository.getById(orderId);
+        order.setProviderId(providerId);
+    }
+
     //Jonas
     /// Save Orders
     public Order saveOrder(Order order) {

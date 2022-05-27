@@ -25,6 +25,8 @@ public class Order {
     private Date deliveryDate;
     private Date cancellationDate;
 
+    private Long providerId;
+
     /// Constructor
 
     public Order(User user){
@@ -36,6 +38,7 @@ public class Order {
         this.shippingDate = null;
         this.deliveryDate = null;
         this.cancellationDate = null;
+        this.providerId = 1L;
 
     }
 
@@ -48,6 +51,7 @@ public class Order {
         this.shippingDate = null;
         this.deliveryDate = null;
         this.cancellationDate = null;
+        this.providerId = 1L;
     }
     public Order(){}
 
@@ -130,5 +134,13 @@ public class Order {
 
     public void setCancellationDate(Date cancellationDate) {
         this.cancellationDate = cancellationDate;
+    }
+
+    public Long getProviderId() {
+        return providerId;
+    }
+
+    public void setProviderId(Long providerId) {
+        this.providerId = providerId;
     }
 }
