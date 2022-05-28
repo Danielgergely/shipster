@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -214,4 +215,23 @@ public class ShopController {
             return "shop/order";
         }
     }
+
+    //Manuel
+    private final ReceiptGenerator receiptGenerator;
+
+    public ShopController(ReceiptGenerator receiptGenerator) {
+        this.receiptGenerator = receiptGenerator;
+    }
+
+    @GetMapping(path = "order/receipt")
+    public void generateReceipt(HttpServletResponse response, @RequestParam Long orderId) throws IOException {
+        //Also get userId
+        response.setContentType("application/pdf");
+        String headerKey = "Content-Disposition";
+        String headerValue = "inline; filename:shipster_receipt" + ".pdf";
+        response.setHeader(headerKey, headerValue);
+
+        this.receiptGenerator.createPDF(response, orderId);
+    }
+
 }
