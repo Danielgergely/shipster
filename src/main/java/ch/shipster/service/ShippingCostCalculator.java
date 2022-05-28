@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 // Manuel
@@ -57,8 +58,9 @@ public class ShippingCostCalculator {
         float palletsRequired = 0;
         float spaceLeft = 0;
         float tempMinPalletSpace = 0;
+        List<OrderItem> orderItemIterList = new ArrayList<OrderItem>(sco);
 
-        for (OrderItem i : sco) {
+        for (OrderItem i : orderItemIterList) {
             Article currentArticle = orderItemService.getArticle(i);
             if (tempMinPalletSpace < currentArticle.getPalletSpace()) {
                 tempMinPalletSpace = currentArticle.getPalletSpace();
