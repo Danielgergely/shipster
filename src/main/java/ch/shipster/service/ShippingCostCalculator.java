@@ -4,6 +4,7 @@ import ch.shipster.data.domain.Address;
 import ch.shipster.data.domain.Article;
 import ch.shipster.data.domain.OrderItem;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +26,8 @@ public class ShippingCostCalculator {
     OrderItemService orderItemService;
 
     public float palletCalculation(Long orderId) {
-        List<OrderItem> sco = orderService.getOrderItems(orderId);
-        return requiredPallets(sco);
+        List<OrderItem> basketItems = orderService.getOrderItems(orderId);
+        return requiredPallets(basketItems);
     }
 
     public boolean spaceLimit(float requiredPallets) {
@@ -39,8 +40,8 @@ public class ShippingCostCalculator {
 
     public float costCalculation(Long orderId) throws IOException, InterruptedException {
         Address currentAddress = orderService.getUserAddress(orderId);
-        List<OrderItem> sco = orderService.getOrderItems(orderId);
-        int requiredPallets = requiredPallets(sco);
+        List<OrderItem> basketItems = orderService.getOrderItems(orderId);
+        int requiredPallets = requiredPallets(basketItems);
         int distance = DistanceCalculator.calculateDistance(currentAddress);
 
         return costService.getCheapestCost(distance, requiredPallets).getPrice();
@@ -48,41 +49,58 @@ public class ShippingCostCalculator {
 
     public float costCalculation(Long orderId, Long providerId) throws IOException, InterruptedException {
         Address currentAddress = orderService.getUserAddress(orderId);
-        List<OrderItem> sco = orderService.getOrderItems(orderId);
-        int requiredPallets = requiredPallets(sco);
+        List<OrderItem> basketItems = orderService.getOrderItems(orderId);
+        int requiredPallets = requiredPallets(basketItems);
         int distance = DistanceCalculator.calculateDistance(currentAddress);
         return costService.getCost(providerId, distance, requiredPallets).getPrice();
     }
 
-    private int requiredPallets(List<OrderItem> sco) {
+    private int requiredPallets(List<OrderItem> basketItems){
         float palletsRequired = 0;
-        float spaceLeft = 0;
-        float tempMinPalletSpace = 0;
-        List<OrderItem> orderItemIterList = new ArrayList<OrderItem>(sco);
+        float spaceLeft;
+        float tempMinPalletSpace;
+        OrderItem currentBasketItem;
+        Article currentArticle;
 
-        for (OrderItem i : orderItemIterList) {
-            Article currentArticle = orderItemService.getArticle(i);
-            if (tempMinPalletSpace < currentArticle.getPalletSpace()) {
-                tempMinPalletSpace = currentArticle.getPalletSpace();
-            } else {
-                palletsRequired = palletsRequired + tempMinPalletSpace;
-                spaceLeft = palletsRequired - (i.getQuantity() * orderItemService.getArticle(i).getPalletProductRatio());
-                sco.remove(i);
+        while (!basketItems.isEmpty()){
+            currentBasketItem = findLargestItem(basketItems);
+            currentArticle = orderItemService.getArticle(currentBasketItem);
+            tempMinPalletSpace = currentArticle.getPalletSpace();
+
+            if (tempMinPalletSpace < currentBasketItem.getQuantity() * currentArticle.getPalletProductRatio()){
+                tempMinPalletSpace = tempMinPalletSpace + currentArticle.getPalletSpace();
             }
-            palletsRequired = palletsRequired + palletsRequired(sco, i, spaceLeft);
+            palletsRequired = palletsRequired + tempMinPalletSpace;
+            spaceLeft = tempMinPalletSpace - (currentBasketItem.getQuantity() * currentArticle.getPalletProductRatio());
+            basketItems.remove(currentBasketItem);
+
+            if (!basketItems.isEmpty()){
+                List toRemove = new ArrayList();
+                for (OrderItem i : basketItems){
+                    float spaceRequired = (i.getQuantity() * orderItemService.getArticle(i).getPalletProductRatio());
+                    if (spaceLeft <= spaceRequired){
+                        palletsRequired = palletsRequired + spaceRequired;
+                        toRemove.add(i);
+                    }
+                }
+                basketItems.removeAll(toRemove);
+            }
         }
         return (int) Math.ceil(palletsRequired);
     }
 
-
-    public float palletsRequired(List<OrderItem> orderItems, OrderItem oI, float spaceLeft) {
-        float palletsRequired = 0;
-        for (OrderItem orderItem : orderItems) {
-            float spaceNeeded = orderItem.getQuantity() * orderItemService.getArticle(oI).getPalletProductRatio();
-            if (spaceLeft <= spaceNeeded) {
-                palletsRequired = palletsRequired + spaceNeeded;
+    private OrderItem findLargestItem(List<OrderItem> basketItems){
+        float minPalletSpace = 0;
+        Article currentArticle;
+        OrderItem largestBasketItem = null;
+        for (OrderItem i : basketItems) {
+            currentArticle = orderItemService.getArticle(i);
+            if (minPalletSpace < currentArticle.getPalletSpace()) {
+                minPalletSpace = currentArticle.getPalletSpace();
+                largestBasketItem = i;
             }
         }
-        return palletsRequired;
+        return largestBasketItem;
     }
 }
+
