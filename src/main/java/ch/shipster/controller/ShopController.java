@@ -47,6 +47,9 @@ public class ShopController {
     @Autowired
     ShippingCostCalculator shippingCostCalculator;
 
+    @Autowired
+    ReceiptGenerator receiptGenerator;
+
     @GetMapping(path = "shop")
     public String getShopView(Model model) {
         Optional<User> user = userService.getCurrentUser();
@@ -215,13 +218,7 @@ public class ShopController {
             return "shop/order";
         }
     }
-
     //Manuel
-    private final ReceiptGenerator receiptGenerator;
-
-    public ShopController(ReceiptGenerator receiptGenerator) {
-        this.receiptGenerator = receiptGenerator;
-    }
 
     @GetMapping(path = "order/receipt")
     public void generateReceipt(HttpServletResponse response, @RequestParam Long orderId) throws IOException {
@@ -231,7 +228,7 @@ public class ShopController {
         String headerValue = "inline; filename:shipster_receipt" + orderId + ".pdf";
         response.setHeader(headerKey, headerValue);
 
-        this.receiptGenerator.createPDF(response, orderId);
+        receiptGenerator.createPDF(response, orderId);
     }
 
 }
