@@ -225,7 +225,7 @@ public class ShopController {
         //Also get userId
         response.setContentType("application/pdf");
         String headerKey = "Content-Disposition";
-        String headerValue = "inline; filename:shipster_receipt" + orderId + ".pdf";
+        String headerValue = "attachment; filename=shipster_receipt_#" + orderId + ".pdf";
         response.setHeader(headerKey, headerValue);
 
         receiptGenerator.createPDF(response, orderId);

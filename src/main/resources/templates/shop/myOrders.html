@@ -19,6 +19,7 @@
                 <td>Delivery date</td>
                 <td>Cancellation date</td>
                 <td>Status</td>
+                <td></td>
             </tr>
             </thead>
             <tbody>
@@ -30,10 +31,18 @@
                 <td th:text="${order.getDeliveryDate()!= null} ? ${#dates.format(order.getDeliveryDate(), 'dd-MM-yyyy HH:mm')} : '-'"></td>
                 <td th:text="${order.getCancellationDate()!= null} ? ${#dates.format(order.getCancellationDate(), 'dd-MM-yyyy HH:mm')} : '-'"></td>
                 <td th:text="${order.getOrderStatus()!= null} ? ${order.getOrderStatus()} : '-'"></td>
+                <td><button class="btn btn-outline-secondary-small receiptBtn" th:onclick="'window.location.href=\'/order/receipt?orderId=' + ${order.getId()} + '\''"> Receipt</button> </td>
             </tr>
             </tbody>
         </table>
     </div>
 </div>
 </body>
+
+<script>
+    $('.receiptBtn').click(function (e) {
+        e.stopPropagation();
+    });
+</script>
+
 </html>

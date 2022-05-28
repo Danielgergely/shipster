@@ -65,9 +65,12 @@
                     </div>
                 </div>
 
-                <div class="m-2 d-flex justify-content-center">
+                <div class="m-2 d-flex justify-content-around">
                     <button id="order" class="btn btn-outline-secondary mb-5" th:onclick="'window.location.href = \'/myOrders' + '\''"
                          style="max-width:200px" >My orders
+                    </button>
+                    <button id="receipt" class="btn btn-outline-secondary mb-5" th:onclick="'window.location.href=\'/order/receipt?orderId=' + ${order.getId()} + '\''"
+                            style="max-width:200px" >Receipt
                     </button>
                 </div>
             </div>
