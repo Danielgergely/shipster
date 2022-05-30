@@ -38,8 +38,12 @@ public class ReceiptGenerator {
     @Autowired
     AddressService addressService;
 
-    public void createPDF(HttpServletResponse response, Long orderId) throws IOException {
+    @Autowired
+    ShippingCostCalculator shippingCostCalculator;
+
+    public void createPDF(HttpServletResponse response, Long orderId) throws IOException, InterruptedException {
         User user = orderService.getUser(orderId);
+        Float productCost = 0.0f;
         List<OrderItem> basketItems = orderService.getOrderItems(orderId);
         Document document = new Document(PageSize.A4);
         PdfWriter.getInstance(document, response.getOutputStream());
@@ -60,23 +64,6 @@ public class ReceiptGenerator {
         Font infoHeader = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
         infoHeader.setSize(14);
         infoHeader.setColor(Color.black);
-
-        /*
-        //Write Table Header
-        public void writeHeader(PdfPTable table){
-            PdfPCell cell = new PdfPCell();
-            cell.setBackgroundColor(Color.gray);
-            cell.setPadding(5);
-
-            font fontHeader = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
-            fontHeader.setColor(Color.white);
-
-            cell.setPhrase(new Phrase("Article Name". fontHeader));
-            table.addCell
-        }
-        */
-
-        //Write Table Data
 
         //Title
         Paragraph title = new Paragraph("Shipster Receipt / Order Nr. " + orderId, fontTitle);
@@ -135,7 +122,7 @@ public class ReceiptGenerator {
         info.addCell(cCountry);
 
         //Basket table
-        PdfPTable table = new PdfPTable(2);
+        PdfPTable table = new PdfPTable(3);
         table.setWidthPercentage(80f);
         //table.setWidthPercentage(new float[] {3.0f, 3.0f, 3.0f});
         table.setSpacingBefore(30);
@@ -150,11 +137,36 @@ public class ReceiptGenerator {
         cell.setPhrase(new Phrase("Quantity", fontHeader));
         table.addCell(cell);
 
+        cell.setPhrase(new Phrase("Price", fontHeader));
+        table.addCell(cell);
+
         for (OrderItem i : basketItems){
             Article article = articleService.findById(i.getArticleId());
             table.addCell(article.getName());
             table.addCell(String.valueOf(i.getQuantity()));
+            table.addCell(String.valueOf(i.getQuantity() * orderItemService.getArticle(i).getPrice()) + ".- CHF");
+            productCost = productCost + (i.getQuantity() * orderItemService.getArticle(i).getPrice());
         }
+
+        //Total Product-Cost Cell
+        table.addCell("");
+        table.addCell("Total Product Cost");
+        table.addCell(String.valueOf(productCost) + ".- CHF");
+
+        //Total Pallet
+        table.addCell("");
+        table.addCell("Total Pallets");
+        table.addCell(String.valueOf(shippingCostCalculator.palletCalculation(orderId)) + " Pallet(s)");
+
+        //Total Shipping-Cost Cell
+        table.addCell("");
+        table.addCell("Total Shipping Cost");
+        table.addCell(String.valueOf(shippingCostCalculator.costCalculation(orderId)) + ".- CHF");
+
+        //Total Overall-Cost Cell
+        table.addCell("");
+        table.addCell("Grand Total Cost");
+        table.addCell(String.valueOf((shippingCostCalculator.costCalculation(orderId)) + (shippingCostCalculator.palletCalculation(orderId))) + ".- CHF");
 
         //Creating PDF
         document.add(shipster_logo);

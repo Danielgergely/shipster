@@ -221,7 +221,7 @@ public class ShopController {
     //Manuel
 
     @GetMapping(path = "order/receipt")
-    public void generateReceipt(HttpServletResponse response, @RequestParam Long orderId) throws IOException {
+    public void generateReceipt(HttpServletResponse response, @RequestParam Long orderId) throws IOException, InterruptedException {
         //Also get userId
         response.setContentType("application/pdf");
         String headerKey = "Content-Disposition";
