@@ -1,15 +1,46 @@
-<!-- Daniel -->
+<!-- Daniel-->
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="general.html :: headerfiles(title='Admin')"></head>
-<body class="bg-admin">
+<body class="bg-article">
+
 <!-- Navigation-->
-<nav th:replace="general.html :: navigation_admin (page='Order admin', user=${user})"></nav>
+<nav th:replace="general.html :: navigation_admin(page='Order admin', user=${currentUser})"></nav>
 
 <div class="shop-start">
-    This is the order admin page
+    <div class="w-100 d-flex justify-content-center">
+        <table class="table shipster-user-tbl m-2">
+            <thead class="shipster-user-tbl-header">
+            <tr>
+                <td>Id</td>
+                <td>Order date</td>
+                <td>Shipping date</td>
+                <td>Delivery date</td>
+                <td>Cancellation date</td>
+                <td>Status</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="user-row" th:each="order : ${orders}"
+                th:onclick="'window.location.href=\'order?orderId=' + ${order.getId()} + '\''">
+                <td th:text="'#' + ${order.getId()}"></td>
+                <td th:text="${order.getOrderDate() != null} ? ${#dates.format(order.getOrderDate(), 'dd-MM-yyyy HH:mm')} : '-'"></td>
+                <td th:text="${order.getShippingDate()!= null} ? ${#dates.format(order.getShippingDate(), 'dd-MM-yyyy HH:mm')} : '-'"></td>
+                <td th:text="${order.getDeliveryDate()!= null} ? ${#dates.format(order.getDeliveryDate(), 'dd-MM-yyyy HH:mm')} : '-'"></td>
+                <td th:text="${order.getCancellationDate()!= null} ? ${#dates.format(order.getCancellationDate(), 'dd-MM-yyyy HH:mm')} : '-'"></td>
+                <td th:text="${order.getOrderStatus()!= null} ? ${order.getOrderStatus()} : '-'"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
-
 </body>
+
+<script>
+    $('.receiptBtn').click(function (e) {
+        e.stopPropagation();
+    });
+</script>
+
 </html>

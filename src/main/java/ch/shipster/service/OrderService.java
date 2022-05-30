@@ -132,6 +132,10 @@ public class OrderService {
         order.setProviderId(providerId);
     }
 
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll();
+    }
+
     //Jonas
     /// Save Orders
     public Order saveOrder(Order order) {

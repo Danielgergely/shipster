@@ -1,17 +1,17 @@
 package ch.shipster.controller;
 
-import ch.shipster.data.domain.Address;
-import ch.shipster.data.domain.User;
+import ch.shipster.data.domain.*;
 import ch.shipster.exceptions.NoPermissionException;
 import ch.shipster.security.ShipsterUserRole;
-import ch.shipster.service.AddressService;
-import ch.shipster.service.UserService;
+import ch.shipster.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +26,18 @@ public class AdminController {
 
     @Autowired
     AddressService addressService;
+
+    @Autowired
+    OrderService orderService;
+
+    @Autowired
+    OrderItemService orderItemService;
+
+    @Autowired
+    ProviderService providerService;
+
+    @Autowired
+    CheckoutService checkoutService;
 
     @GetMapping("admin")
     public String getAdminView(Model model) {
@@ -172,8 +184,44 @@ public class AdminController {
         if (user.isEmpty()) {
             return "user/login";
         } else {
-            model.addAttribute("user", user.get());
+            List<Order> orders = orderService.getAllOrders();
+            model.addAttribute("orders", orders);
+            model.addAttribute("currentUser", user.get());
             return "admin/orders";
         }
+    }
+
+    @GetMapping(path = "admin/order")
+    public String getOrderDetails(@RequestParam Long orderId, Model model) throws IOException, InterruptedException {
+        Optional<User> currentUser = userService.getCurrentUser();
+        if (currentUser.isEmpty()) {
+            return "user/login";
+        } else {
+            Order order = orderService.getOrderById(orderId);
+            User user = userService.findById(order.getUserId());
+            List<OrderItem> orderItems = orderItemService.getAllByOrderId(orderId);
+            List<Article> articles = orderService.getArticlesInOrder(orderId);
+            Provider provider = providerService.getProviderById(order.getProviderId());
+            Float articlesTotalPrice = checkoutService.calculateTotalOrderPrice(order);
+            Float totalPrice = checkoutService.calculateTotalOrderPriceWithShipping(order, order.getProviderId());
+            List<OrderStatus> orderStatuses = Arrays.asList(OrderStatus.values());
+            model.addAttribute("currentUser", currentUser.get());
+            model.addAttribute("user", user);
+            model.addAttribute("provider", provider);
+            model.addAttribute("order", order);
+            model.addAttribute("orderStatuses", orderStatuses);
+            model.addAttribute("orderItems", orderItems);
+            model.addAttribute("articles", articles);
+            model.addAttribute("articlesTotalPrice", articlesTotalPrice);
+            model.addAttribute("totalPrice", totalPrice);
+            return "shop/order";
+        }
+    }
+
+    @PostMapping("admin/changeOrderStatus")
+    public String changeOrderStatus(@RequestParam Long orderId, @RequestParam String status) {
+        Order order = orderService.getOrderById(orderId);
+        order.setOrderStatus(OrderStatus.valueOf(status));
+        return "redirect:/admin/order?orderId=" + orderId;
     }
 }
