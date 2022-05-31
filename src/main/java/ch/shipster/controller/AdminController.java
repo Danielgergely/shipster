@@ -221,9 +221,7 @@ public class AdminController {
     @PostMapping("admin/changeOrderStatus")
     @ResponseBody
     public String changeOrderStatus(@RequestParam Long orderId, @RequestParam String status) {
-        Order order = orderService.getOrderById(orderId);
-        order.setOrderStatus(OrderStatus.valueOf(status));
-        orderService.saveOrder(order);
+        orderService.changeOrderStatus(orderId, status);
         return "{\"message\": \"Status updated.\"}";
     }
 }

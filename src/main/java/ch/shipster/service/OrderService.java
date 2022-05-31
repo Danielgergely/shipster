@@ -6,8 +6,8 @@ import ch.shipster.data.repository.OrderRepository;
 import ch.shipster.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.Date;
 
-import java.security.cert.CollectionCertStoreParameters;
 import java.util.*;
 
 // Timo
@@ -134,6 +134,35 @@ public class OrderService {
 
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
+    }
+
+    public void changeOrderStatus(Long orderId, String status) {
+        Order order = orderRepository.getById(orderId);
+        OrderStatus orderStatus = OrderStatus.valueOf(status);
+        order.setOrderStatus(orderStatus);
+        switch (orderStatus) {
+            case BASKET -> {
+                order.setBasketDate(new Date());
+                order.setLastUpdateDate(new Date());
+            }
+            case ORDERED -> {
+                order.setOrderDate(new Date());
+                order.setLastUpdateDate(new Date());
+            }
+            case SHIPPED -> {
+                order.setShippingDate(new Date());
+                order.setLastUpdateDate(new Date());
+            }
+            case CANCELED -> {
+                order.setCancellationDate(new Date());
+                order.setLastUpdateDate(new Date());
+            }
+            case DELIVERED -> {
+                order.setDeliveryDate(new Date());
+                order.setLastUpdateDate(new Date());
+            }
+        }
+        orderRepository.save(order);
     }
 
     //Jonas
