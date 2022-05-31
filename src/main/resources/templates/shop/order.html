@@ -65,13 +65,16 @@
                     </div>
                 </div>
 
-                <div class="m-2 d-flex justify-content-around">
-                    <select>
+                <p></p> <!-- division line -->
+
+                <div class="m-2 d-flex justify-content-end">
+                    <label for="status_select" class="me-2 mt-2">Change status:</label>
+                    <select id="status_select" class="shipster-select me-2" onchange="enableBtn()">
                         <option hidden> Please select</option>
                         <option th:each="status : ${orderStatuses}" th:text="${status.name()}"></option>
                     </select>
-                    <button id="receipt" class="btn btn-outline-secondary mb-5" th:onclick="changeStatus()"
-                            style="max-width:200px" >Change status
+                    <button id="save" class="btn btn-outline-secondary mb-5 me-2" th:onclick="|changeStatus(${order.getId()})|"
+                            style="max-width:200px" disabled>Save
                     </button>
                 </div>
             </div>
@@ -81,4 +84,21 @@
 
 </body>
 
+<script>
+    function enableBtn() {
+        $('#save').prop('disabled', false);
+    }
+
+    function changeStatus(orderId) {
+        let status = $('#status_select').val();
+        let url = "/admin/changeOrderStatus?orderId=" + orderId + "&status=" + status;
+        $.ajax({
+            url: url,
+            type: "POST",
+            success: function(data) {
+                window.location.replace("/admin/order?orderId=" + orderId);
+            }
+        })
+    }
+</script>
 </html>

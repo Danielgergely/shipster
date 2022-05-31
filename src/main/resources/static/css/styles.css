@@ -755,3 +755,13 @@ hr.rounded {
 .product-basket-50 {
     width: 50%;
 }
+
+.shipster-select {
+    border: 1px solid #ffc800;
+    background-color: black;
+    color: #ffc800;
+    padding: 0.375rem 0.75rem;
+    border-radius: 5px;
+    margin-top: 5px;
+    height: 38px;
+}

@@ -219,9 +219,11 @@ public class AdminController {
     }
 
     @PostMapping("admin/changeOrderStatus")
+    @ResponseBody
     public String changeOrderStatus(@RequestParam Long orderId, @RequestParam String status) {
         Order order = orderService.getOrderById(orderId);
         order.setOrderStatus(OrderStatus.valueOf(status));
-        return "redirect:/admin/order?orderId=" + orderId;
+        orderService.saveOrder(order);
+        return "{\"message\": \"Status updated.\"}";
     }
 }
