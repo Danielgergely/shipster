@@ -1,5 +1,6 @@
 package ch.shipster.service;
 
+import ch.shipster.data.domain.Article;
 import ch.shipster.data.domain.Cost;
 import ch.shipster.data.domain.Provider;
 import ch.shipster.data.repository.CostRepository;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -42,7 +44,9 @@ public class CostService {
     }
 
     public Cost getCost(Long providerId, int km, int pallets) {
-        for (Cost c : costRepository.findByProviderIdAndPalletOrderByKmDesc(providerId, pallets)) {
+        List<Cost> costs = costRepository.findByProviderIdAndPalletOrderByKmDesc(providerId, pallets);
+        costs.sort(Comparator.comparing(Cost::getKm));
+        for (Cost c : costs) {
             if (c.getKm() > km) {
                 return c;
             }
