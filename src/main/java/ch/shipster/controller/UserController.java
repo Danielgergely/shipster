@@ -29,13 +29,18 @@ public class UserController {
     AddressService addressService;
 
     @PostMapping("register")
-    public String registerUser(@ModelAttribute User user, Address address) throws Exception {
+    public String registerUser(@ModelAttribute User user, Address address, RedirectAttributes redirectAttributes) throws Exception {
         Address newAddress = new Address(
                 address.getStreet(),
                 address.getNumber(),
                 address.getCity(),
                 address.getZip(),
                 address.getCountry());
+        boolean valid = addressService.validateAddress(newAddress);
+        if (!valid) {
+            redirectAttributes.addAttribute("message", "Address is not valid. Please use a valid address");
+            return "redirect:register";
+        }
         addressService.createAddress(newAddress);
         user.setAddressId(newAddress.getAddressId());
         User newUser = new User(

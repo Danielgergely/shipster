@@ -8,6 +8,7 @@ import ch.shipster.exceptions.NotLoggedInException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Optional;
 
 // Daniel
@@ -57,5 +58,9 @@ public class AddressService {
             address.setCountry(updatedAddress.getCountry());
             addressRepository.save(address);
         }
+    }
+
+    public boolean validateAddress(Address address) throws IOException, InterruptedException {
+        return DistanceCalculator.validateAddress(address);
     }
 }

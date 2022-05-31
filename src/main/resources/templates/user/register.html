@@ -67,6 +67,9 @@
         </p>
 
         <button class="btn btn-outline-secondary" type="submit">Register</button>
+        <div th:if="${message != null}" class="col-md-12 pb-2">
+            <h5 class="fst-italic text-centered text-error" th:text="${message}"></h5>
+        </div>
     </form>
 </div>
 </body>
