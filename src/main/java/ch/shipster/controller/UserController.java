@@ -51,10 +51,15 @@ public class UserController {
                 user.getPassword(),
                 user.getAddressId(),
                 user.getGender());
-        userService.createUser(newUser);
-
-        ShipsterLogger.logger.info("User with ID " + newAddress.getAddressId() + " has successfully registered");
-        return "user/login";
+        try {
+            userService.createUser(newUser);
+            ShipsterLogger.logger.info("User with ID " + newAddress.getAddressId() + " has successfully registered");
+            return "user/login";
+        }
+        catch(Exception e) {
+            redirectAttributes.addAttribute("message", e.getMessage());
+            return "redirect:register";
+        }
     }
 
     @GetMapping("profile")

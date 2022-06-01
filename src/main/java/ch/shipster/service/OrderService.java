@@ -130,6 +130,7 @@ public class OrderService {
     public void changeProvider(Long orderId, Long providerId) {
         Order order = orderRepository.getById(orderId);
         order.setProviderId(providerId);
+        orderRepository.save(order);
     }
 
     public List<Order> getAllOrders() {

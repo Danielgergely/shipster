@@ -214,7 +214,7 @@ public class AdminController {
             model.addAttribute("articles", articles);
             model.addAttribute("articlesTotalPrice", articlesTotalPrice);
             model.addAttribute("totalPrice", totalPrice);
-            return "shop/order";
+            return "admin/order";
         }
     }
 

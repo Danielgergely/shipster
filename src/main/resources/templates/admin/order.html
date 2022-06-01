@@ -14,7 +14,7 @@
             <div class="col-md-8 col-sm-10 shipster-text-light border rounded m-2"
                  style="min-width: 300px; background-color: black;">
                 <div class="card-body text-center border-bottom mb-2">
-                    <h4 class="basket-title mb-5" th:text="'Order #' + ${order.getId()}"></h4>
+                    <div class="d-flex justify-content-around"><h4 class="basket-title mb-5" th:text="'Order #' + ${order.getId()}"></h4> <h4 class="basket-title mb-5" th:text="'Customer: ' + ${user.getUserName()}"></h4></div>
                     <div class="d-flex justify-content-around"><h6>Order date:</h6><h6 th:text="${order.getOrderDate() != null} ? ${#dates.format(order.getOrderDate(), 'dd-MM-yyyy HH:mm')} : '-'"></h6></div>
                     <div class="d-flex justify-content-around"><h6>Order status:</h6><h6 th:text="${order.getOrderStatus()}"></h6></div>
                     <div class="d-flex justify-content-around"><h6>Delivery date:</h6><h6 th:text="${order.getDeliveryDate()!= null} ? ${#dates.format(order.getDeliveryDate(), 'dd-MM-yyyy HH:mm')} : '-'"></h6></div>
@@ -65,12 +65,16 @@
                     </div>
                 </div>
 
-                <div class="m-2 d-flex justify-content-around">
-                    <button id="order" class="btn btn-outline-secondary mb-5" th:onclick="'window.location.href = \'/myOrders' + '\''"
-                         style="max-width:200px" >My orders
-                    </button>
-                    <button id="receipt" class="btn btn-outline-secondary mb-5" th:onclick="'window.location.href=\'/order/receipt?orderId=' + ${order.getId()} + '\''"
-                            style="max-width:200px" >Receipt
+                <p></p> <!-- division line -->
+
+                <div class="m-2 d-flex justify-content-end">
+                    <label for="status_select" class="me-2 mt-2">Change status:</label>
+                    <select id="status_select" class="shipster-select me-2" onchange="enableBtn()">
+                        <option hidden> Please select</option>
+                        <option th:each="status : ${orderStatuses}" th:text="${status.name()}"></option>
+                    </select>
+                    <button id="save" class="btn btn-outline-secondary mb-5 me-2" th:onclick="|changeStatus(${order.getId()})|"
+                            style="max-width:200px" disabled>Save
                     </button>
                 </div>
             </div>
@@ -80,4 +84,21 @@
 
 </body>
 
+<script>
+    function enableBtn() {
+        $('#save').prop('disabled', false);
+    }
+
+    function changeStatus(orderId) {
+        let status = $('#status_select').val();
+        let url = "/admin/changeOrderStatus?orderId=" + orderId + "&status=" + status;
+        $.ajax({
+            url: url,
+            type: "POST",
+            success: function(data) {
+                window.location.replace("/admin/order?orderId=" + orderId);
+            }
+        })
+    }
+</script>
 </html>
