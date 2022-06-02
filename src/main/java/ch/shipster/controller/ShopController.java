@@ -189,7 +189,7 @@ public class ShopController {
         if (user.isEmpty()) {
             return "user/login";
         } else {
-            List<Order> orders = orderService.getOrdersByUserId(user.get().getUserId());
+            List<Order> orders = orderService.getOrdersByUserNotBasket(user.get().getUserId());
             model.addAttribute("orders", orders);
             model.addAttribute("user", user.get());
             return "shop/myOrders";
@@ -222,7 +222,6 @@ public class ShopController {
 
     @GetMapping(path = "order/receipt")
     public void generateReceipt(HttpServletResponse response, @RequestParam Long orderId) throws IOException, InterruptedException {
-        //Also get userId
         response.setContentType("application/pdf");
         String headerKey = "Content-Disposition";
         String headerValue = "attachment; filename=shipster_receipt_#" + orderId + ".pdf";

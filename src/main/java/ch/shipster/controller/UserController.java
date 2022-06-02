@@ -74,6 +74,8 @@ public class UserController {
             if (message != null) {
                 if (message.equals("Your profile has been updated.")) {
                     model.addAttribute("profile_update", message);
+                } else if (message.equals("Address is not valid. Please use a valid address")) {
+                    model.addAttribute("bad_address", message);
                 } else {
                     model.addAttribute("password_changed", message);
                 }
@@ -84,8 +86,13 @@ public class UserController {
 
     @PostMapping("updateProfile")
     public String updateProfile(@ModelAttribute User updatedUser, Address updatedAddress, RedirectAttributes redirectAttributes) throws Exception {
-        userService.saveUser(updatedUser);
+        boolean valid = addressService.validateAddress(updatedAddress);
+        if (!valid) {
+            redirectAttributes.addAttribute("message", "Address is not valid. Please use a valid address");
+            return "redirect:/profile";
+        }
         addressService.saveAddress(updatedAddress);
+        userService.saveUser(updatedUser);
         ShipsterLogger.logger.info("User " + userService.getCurrentUser() + " changed his address");
         redirectAttributes.addAttribute("message", "Your profile has been updated.");
         return "redirect:/profile";

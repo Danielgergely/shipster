@@ -107,11 +107,15 @@ public class DistanceCalculator {
         HttpResponse<String> response = client.send(request,
                 HttpResponse.BodyHandlers.ofString());
         String outputAPI = response.body();
-        String confidence = outputAPI.substring(outputAPI.indexOf("confidence")+13,
-                outputAPI.indexOf("entityType")-3);
-
-        if (confidence.equals("High")){
-            isAddressValid = true;
+        try {
+            String confidence = outputAPI.substring(outputAPI.indexOf("confidence") + 13,
+                    outputAPI.indexOf("entityType") - 3);
+            if (confidence.equals("High")){
+                isAddressValid = true;
+            }
+        }
+        catch (Exception e) {
+            isAddressValid = false;
         }
         return isAddressValid;
     }
