@@ -56,10 +56,10 @@ public class ShopController {
         if (user.isEmpty()) {
             model.addAttribute("user", "no_user");
         } else {
-            List<Article> products = articleService.getAllArticles();
-            model.addAttribute("products", products);
             model.addAttribute("user", user.get());
         }
+        List<Article> products = articleService.getAllArticles();
+        model.addAttribute("products", products);
         return "shop/shop";
     }
 
@@ -68,7 +68,7 @@ public class ShopController {
     public String addToBasket(@RequestParam Long articleId) throws Exception {
         Optional<User> user = userService.getCurrentUser();
         if (user.isEmpty()) {
-            return "{\"user not logged in\":1}";
+            return "{\"message\": \"please log in to add to basket\"}";
         } else {
             Order order = orderService.getBasketByUser(user.get());
             orderItemService.add(articleId, order.getId());
@@ -189,7 +189,7 @@ public class ShopController {
         if (user.isEmpty()) {
             return "user/login";
         } else {
-            List<Order> orders = orderService.getOrdersByUserId(user.get().getUserId());
+            List<Order> orders = orderService.getOrdersByUserNotBasket(user.get().getUserId());
             model.addAttribute("orders", orders);
             model.addAttribute("user", user.get());
             return "shop/myOrders";
@@ -222,7 +222,6 @@ public class ShopController {
     //Manuel
     @GetMapping(path = "order/receipt")
     public void generateReceipt(HttpServletResponse response, @RequestParam Long orderId) throws IOException, InterruptedException {
-        //Also get userId
         response.setContentType("application/pdf");
         String headerKey = "Content-Disposition";
         String headerValue = "attachment; filename=shipster_receipt_#" + orderId + ".pdf";

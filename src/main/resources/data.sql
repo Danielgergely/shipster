@@ -335,4 +335,56 @@ INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (285, 2, 12, 270, 5
 INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (286, 2, 12, 300, 589.54) ON CONFLICT DO NOTHING;
 INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (287, 2, 12, 330, 626.36) ON CONFLICT DO NOTHING;
 INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (288, 2, 12, 360, 663.21) ON CONFLICT DO NOTHING;
+
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (289, 1, 1, 1000, 400.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (290, 1, 2, 1000, 450.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (291, 1, 3, 1000, 500.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (292, 1, 4, 1000, 550.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (293, 1, 5, 1000, 600.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (294, 1, 6, 1000, 650.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (295, 1, 7, 1000, 700.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (296, 1, 8, 1000, 750.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (297, 1, 9, 1000, 800.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (298, 1, 10, 1000, 850.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (299, 1, 11, 1000, 900.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (300, 1, 12, 1000, 1000.00) ON CONFLICT DO NOTHING;
+
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (301, 2, 1, 1000, 350.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (302, 2, 2, 1000, 400.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (303, 2, 3, 1000, 450.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (304, 2, 4, 1000, 500.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (305, 2, 5, 1000, 550.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (306, 2, 6, 1000, 600.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (307, 2, 7, 1000, 650.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (308, 2, 8, 1000, 700.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (309, 2, 9, 1000, 750.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (310, 2, 10, 1000, 800.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (311, 2, 11, 1000, 850.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (312, 2, 12, 1000, 900.00) ON CONFLICT DO NOTHING;
+
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (313, 1, 1, 10000, 4000.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (314, 1, 2, 10000, 4500.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (315, 1, 3, 10000, 5000.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (316, 1, 4, 10000, 5500.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (317, 1, 5, 10000, 6000.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (318, 1, 6, 10000, 6500.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (319, 1, 7, 10000, 7000.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (320, 1, 8, 10000, 7500.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (321, 1, 9, 10000, 8000.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (322, 1, 10, 10000, 8500.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (323, 1, 11, 10000, 9000.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (324, 1, 12, 10000, 10000.00) ON CONFLICT DO NOTHING;
+
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (325, 2, 1, 10000, 3500.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (326, 2, 2, 10000, 4000.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (327, 2, 3, 10000, 4500.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (328, 2, 4, 10000, 5000.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (329, 2, 5, 10000, 5500.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (330, 2, 6, 10000, 6000.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (331, 2, 7, 10000, 6500.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (332, 2, 8, 10000, 7000.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (333, 2, 9, 10000, 7500.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (334, 2, 10, 10000, 8000.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (335, 2, 11, 10000, 8500.00) ON CONFLICT DO NOTHING;
+INSERT INTO cost (id, provider_id, pallet, km, price) VALUES (336, 2, 12, 10000, 9000.00) ON CONFLICT DO NOTHING;
 SELECT setval('cost_id_seq', (SELECT MAX(id) FROM cost));

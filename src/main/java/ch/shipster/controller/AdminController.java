@@ -214,14 +214,14 @@ public class AdminController {
             model.addAttribute("articles", articles);
             model.addAttribute("articlesTotalPrice", articlesTotalPrice);
             model.addAttribute("totalPrice", totalPrice);
-            return "shop/order";
+            return "admin/order";
         }
     }
 
     @PostMapping("admin/changeOrderStatus")
+    @ResponseBody
     public String changeOrderStatus(@RequestParam Long orderId, @RequestParam String status) {
-        Order order = orderService.getOrderById(orderId);
-        order.setOrderStatus(OrderStatus.valueOf(status));
-        return "redirect:/admin/order?orderId=" + orderId;
+        orderService.changeOrderStatus(orderId, status);
+        return "{\"message\": \"Status updated.\"}";
     }
 }

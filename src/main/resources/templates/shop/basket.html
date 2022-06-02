@@ -75,12 +75,12 @@
                             <div id="provider-list">
                                 <div class="provider d-flex">
                                     <div class="me-3"
-                                         th:onclick="'window.location.href=\'/shop/provider?provider_id=1&order_id=' + ${order.getId()} + '\''">
+                                         th:onclick="'window.location.href=\'/shop/provider?providerId=2&orderId=' + ${order.getId()} + '\''">
                                         <input type="radio" name="post" value="2" id="post"
                                                th:checked="${provider.getId() eq 2}"/>
                                         <label for="post">Post</label>
                                     </div>
-                                    <div th:onclick="'window.location.href=\'/shop/provider?provider_id=1&order_id=' + ${order.getId()} + '\''">
+                                    <div th:onclick="'window.location.href=\'/shop/provider?providerId=1&orderId=' + ${order.getId()} + '\''">
                                         <input type="radio" name="dhl" value="1" id="dhl"
                                                th:checked="${provider.getId() eq 1}"/>
                                         <label for="dhl">DHL</label>
@@ -110,6 +110,9 @@
 <div id="loading" class="loading d-none justify-content-center align-items-center">
     <img width="250px" height="250px" th:src="@{/images/shipster_loading.svg}">
 </div>
+
+<!-- Footer -->
+<footer th:replace="general.html :: footer"></footer>
 
 </body>
 
@@ -143,7 +146,7 @@
                 } else {
                     $('#order-success').text(message.message);
                     $('#order').attr("disabled", true);
-                    window.location.replace("/order/confirmation?orderId=" + orderId + "&providerId=" + providerId);
+                    window.location.replace("/order/confirmation?orderId=" + orderId);
                 }
             }
         })

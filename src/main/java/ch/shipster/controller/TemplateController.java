@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
 
@@ -59,7 +60,10 @@ public class TemplateController {
     }
 
     @GetMapping(path = "register")
-    public String getRegisterView(Model model){
+    public String getRegisterView(@RequestParam(name = "message", required = false) String message, Model model){
+        if (message != null){
+            model.addAttribute("message", message);
+        }
         model.addAttribute("user", new User());
         model.addAttribute("address", new Address());
         return "user/register";

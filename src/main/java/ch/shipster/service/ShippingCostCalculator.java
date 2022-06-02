@@ -31,11 +31,7 @@ public class ShippingCostCalculator {
     }
 
     public boolean spaceLimit(float requiredPallets) {
-        if (requiredPallets >= 12) {
-            return false;
-        } else {
-            return false;
-        }
+        return !(requiredPallets >= 12);
     }
 
     public float costCalculation(Long orderId) throws IOException, InterruptedException {

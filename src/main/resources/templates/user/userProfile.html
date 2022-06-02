@@ -91,6 +91,10 @@
             <div th:if="${profile_update != null}" class="col-md-12 pb-2">
                 <h5 class="fst-italic text-centered text-success" th:text="${profile_update}"></h5>
             </div>
+
+            <div th:if="${bad_address != null}" class="col-md-12 pb-2">
+                <h5 class="fst-italic text-centered text-error" th:text="${bad_address}"></h5>
+            </div>
             <button id="update_btn" class="btn btn-outline-secondary mb-4" type="submit" disabled>Update</button>
         </form>
         <form class="col-md-4" id="password_change" method="post" action="#" th:action="@{/updatePassword(userId=${user.getUserId()})}">

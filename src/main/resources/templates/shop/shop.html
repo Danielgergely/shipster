@@ -81,6 +81,10 @@
     <div class="fade-message" id="hide-me" style="display: none;">
     </div>
 </div>
+
+<!-- Footer -->
+<footer th:replace="general.html :: footer"></footer>
+
 </body>
 
 <script>
@@ -103,14 +107,19 @@
             url: url,
             type: "POST",
             success: function (data) {
-                console.log(data);
-                let message = jQuery.parseJSON(data);
-                let div = $('#hide-me')
-                div.text(message.message);
+                let div = $('#hide-me');
+                try {
+                    let message = jQuery.parseJSON(data);
+                    console.log(message);
+                    div.text(message.message);
+                }
+                catch(err) {
+                    div.text("Please log in to add an item to basket");
+                }
                 div.show().delay(4000).hide("slow");
             },
             error: function () {
-                console.log("error");
+                console.log("something went wrong");
             }
         })
     }

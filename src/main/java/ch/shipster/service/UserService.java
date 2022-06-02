@@ -74,7 +74,6 @@ public class UserService {
             currentUser.get().setFirstName(updatedUser.getFirstName());
             currentUser.get().setLastName(updatedUser.getLastName());
             currentUser.get().setUserName(updatedUser.getUserName());
-            currentUser.get().setEmail(updatedUser.getEmail());
             currentUser.get().setGender(updatedUser.getGender());
 
             userRepository.save(currentUser.get());

@@ -17,11 +17,9 @@ public class DistanceCalculator {
     public static Address warehouseAddress = new Address("Bahnhofstrasse", "6", "Windisch", "5210", "Switzerland");
 
     public static int calculateDistance(Address deliveryAddress) throws IOException, InterruptedException {
-        // TODO: call google API and calculate distance between warehouse and to address
       String[] deliveryCoordinates = getCoordinates(deliveryAddress);
       String[] warehouseCoordinates = getCoordinates(warehouseAddress);
-      int distance = getDistance(warehouseCoordinates, deliveryCoordinates);
-    return distance;
+      return getDistance(warehouseCoordinates, deliveryCoordinates);
     }
 
     public static int getDistance(String[] coordinates1, String[] coordinates2) throws IOException, InterruptedException {
@@ -109,13 +107,16 @@ public class DistanceCalculator {
         HttpResponse<String> response = client.send(request,
                 HttpResponse.BodyHandlers.ofString());
         String outputAPI = response.body();
-        String confidence = outputAPI.substring(outputAPI.indexOf("confidence")+13,
-                outputAPI.indexOf("entityType")-3);
-
-        if (confidence.equals("High")){
-            isAddressValid = true;
+        try {
+            String confidence = outputAPI.substring(outputAPI.indexOf("confidence") + 13,
+                    outputAPI.indexOf("entityType") - 3);
+            if (confidence.equals("High")){
+                isAddressValid = true;
+            }
         }
-        //it would be possible to integrate the confidence "Medium" and "Low" here if we have UC's which need this.
+        catch (Exception e) {
+            isAddressValid = false;
+        }
         return isAddressValid;
     }
 }

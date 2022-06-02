@@ -9,8 +9,8 @@
 <nav th:replace="general.html :: navigation(page='Shop', user=${user})"></nav>
 
 <div class="shop-start">
-    <div class="w-100 d-flex justify-content-center">
-        <table class="table shipster-user-tbl m-2">
+    <div class="w-100 d-flex justify-content-center fill-page">
+        <table class="table shipster-user-tbl m-2" style="height: fit-content">
             <thead class="shipster-user-tbl-header">
             <tr>
                 <td>Id</td>
@@ -37,6 +37,10 @@
         </table>
     </div>
 </div>
+
+<!-- Footer -->
+<footer th:replace="general.html :: footer"></footer>
+
 </body>
 
 <script>

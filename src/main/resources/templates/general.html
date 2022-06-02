@@ -14,13 +14,15 @@
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"
             async></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js" integrity="sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY=" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/84da6b849d.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
 <!-- Navigation-->
 <nav th:fragment="navigation (page, user)" class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
     <div class="container">
-        <a class="navbar-brand" href="/"><img class="img-logo" th:src="@{~/images/shipster_yellow_transparent.svg}"
+        <a class="navbar-brand" href="/"><img class="img-logo" th:src="@{~/images/Shipster_Ukraine.png}"
                                               alt="shipster logo"/></a>
         <div class="navbar-toggler" role="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
              aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,7 +46,13 @@
                 </div>
 
                 <div th:if="${user != 'no_user'}" class="ms-auto nav-menu">
-                    <li class="nav-item mb-4"><a class="nav-link text-centered" href="/admin">Admin</a></li>
+                    <li class="nav-item mb-4 dropdown">
+                        <a class="nav-link text-centered" href="/admin">Admin</a>
+                        <div class="dropdown-content">
+                            <a class="nav-link" href="/admin/users">Users</a>
+                            <a class="nav-link" href="/admin/orders">Orders</a>
+                        </div>
+                    </li>
                     <li class="nav-item ms-2 d-flex justify-content-center">
                         <a href="/profile">
                             <img th:if="${user.getGender() == 'male'}" th:src="@{~/images/avatar_male.svg}"
@@ -58,24 +66,31 @@
                 </div>
 
                 <div th:unless="${user != 'no_user'}" class="ms-auto nav-menu">
-                    <li class="nav-item mb-4"><a class="nav-link text-centered" href="/admin">Admin</a></li>
+                    <li class="nav-item mb-4 dropdown">
+                        <a class="nav-link text-centered" href="/admin">Admin</a>
+                        <div class="dropdown-content">
+                            <a class="nav-link" href="/admin/users">Users</a>
+                            <a class="nav-link" href="/admin/orders">Orders</a>
+                        </div>
+                    </li>
                     <li class="nav-item ms-2"><a class="btn btn-outline-secondary" href="/login">Login</a></li>
                     <li class="nav-item ms-2"><a class="btn btn-outline-secondary" href="/register">Sign up</a></li>
                 </div>
 
                 <div class="cart" onclick="window.location.href='/shop/basket'">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#ffc800" class="bi bi-cart4 cart-icon"
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#ffc800"
+                         class="bi bi-cart4 cart-icon"
                          viewBox="0 0 16 16">
                         <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
                     </svg>
                 </div>
-            </div>
         </div>
+    </div>
     </div>
 </nav>
 
 
-<!-- Navigation-->
+<!-- Admin navigation-->
 <nav th:fragment="navigation_admin (page, user)" class="navbar navbar-expand-lg navbar-dark fixed-top"
      id="mainAdminNav">
     <div class="container">
@@ -88,8 +103,12 @@
         <div class="collapse navbar-collapse" id="navbarAdminResponsive">
             <ul class="navbar-nav text-uppercase d-flex justify-content-between w-100 py-4 py-lg-0">
                 <div class="nav-menu">
-                    <li class="nav-item" th:classappend="${page == 'Admin' ? 'page-location' : ''}"><a class="nav-link"
-                                                                                                       href="/admin">Admin</a>
+                    <li class="nav-item dropdown" th:classappend="${page == 'Admin' ? 'page-location' : ''}">
+                        <a class="nav-link" href="/admin">Admin</a>
+                        <div class="dropdown-content">
+                            <a class="nav-link" href="/admin/users">Users</a>
+                            <a class="nav-link" href="/admin/orders">Orders</a>
+                        </div>
                     </li>
                     <li class="nav-item" th:classappend="${page == 'User admin' ? 'page-location' : ''}"><a
                             class="nav-link" href="/admin/users">User admin</a>
@@ -123,6 +142,65 @@
         </div>
     </div>
 </nav>
+
+
+<!-- Footer start -->
+<!-- based on: https://www.codeply.com/p/EJd6H4Ejyi -->
+<div class="shipster-footer" th:fragment="footer">
+    <div class="container">
+        <div class="spacer-row"></div>
+        <div class="row">
+            <div class="col-md-5">
+                <a class="nav-link" href="/"><h5><i class="fa-solid fa-ship"></i></i> SHIPSTER INC.</h5></a>
+                <div class="row">
+                    <div class="col-6">
+                        <ul class="list-unstyled">
+                            <li><a href="/shop">Shop</a></li>
+                            <li><a href="/team">Team</a></li>
+                            <li><a href="/about">About</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-6">
+                        <ul class="list-unstyled">
+                            <li><a href="/shop/basket">Basket</a></li>
+                            <li><a href="/profile">My Profile</a></li>
+                            <li><a href="/admin">Admin</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <ul class="nav">
+                    <li class="nav-item"><a href="mailto:daniel.gergely@students.fhnw.ch" target="_blank" class="nav-link pl-0"><i class="fa-solid fa-at"></i></a></li>
+                    <li class="nav-item"><a href="https://linkedin.com/in/danielg98" target="_blank" class="nav-link"><i class="fa-brands fa-linkedin"></i></a></li>
+                    <li class="nav-item"><a href="https://gitlab.fhnw.ch/daniel.gergely/shipster" target="_blank" class="nav-link"><i class="fa-brands fa-gitlab"></i></a></li>
+                </ul>
+                <br>
+            </div>
+            <div class="col-md-2">
+                <h5 class="text-md-right">Contact Us</h5>
+                <hr>
+                <ul class="list-unstyled" onclick="window.open('http://maps.google.com/?q=Bahnhofstrasse 6, 5210 Windisch, Switzerland')" style="cursor: pointer">
+                    <li>Bahnhofstrasse 6</li>
+                    <li>5210 Windisch</li>
+                    <li>Switzerland</li>
+                </ul>
+            </div>
+            <div class="col-md-5">
+                <form>
+                    <fieldset class="form-group">
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <textarea class="form-control" id="exampleMessage" placeholder="Message"></textarea>
+                    </fieldset>
+                    <fieldset class="form-group text-xs-right">
+                        <button type="button" class="btn btn-outline-secondary-small" onclick="window.location.reload()">Send</button>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- footer end -->
 
 </body>
 </html>
