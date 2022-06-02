@@ -56,10 +56,10 @@ public class ShopController {
         if (user.isEmpty()) {
             model.addAttribute("user", "no_user");
         } else {
-            List<Article> products = articleService.getAllArticles();
-            model.addAttribute("products", products);
             model.addAttribute("user", user.get());
         }
+        List<Article> products = articleService.getAllArticles();
+        model.addAttribute("products", products);
         return "shop/shop";
     }
 
@@ -68,7 +68,7 @@ public class ShopController {
     public String addToBasket(@RequestParam Long articleId) throws Exception {
         Optional<User> user = userService.getCurrentUser();
         if (user.isEmpty()) {
-            return "{\"user not logged in\":1}";
+            return "{\"message\": \"please log in to add to basket\"}";
         } else {
             Order order = orderService.getBasketByUser(user.get());
             orderItemService.add(articleId, order.getId());
