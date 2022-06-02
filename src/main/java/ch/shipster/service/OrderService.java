@@ -38,6 +38,13 @@ public class OrderService {
         return orderRepository.getAllByOrderStatus(orderStatus.name());
     }
 
+    public List<Order> getOrdersByUserNotBasket(Long userId){
+        List<Order> orders = orderRepository.getAllByUserId(userId);
+        List<Order> baskets = orderRepository.getAllByUserIdAndOrderStatus(userId, "BASKET");
+        for (Order o : baskets) orders.remove(o);
+        return orders;
+    }
+
     /// Get Basket (order with state Basket)
     public Order getBasketByUser(Long userId) throws Exception {
         Order outOrder = new Order(userId);
