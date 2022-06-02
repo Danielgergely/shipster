@@ -74,8 +74,8 @@ public class ShippingCostCalculator {
                 List toRemove = new ArrayList();
                 for (OrderItem i : basketItems){
                     float spaceRequired = (i.getQuantity() * orderItemService.getArticle(i).getPalletProductRatio());
-                    if (spaceLeft <= spaceRequired){
-                        palletsRequired = palletsRequired + spaceRequired;
+                    if (spaceLeft >= spaceRequired){
+                        spaceLeft = spaceLeft - spaceRequired;
                         toRemove.add(i);
                     }
                 }

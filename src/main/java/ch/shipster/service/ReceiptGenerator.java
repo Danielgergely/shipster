@@ -20,6 +20,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+//Manuel
 @Service
 public class ReceiptGenerator {
 
