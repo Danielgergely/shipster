@@ -172,4 +172,15 @@ public class OrderItemService {
     public Order getOrder(OrderItem orderItem) {
         return orderRepository.findById(orderItem.getOrderId()).orElseThrow();
     }
+
+    public void deleteOrderItemById(Long orderItemId) {
+        orderItemRepository.deleteById(orderItemId);
+    }
+
+    public void deleteOrderItemsByOrderId(Long orderId) {
+        List<OrderItem> orderItems = getAllByOrderId(orderId);
+        for(OrderItem orderItem : orderItems) {
+            deleteOrderItemById(orderItem.getId());
+        }
+    }
 }

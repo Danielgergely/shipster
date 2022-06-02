@@ -173,6 +173,12 @@ public class OrderService {
         orderRepository.save(order);
     }
 
+    public void deleteOrderById(Long orderId) {
+        orderItemService.deleteOrderItemsByOrderId(orderId);
+        orderRepository.deleteById(orderId);
+        ShipsterLogger.logger.info("Order with id: " + orderId + " deleted");
+    }
+
     //Jonas
     /// Save Orders
     public Order saveOrder(Order order) {

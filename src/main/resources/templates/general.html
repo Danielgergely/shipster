@@ -67,7 +67,6 @@
 
                 <div th:unless="${user != 'no_user'}" class="ms-auto nav-menu">
                     <li class="nav-item mb-4 dropdown">
-                        <a class="nav-link text-centered" href="/admin">Admin</a>
                         <div class="dropdown-content">
                             <a class="nav-link" href="/admin/users">Users</a>
                             <a class="nav-link" href="/admin/orders">Orders</a>
@@ -77,7 +76,7 @@
                     <li class="nav-item ms-2"><a class="btn btn-outline-secondary" href="/register">Sign up</a></li>
                 </div>
 
-                <div class="cart" onclick="window.location.href='/shop/basket'">
+                <div th:if="${user != 'no_user'}" class="cart" onclick="window.location.href='/shop/basket'">
                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#ffc800"
                          class="bi bi-cart4 cart-icon"
                          viewBox="0 0 16 16">

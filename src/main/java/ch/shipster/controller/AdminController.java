@@ -106,6 +106,12 @@ public class AdminController {
         addressService.updateAddress(addressToUpdate);
 
         redirectAttributes.addAttribute("success_message", "User has been updated.");
+        try {
+            ShipsterLogger.logger.info("User with id: " + userId + " updated by" + userService.getCurrentUser().get().getUserName());
+        }
+        catch (Exception e) {
+            ShipsterLogger.logger.info("User with id: " + userId + " updated.");
+        }
         return "redirect:user?userId=" + userToUpdate.getUserId();
     }
 
@@ -113,6 +119,12 @@ public class AdminController {
     public String updatePassword(@RequestParam(name = "password") String password, @RequestParam Long userId, RedirectAttributes redirectAttributes) throws Exception {
         userService.changeUserPassword(password, userId);
         redirectAttributes.addAttribute("message", "Password has been changed.");
+        try {
+            ShipsterLogger.logger.info("Password of user with id: " + userId + " updated by" + userService.getCurrentUser().get().getUserName());
+        }
+        catch (Exception e) {
+            ShipsterLogger.logger.info("Password of user with id: " + userId + " updated.");
+        }
         return "redirect:user?userId=" + userId;
     }
 
@@ -132,6 +144,7 @@ public class AdminController {
             model.addAttribute("currentUser", adminUser.get());
             model.addAttribute("user", user);
             redirectAttributes.addAttribute("success_message", "Role has been updated.");
+            ShipsterLogger.logger.info("Role of user with id: " + userId + " updated by" + adminUser.get().getUserName());
             return "redirect:user?userId=" + userId;
         }
     }
@@ -151,6 +164,7 @@ public class AdminController {
             model.addAttribute("newUser", new User());
             model.addAttribute("newAddress", new Address());
             model.addAttribute("success_message", "User has been deleted.");
+            ShipsterLogger.logger.info("User with id: " + userId + " deleted by " + adminUser.get().getUserName());
             return "admin/users";
         }
     }
@@ -175,6 +189,12 @@ public class AdminController {
                 user.getGender());
         userService.createUser(newUser);
         redirectAttributes.addAttribute("success_message", "User has been created");
+        try {
+            ShipsterLogger.logger.info("User with id: " + newUser.getUserId() + " created by " + userService.getCurrentUser().get().getUserName());
+        }
+        catch (Exception e) {
+            ShipsterLogger.logger.info("User with id: \" + newUser.getUserId() + \" created.");
+        }
         return "redirect:/admin/users";
     }
 
@@ -222,6 +242,7 @@ public class AdminController {
     @ResponseBody
     public String changeOrderStatus(@RequestParam Long orderId, @RequestParam String status) {
         orderService.changeOrderStatus(orderId, status);
+        ShipsterLogger.logger.info("The status of order with id: " + orderId + " changed to: " + status);
         return "{\"message\": \"Status updated.\"}";
     }
 }

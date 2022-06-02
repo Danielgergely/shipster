@@ -1,5 +1,6 @@
 package ch.shipster.service;
 
+import ch.shipster.data.domain.Order;
 import ch.shipster.data.domain.User;
 import ch.shipster.data.repository.UserRepository;
 import ch.shipster.exceptions.NotFoundException;
@@ -20,6 +21,12 @@ public class UserService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    OrderService orderService;
+
+    @Autowired
+    AddressService addressService;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -80,16 +87,21 @@ public class UserService {
         }
     }
 
-    public void updateUser(User updatedUser) throws Exception {
+    public void updateUser(User updatedUser){
             userRepository.save(updatedUser);
     }
 
-    public void deleteUser(Long id) throws Exception {
-        Optional<User> user = userRepository.findById(id);
+    public void deleteUser(Long userId) {
+        Optional<User> user = userRepository.findById(userId);
         if (user.isEmpty()) {
-            ShipsterLogger.logger.error("User with id " + id + " not found.");
-            throw new NotFoundException("User with id " + id + " not found.");
+            ShipsterLogger.logger.error("User with id " + userId + " not found.");
+            throw new NotFoundException("User with id " + userId + " not found.");
         } else {
+            List<Order> orders = orderService.getOrdersByUserId(userId);
+            for(Order order : orders) {
+                orderService.deleteOrderById(order.getId());
+            }
+            addressService.deleteAddressById(user.get().getAddressId());
             userRepository.delete(user.get());
         }
     }

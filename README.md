@@ -23,3 +23,35 @@ Username: admin
 Password: password
 
 Have fun!
+
+### Application detailed description
+
+#### Home page
+
+This is the start page. Accessible without login. The "Shop with us" button leads to the shop page.
+
+The navbar contains a list of the available pages, along with login, signup. If user is signed in then also a link to the admin interface is shown. This can only be accessed, if a user has and admin role, otherwise a 403-Permission denied error is shown.
+
+The footer also contains some additional information and links.
+
+
+#### About page
+This page presents some information about Shipster and looks quite cool ;).
+
+
+#### Team page
+Here the Shipster team is presented with wonderful pictures and some inspiring text.
+
+#### Shop
+This page is where all the shipster products are presented. We have a list of 12 articles. Each article can be added to the basket (cart icon), liked (heart icon), viewed separately by clicking on the image or the info button. Additionally, the truck icon shows how much pallet space this article needs, as well as the max stack number.
+
+#### Admin
+<ins>Only accessible with admin role!</ins>
+This page leads to an overview page where the administrator can either select the user or orders page. The navigation also changes to a different color and links.
+
+#### Admin - users
+Here a list of all users are presented. By clicking on a row, the admin can change user information, update user details, or change roles and even delete the user easily and efficiently.
+
+#### Admin - orders
+Here a list of all orders are shown sorted according to order date. By clicking on a row, an administrator can view the order, and change the status of an order.
+

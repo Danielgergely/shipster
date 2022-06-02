@@ -63,4 +63,8 @@ public class AddressService {
     public boolean validateAddress(Address address) throws IOException, InterruptedException {
         return DistanceCalculator.validateAddress(address);
     }
+
+    public void deleteAddressById(Long addressId) {
+        addressRepository.deleteById(addressId);
+    }
 }

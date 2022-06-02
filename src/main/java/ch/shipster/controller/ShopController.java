@@ -72,6 +72,7 @@ public class ShopController {
         } else {
             Order order = orderService.getBasketByUser(user.get());
             orderItemService.add(articleId, order.getId());
+            ShipsterLogger.logger.info("Item " + articleId + " added to order " + order.getId());
             return "{\"message\":\"Product added to basket\"}";
         }
     }
@@ -101,6 +102,7 @@ public class ShopController {
     public String addArticle(@RequestParam Long articleId, @RequestParam Long orderId, RedirectAttributes redirectAttributes) throws Exception {
         orderItemService.add(articleId, orderId);
         redirectAttributes.addAttribute("message", "Product added to basket");
+        ShipsterLogger.logger.info("Article " + articleId + " added to basket with id: " + orderId);
         return "redirect:/shop/basket";
     }
 
@@ -108,6 +110,7 @@ public class ShopController {
     public String removeArticle(@RequestParam Long articleId, @RequestParam Long orderId, RedirectAttributes redirectAttributes) throws Exception {
         orderItemService.remove(articleId, orderId);
         redirectAttributes.addAttribute("message", "Product removed from basket");
+        ShipsterLogger.logger.info("Article " + articleId + " removed from basket with id: " + orderId);
         return "redirect:/shop/basket";
     }
 
@@ -147,12 +150,14 @@ public class ShopController {
         } catch (Exception e) {
             return "{\"message\": \"" + e.getMessage() + "\"}";
         }
+        ShipsterLogger.logger.info("Basket with id: " + orderId + " ordered");
         return "{\"message\": \"Basket with id: " + orderId + " ordered\"}";
     }
 
     @GetMapping(path = "/shop/provider")
     public String changeProvider(@RequestParam Long providerId, @RequestParam Long orderId) {
         orderService.changeProvider(orderId, providerId);
+        ShipsterLogger.logger.info("Provider for order " + orderId + " changed to: " + providerId);
         return "redirect:/shop/basket";
     }
 
@@ -226,8 +231,8 @@ public class ShopController {
         String headerKey = "Content-Disposition";
         String headerValue = "attachment; filename=shipster_receipt_#" + orderId + ".pdf";
         response.setHeader(headerKey, headerValue);
-
         receiptGenerator.createPDF(response, orderId);
+        ShipsterLogger.logger.info("Receipt for order  " + orderId + " generated.");
     }
 
 }
