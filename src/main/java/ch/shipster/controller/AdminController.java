@@ -248,4 +248,10 @@ public class AdminController {
         ShipsterLogger.logger.info("The status of order with id: " + orderId + " changed to: " + status);
         return "{\"message\": \"Status updated\"}";
     }
+
+    @GetMapping("admin/order/delete")
+    public String deleteOrder(@RequestParam Long orderId) {
+        orderService.deleteOrderById(orderId);
+        return "redirect:/admin/orders";
+    }
 }

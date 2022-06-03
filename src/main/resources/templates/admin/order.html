@@ -75,6 +75,9 @@
                 <p></p> <!-- division line -->
 
                 <div class="m-2 d-flex justify-content-end">
+                    <button id="delete" class="btn btn-outline-secondary mb-5 me-auto"
+                            style="max-width:200px" th:onclick="|deleteOrder(${order.getId()})|">Delete
+                    </button>
                     <label for="status_select" class="me-2 mt-2">Change status:</label>
                     <select id="status_select" class="shipster-select me-2" onchange="enableBtn()">
                         <option hidden> Please select</option>
@@ -122,6 +125,17 @@
             error: function (response) {
                 let message = jQuery.parseJSON(response);
                 $('#error-msg').text(message.message);
+            }
+        })
+    }
+
+    function deleteOrder(orderId) {
+        let url = "/admin/order/delete?orderId=" + orderId;
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function() {
+                window.location.replace("/admin/orders");
             }
         })
     }
