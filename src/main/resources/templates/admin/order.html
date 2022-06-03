@@ -79,6 +79,9 @@
                 </div>
             </div>
         </div>
+        <div th:if="${message != null}" class="col-md-12 pb-2">
+            <h5 class="fst-italic text-centered text-error" th:text="${message}"></h5>
+        </div>
     </div>
 </div>
 
@@ -95,8 +98,8 @@
         $.ajax({
             url: url,
             type: "POST",
-            success: function(data) {
-                window.location.replace("/admin/order?orderId=" + orderId);
+            success: function() {
+                //window.location.replace("/admin/order?orderId=" + orderId);
             }
         })
     }

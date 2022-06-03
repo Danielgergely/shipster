@@ -8,6 +8,7 @@ import ch.shipster.data.repository.ArticleRepository;
 import ch.shipster.data.repository.OrderItemRepository;
 import ch.shipster.data.repository.OrderRepository;
 import ch.shipster.exceptions.NotFoundException;
+import ch.shipster.exceptions.PalletOverloadException;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,11 @@ public class OrderItemService {
     @Autowired
     ArticleRepository articleRepository;
 
+    @Autowired
+    ShippingCostCalculator  shippingCostCalculator;
+
+    @Autowired
+    OrderService orderService;
 
     public List<OrderItem> getAllByOrderId(Long orderId){
         return orderItemRepository.getAllByOrderId(orderId);
@@ -73,22 +79,40 @@ public class OrderItemService {
 
 
     // Add (or remove if negative)
-    public Optional<OrderItem> add(Article article, Order order, int inQuantity) throws Exception {
+    public Optional<OrderItem> add(Article article, Order order, int inQuantity) throws Exception, PalletOverloadException {
 
         if (order.getOrderStatus() != OrderStatus.BASKET) {
             ShipsterLogger.logger.error("Order ID (" + order.getId() + ") is not of the Status BASKET. Quantity may not be changed");
             throw new Exception("Order ID (" + order.getId() + ") is not of the Status BASKET. Quantity may not be changed");
         }
 
+
+
         OrderItem oi = getOrderItem(order, article);
         int newQuantity = oi.getQuantity() + inQuantity;
+
 
         if (newQuantity <= 0) {
             orderItemRepository.delete(oi);
             return Optional.empty();
         } else {
-            oi.setQuantity(newQuantity);
-            return Optional.of(orderItemRepository.save(oi));
+            List<OrderItem> tempListOI = orderService.getOrderItems(order);
+
+            for(OrderItem xoi : tempListOI){
+                if(xoi.getArticleId() == article.getId() && xoi.getOrderId() == order.getId()){
+                    xoi.setQuantity(xoi.getQuantity() + inQuantity);
+                } else {
+                    tempListOI.add(new OrderItem(article.getId(), order.getId(), inQuantity));
+                }
+            }
+
+            if (shippingCostCalculator.spaceLimit(shippingCostCalculator.requiredPallets(tempListOI))) {
+                oi.setQuantity(newQuantity);
+                return Optional.of(orderItemRepository.save(oi));
+            } else {
+                throw new PalletOverloadException("This would overload the truck");
+            }
+
         }
     }
     public Optional<OrderItem> add(Long articleId, Long orderId, int inQuantity) throws Exception {

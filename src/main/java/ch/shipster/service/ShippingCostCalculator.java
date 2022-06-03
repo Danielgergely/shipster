@@ -31,7 +31,7 @@ public class ShippingCostCalculator {
     }
 
     public boolean spaceLimit(float requiredPallets) {
-        return !(requiredPallets >= 12);
+        return (requiredPallets <= 12);
     }
 
     public float costCalculation(Long orderId) throws IOException, InterruptedException {
@@ -51,7 +51,7 @@ public class ShippingCostCalculator {
         return costService.getCost(providerId, distance, requiredPallets).getPrice();
     }
 
-    private int requiredPallets(List<OrderItem> basketItems){
+    public int requiredPallets(List<OrderItem> basketItems){
         float palletsRequired = 0;
         float spaceLeft;
         float tempMinPalletSpace;

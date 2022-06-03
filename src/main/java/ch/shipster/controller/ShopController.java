@@ -1,6 +1,7 @@
 package ch.shipster.controller;
 
 import ch.shipster.data.domain.*;
+import ch.shipster.exceptions.PalletOverloadException;
 import ch.shipster.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 
@@ -99,8 +101,13 @@ public class ShopController {
     }
 
     @GetMapping(path = "shop/article/add")
-    public String addArticle(@RequestParam Long articleId, @RequestParam Long orderId, RedirectAttributes redirectAttributes) throws Exception {
-        orderItemService.add(articleId, orderId);
+    public String addArticle(@RequestParam Long articleId, @RequestParam Long orderId, RedirectAttributes redirectAttributes) throws Exception{
+        try {
+            orderItemService.add(articleId, orderId);
+        } catch (PalletOverloadException e) {
+            redirectAttributes.addAttribute("message", e.getMessage());
+            return "redirect:/shop/basket";
+        }
         redirectAttributes.addAttribute("message", "Product added to basket");
         ShipsterLogger.logger.info("Article " + articleId + " added to basket with id: " + orderId);
         return "redirect:/shop/basket";
@@ -116,11 +123,18 @@ public class ShopController {
 
 
     @GetMapping(path = "shop/basket")
-    public String getBasket(Model model) throws Exception {
+    public String getBasket(@RequestParam(required = false) String message, Model model) throws Exception {
         Optional<User> user = userService.getCurrentUser();
         if (user.isEmpty()) {
             return "user/login";
         } else {
+            if (Objects.equals(message, "Product added to basket")) {
+                model.addAttribute("successMessage", message);
+            } else if(Objects.equals(message, "Product removed from basket")){
+                model.addAttribute("successMessage", message);
+            } else if (message != null) {
+                model.addAttribute("errorMessage", message);
+            }
             Order order = orderService.getBasketByUser(user.get());
             Long providerId = order.getProviderId();
             List<Article> articles = orderService.getArticlesInBasket(user.get().getUserId());

@@ -101,6 +101,12 @@
                 </div>
                 <h5 id="order-failure" class="fst-italic text-centered error-text"></h5>
                 <h5 id="order-success" class="fst-italic text-centered text-success"></h5>
+                <div th:if="${errorMessage != null}" class="col-md-12 pb-2">
+                    <h5 class="fst-italic text-centered text-error" th:text="${errorMessage}"></h5>
+                </div>
+                <div th:if="${successMessage != null}" class="col-md-12 pb-2">
+                    <h5 class="fst-italic text-centered text-success" th:text="${successMessage}"></h5>
+                </div>
             </div>
 
         </div>

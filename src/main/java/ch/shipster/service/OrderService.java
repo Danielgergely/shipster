@@ -27,6 +27,9 @@ public class OrderService {
     @Autowired
     AddressRepository addressRepository;
 
+    @Autowired
+    CheckoutService checkoutService;
+
     /// Get Order Lists
     public List<Order> getOrdersByUserId(Long userId) {
         List<Order> orders = orderRepository.getAllByUserId(userId);
@@ -144,7 +147,7 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
-    public void changeOrderStatus(Long orderId, String status) {
+    public void changeOrderStatus(Long orderId, String status) throws Exception {
         Order order = orderRepository.getById(orderId);
         OrderStatus orderStatus = OrderStatus.valueOf(status);
         order.setOrderStatus(orderStatus);
@@ -154,20 +157,16 @@ public class OrderService {
                 order.setLastUpdateDate(new Date());
             }
             case ORDERED -> {
-                order.setOrderDate(new Date());
-                order.setLastUpdateDate(new Date());
+                checkoutService.setOrderStatusOrdered(order);
             }
             case SHIPPED -> {
-                order.setShippingDate(new Date());
-                order.setLastUpdateDate(new Date());
+                checkoutService.setOrderStatusShipped(order);
             }
             case CANCELED -> {
-                order.setCancellationDate(new Date());
-                order.setLastUpdateDate(new Date());
+                checkoutService.setOrderStatusCancel(order);
             }
             case DELIVERED -> {
-                order.setDeliveryDate(new Date());
-                order.setLastUpdateDate(new Date());
+                checkoutService.setOrderStatusDelivered(order);
             }
         }
         orderRepository.save(order);

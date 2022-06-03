@@ -150,7 +150,7 @@ public class AdminController {
     }
 
     @GetMapping("admin/user/delete")
-    public String deleteUser(@RequestParam Long userId, Model model) throws Exception {
+    public String deleteUser(@RequestParam Long userId, Model model) {
         Optional<User> adminUser = userService.getCurrentUser();
         if (adminUser.isEmpty()) {
             return "user/login";
@@ -212,7 +212,7 @@ public class AdminController {
     }
 
     @GetMapping(path = "admin/order")
-    public String getOrderDetails(@RequestParam Long orderId, Model model) throws IOException, InterruptedException {
+    public String getOrderDetails(@RequestParam Long orderId, @RequestParam(required = false) String message, Model model) throws IOException, InterruptedException {
         Optional<User> currentUser = userService.getCurrentUser();
         if (currentUser.isEmpty()) {
             return "user/login";
@@ -225,6 +225,18 @@ public class AdminController {
             Float articlesTotalPrice = checkoutService.calculateTotalOrderPrice(order);
             Float totalPrice = checkoutService.calculateTotalOrderPriceWithShipping(order, order.getProviderId());
             List<OrderStatus> orderStatuses = Arrays.asList(OrderStatus.values());
+            if (message != null) {
+                model.addAttribute("message", message);
+                model.addAttribute("currentUser", currentUser.get());
+                model.addAttribute("user", user);
+                model.addAttribute("provider", provider);
+                model.addAttribute("order", order);
+                model.addAttribute("orderStatuses", orderStatuses);
+                model.addAttribute("orderItems", orderItems);
+                model.addAttribute("articles", articles);
+                model.addAttribute("articlesTotalPrice", articlesTotalPrice);
+                model.addAttribute("totalPrice", totalPrice);
+            }
             model.addAttribute("currentUser", currentUser.get());
             model.addAttribute("user", user);
             model.addAttribute("provider", provider);
@@ -239,9 +251,16 @@ public class AdminController {
     }
 
     @PostMapping("admin/changeOrderStatus")
-    @ResponseBody
-    public String changeOrderStatus(@RequestParam Long orderId, @RequestParam String status) {
-        orderService.changeOrderStatus(orderId, status);
+    public String changeOrderStatus(@RequestParam Long orderId, @RequestParam String status, RedirectAttributes redirectAttributes) {
+        try {
+            orderService.changeOrderStatus(orderId, status);
+        }
+        catch (Exception e) {
+            String message = e.getMessage();
+            redirectAttributes.addAttribute("orderId", orderId);
+            redirectAttributes.addAttribute("message", message);
+            return "redirect:/admin/order";
+        }
         ShipsterLogger.logger.info("The status of order with id: " + orderId + " changed to: " + status);
         return "{\"message\": \"Status updated.\"}";
     }
