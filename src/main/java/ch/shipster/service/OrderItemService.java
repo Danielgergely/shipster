@@ -31,12 +31,12 @@ public class OrderItemService {
     ArticleRepository articleRepository;
 
     @Autowired
-    ShippingCostCalculator  shippingCostCalculator;
+    ShippingCostCalculator shippingCostCalculator;
 
     @Autowired
     OrderService orderService;
 
-    public List<OrderItem> getAllByOrderId(Long orderId){
+    public List<OrderItem> getAllByOrderId(Long orderId) {
         return orderItemRepository.getAllByOrderId(orderId);
     }
 
@@ -62,8 +62,7 @@ public class OrderItemService {
             } else {
                 orderItemRepository.save(out);
             }
-        }
-        else if (existingOI.size() == 1) {
+        } else if (existingOI.size() == 1) {
             out = existingOI.get(0);
         } else {
             ShipsterLogger.logger.error("Multiple Order Items for same Article ID (" + articleId + ") and same Order ID (" + orderId + ")");
@@ -86,24 +85,25 @@ public class OrderItemService {
             throw new Exception("Order ID (" + order.getId() + ") is not of the Status BASKET. Quantity may not be changed");
         }
 
-
-
         OrderItem oi = getOrderItem(order, article);
         int newQuantity = oi.getQuantity() + inQuantity;
-
 
         if (newQuantity <= 0) {
             orderItemRepository.delete(oi);
             return Optional.empty();
         } else {
             List<OrderItem> tempListOI = orderService.getOrderItems(order);
-
-            for(OrderItem xoi : tempListOI){
-                if(xoi.getArticleId() == article.getId() && xoi.getOrderId() == order.getId()){
-                    xoi.setQuantity(xoi.getQuantity() + inQuantity);
-                } else {
-                    tempListOI.add(new OrderItem(article.getId(), order.getId(), inQuantity));
+            boolean itemInList = false;
+            for (OrderItem xoi : tempListOI) {
+                itemInList = xoi.getArticleId() == article.getId() && xoi.getOrderId() == order.getId();
+                if (itemInList) {
+                    oi = xoi;
                 }
+            }
+            if (itemInList) {
+                oi.setQuantity(oi.getQuantity() + inQuantity);
+            } else {
+                tempListOI.add(new OrderItem(article.getId(), order.getId(), inQuantity));
             }
 
             if (shippingCostCalculator.spaceLimit(shippingCostCalculator.requiredPallets(tempListOI))) {
@@ -114,7 +114,9 @@ public class OrderItemService {
             }
 
         }
+
     }
+
     public Optional<OrderItem> add(Long articleId, Long orderId, int inQuantity) throws Exception {
         return add(articleRepository.getById(articleId), orderRepository.getById(orderId), inQuantity);
     }
@@ -138,7 +140,7 @@ public class OrderItemService {
         if (quantity <= 0) {
             removeAll(article, order);
             return Optional.empty();
-        } else  {
+        } else {
             orderItem.setQuantity(quantity);
             return Optional.of(orderItemRepository.save(orderItem));
         }
@@ -151,7 +153,7 @@ public class OrderItemService {
 
     // Remove
     public void remove(Long articleId, Long orderId, int quantity) throws Exception {
-        add(articleId, orderId, (- quantity));
+        add(articleId, orderId, (-quantity));
     }
 
     public void remove(Long articleId, Long orderId) throws Exception {
@@ -181,15 +183,15 @@ public class OrderItemService {
 
     /// Get related Article and Order
 
-    public Article getArticle(Long orderItemId){
-        return  getArticle(orderItemRepository.findById(orderItemId).orElseThrow());
+    public Article getArticle(Long orderItemId) {
+        return getArticle(orderItemRepository.findById(orderItemId).orElseThrow());
     }
 
     public Article getArticle(OrderItem orderItem) {
         return articleRepository.findById(orderItem.getArticleId()).orElseThrow();
     }
 
-    public Order getOrder(Long orderItemId){
+    public Order getOrder(Long orderItemId) {
         return getOrder(orderItemRepository.findById(orderItemId).orElseThrow());
     }
 
@@ -203,7 +205,7 @@ public class OrderItemService {
 
     public void deleteOrderItemsByOrderId(Long orderId) {
         List<OrderItem> orderItems = getAllByOrderId(orderId);
-        for(OrderItem orderItem : orderItems) {
+        for (OrderItem orderItem : orderItems) {
             deleteOrderItemById(orderItem.getId());
         }
     }
