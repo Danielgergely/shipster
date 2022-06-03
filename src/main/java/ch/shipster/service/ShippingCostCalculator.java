@@ -63,7 +63,7 @@ public class ShippingCostCalculator {
             currentArticle = orderItemService.getArticle(currentBasketItem);
             tempMinPalletSpace = currentArticle.getPalletSpace();
 
-            if (tempMinPalletSpace < currentBasketItem.getQuantity() * currentArticle.getPalletProductRatio()){
+            while (tempMinPalletSpace < currentBasketItem.getQuantity() * currentArticle.getPalletProductRatio()){
                 tempMinPalletSpace = tempMinPalletSpace + currentArticle.getPalletSpace();
             }
             palletsRequired = palletsRequired + tempMinPalletSpace;
