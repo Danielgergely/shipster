@@ -1,4 +1,4 @@
-<!-- Giacomo-->
+<!-- Daniel -->
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
@@ -35,13 +35,10 @@
                     <div class="basket column price">
                         <h6 class="price-article"
                             th:text="${#numbers.formatDecimal(article.getPrice() * orderItems[iterator.index].getQuantity(), 0, 2)}"></h6>
-                        <!--GET Subtotal Price (Quantity * Product Price)-->
                     </div>
                 </div>
 
-                <p></p> <!-- division line -->
-
-                <!-- Shipping Total, Product Subtotal, Order Total" -->
+                <p></p>
                 <div class="row justify-content-around">
                     <div class="col-6 d-flex justify-content-center">
                         <div>

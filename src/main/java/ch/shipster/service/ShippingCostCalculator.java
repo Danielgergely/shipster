@@ -4,7 +4,6 @@ import ch.shipster.data.domain.Address;
 import ch.shipster.data.domain.Article;
 import ch.shipster.data.domain.OrderItem;
 
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,30 +50,30 @@ public class ShippingCostCalculator {
         return costService.getCost(providerId, distance, requiredPallets).getPrice();
     }
 
-    public int requiredPallets(List<OrderItem> basketItems){
+    public int requiredPallets(List<OrderItem> basketItems) {
         float palletsRequired = 0;
         float spaceLeft;
         float tempMinPalletSpace;
         OrderItem currentBasketItem;
         Article currentArticle;
 
-        while (!basketItems.isEmpty()){
+        while (!basketItems.isEmpty()) {
             currentBasketItem = findLargestItem(basketItems);
             currentArticle = orderItemService.getArticle(currentBasketItem);
             tempMinPalletSpace = currentArticle.getPalletSpace();
 
-            while (tempMinPalletSpace < currentBasketItem.getQuantity() * currentArticle.getPalletProductRatio()){
+            while (tempMinPalletSpace < currentBasketItem.getQuantity() * currentArticle.getPalletProductRatio()) {
                 tempMinPalletSpace = tempMinPalletSpace + currentArticle.getPalletSpace();
             }
             palletsRequired = palletsRequired + tempMinPalletSpace;
             spaceLeft = tempMinPalletSpace - (currentBasketItem.getQuantity() * currentArticle.getPalletProductRatio());
             basketItems.remove(currentBasketItem);
 
-            if (!basketItems.isEmpty()){
+            if (!basketItems.isEmpty()) {
                 List toRemove = new ArrayList();
-                for (OrderItem i : basketItems){
+                for (OrderItem i : basketItems) {
                     float spaceRequired = (i.getQuantity() * orderItemService.getArticle(i).getPalletProductRatio());
-                    if (spaceLeft >= spaceRequired){
+                    if (spaceLeft >= spaceRequired) {
                         spaceLeft = spaceLeft - spaceRequired;
                         toRemove.add(i);
                     }
@@ -85,7 +84,7 @@ public class ShippingCostCalculator {
         return (int) Math.ceil(palletsRequired);
     }
 
-    private OrderItem findLargestItem(List<OrderItem> basketItems){
+    private OrderItem findLargestItem(List<OrderItem> basketItems) {
         float minPalletSpace = 0;
         Article currentArticle;
         OrderItem largestBasketItem = null;

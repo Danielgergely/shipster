@@ -96,7 +96,7 @@
 
                 <div class="m-2 d-flex justify-content-center">
                     <button id="order" class="btn btn-outline-secondary" th:onclick="|placeOrder(${order.getId()})|"
-                         style="width:100px" th:disabled="${articles.size() == 0}" >Order
+                            style="width:100px" th:disabled="${articles.size() == 0}">Order
                     </button>
                 </div>
                 <h5 id="order-failure" class="fst-italic text-centered error-text"></h5>
@@ -122,6 +122,7 @@
 
 </body>
 
+<!-- Daniel -->
 <script>
 
     $('#provider-list').click(function () {

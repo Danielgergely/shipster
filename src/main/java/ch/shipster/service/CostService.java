@@ -1,6 +1,5 @@
 package ch.shipster.service;
 
-import ch.shipster.data.domain.Article;
 import ch.shipster.data.domain.Cost;
 import ch.shipster.data.domain.Provider;
 import ch.shipster.data.repository.CostRepository;
@@ -21,7 +20,7 @@ public class CostService {
     @Autowired
     ProviderRepository providerRepository;
 
-    public Cost getCostById(Long costId){
+    public Cost getCostById(Long costId) {
         return costRepository.getById(costId);
     }
 
@@ -81,15 +80,15 @@ public class CostService {
     }
 
     /// Save
-    public Cost saveCost(Cost cost){
+    public Cost saveCost(Cost cost) {
         return costRepository.save(cost);
     }
 
     public Cost saveCost(Long providerId, int km, int pallet, float price) throws Exception {
         Cost cost;
-        List<Cost> costList= costRepository.findAllByProviderIdAndKmAndPallet(providerId, km, pallet);
+        List<Cost> costList = costRepository.findAllByProviderIdAndKmAndPallet(providerId, km, pallet);
 
-        if (costList.size() == 0){
+        if (costList.size() == 0) {
             cost = new Cost(providerId, km, pallet, price);
             cost.setProviderId(providerId);
             cost.setKm(km);
@@ -105,10 +104,10 @@ public class CostService {
         return saveCost(cost);
     }
 
-    public Cost saveCost(Long costId, Long providerId, int km, int pallet, float price){
+    public Cost saveCost(Long costId, Long providerId, int km, int pallet, float price) {
         Cost cost;
 
-        if (costRepository.existsById(costId)){
+        if (costRepository.existsById(costId)) {
             cost = costRepository.getById(costId);
             cost.setProviderId(providerId);
             cost.setKm(km);

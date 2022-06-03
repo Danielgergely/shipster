@@ -15,9 +15,14 @@
                  style="min-width: 300px; background-color: black;">
                 <div class="card-body text-center border-bottom mb-2">
                     <h4 class="basket-title mb-5" th:text="'Order #' + ${order.getId()}"></h4>
-                    <div class="d-flex justify-content-around"><h6>Order date:</h6><h6 th:text="${order.getOrderDate() != null} ? ${#dates.format(order.getOrderDate(), 'dd-MM-yyyy HH:mm')} : '-'"></h6></div>
-                    <div class="d-flex justify-content-around"><h6>Order status:</h6><h6 th:text="${order.getOrderStatus()}"></h6></div>
-                    <div class="d-flex justify-content-around"><h6>Delivery date:</h6><h6 th:text="${order.getDeliveryDate()!= null} ? ${#dates.format(order.getDeliveryDate(), 'dd-MM-yyyy HH:mm')} : '-'"></h6></div>
+                    <div class="d-flex justify-content-around"><h6>Order date:</h6><h6
+                            th:text="${order.getOrderDate() != null} ? ${#dates.format(order.getOrderDate(), 'dd-MM-yyyy HH:mm')} : '-'"></h6>
+                    </div>
+                    <div class="d-flex justify-content-around"><h6>Order status:</h6><h6
+                            th:text="${order.getOrderStatus()}"></h6></div>
+                    <div class="d-flex justify-content-around"><h6>Delivery date:</h6><h6
+                            th:text="${order.getDeliveryDate()!= null} ? ${#dates.format(order.getDeliveryDate(), 'dd-MM-yyyy HH:mm')} : '-'"></h6>
+                    </div>
                 </div>
                 <div class="d-flex align-items-center border-bottom mb-2 p-2" th:each="article, iterator : ${articles}">
                     <div class="basket column thumbnail"
@@ -32,18 +37,14 @@
                     <div class="basket column spacer">
                     </div>
                     <div class="basket column quantity">
-                            <div class="m-2" th:text="${orderItems[iterator.index].getQuantity()}"></div>
+                        <div class="m-2" th:text="${orderItems[iterator.index].getQuantity()}"></div>
                     </div>
                     <div class="basket column price">
                         <h6 class="price-article"
                             th:text="${#numbers.formatDecimal(article.getPrice() * orderItems[iterator.index].getQuantity(), 0, 2)}"></h6>
-                        <!--GET Subtotal Price (Quantity * Product Price)-->
                     </div>
                 </div>
-
-                <p></p> <!-- division line -->
-
-                <!-- Shipping Total, Product Subtotal, Order Total" -->
+                <p></p>
                 <div class="row justify-content-around">
                     <div class="col-6 d-flex justify-content-center">
                         <div>
@@ -66,11 +67,13 @@
                 </div>
 
                 <div class="m-2 d-flex justify-content-around">
-                    <button id="order" class="btn btn-outline-secondary mb-5" th:onclick="'window.location.href = \'/myOrders' + '\''"
-                         style="max-width:200px" >My orders
+                    <button id="order" class="btn btn-outline-secondary mb-5"
+                            th:onclick="'window.location.href = \'/myOrders' + '\''"
+                            style="max-width:200px">My orders
                     </button>
-                    <button id="receipt" class="btn btn-outline-secondary mb-5" th:onclick="'window.location.href=\'/order/receipt?orderId=' + ${order.getId()} + '\''"
-                            style="max-width:200px" >Receipt
+                    <button id="receipt" class="btn btn-outline-secondary mb-5"
+                            th:onclick="'window.location.href=\'/order/receipt?orderId=' + ${order.getId()} + '\''"
+                            style="max-width:200px">Receipt
                     </button>
                 </div>
             </div>

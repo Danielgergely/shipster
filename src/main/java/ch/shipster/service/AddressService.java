@@ -31,7 +31,7 @@ public class AddressService {
         return address.get();
     }
 
-    public void createAddress(Address address) throws Exception {
+    public void createAddress(Address address) {
         if (address.getAddressId() == null) {
             addressRepository.save(address);
         } else {

@@ -73,7 +73,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void saveUser(User updatedUser) throws Exception {
+    public void saveUser(User updatedUser) {
         Optional<User> currentUser = getCurrentUser();
         if (currentUser.isEmpty()) {
             throw new NotLoggedInException("User is not logged in");
@@ -87,8 +87,8 @@ public class UserService {
         }
     }
 
-    public void updateUser(User updatedUser){
-            userRepository.save(updatedUser);
+    public void updateUser(User updatedUser) {
+        userRepository.save(updatedUser);
     }
 
     public void deleteUser(Long userId) {
@@ -98,7 +98,7 @@ public class UserService {
             throw new NotFoundException("User with id " + userId + " not found.");
         } else {
             List<Order> orders = orderService.getOrdersByUserId(userId);
-            for(Order order : orders) {
+            for (Order order : orders) {
                 orderService.deleteOrderById(order.getId());
             }
             addressService.deleteAddressById(user.get().getAddressId());
@@ -120,9 +120,9 @@ public class UserService {
         }
     }
 
-    public void changePassword(String password) throws Exception {
+    public void changePassword(String password) {
         Optional<User> user = getCurrentUser();
-        if (user.isEmpty()){
+        if (user.isEmpty()) {
             ShipsterLogger.logger.error("User is not logged in");
             throw new NotLoggedInException("User is not logged in");
         } else {
@@ -132,9 +132,9 @@ public class UserService {
         }
     }
 
-    public void changeUserPassword(String password, Long userId) throws Exception {
+    public void changeUserPassword(String password, Long userId) {
         Optional<User> user = userRepository.findById(userId);
-        if (user.isEmpty()){
+        if (user.isEmpty()) {
             ShipsterLogger.logger.error("User not found");
             throw new NotFoundException("User not found");
         } else {

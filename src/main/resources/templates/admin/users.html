@@ -22,7 +22,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr class="user-row" th:each="user : ${users}" th:onclick="'window.location.href=\'user?userId=' + ${user.getUserId()} + '\''">
+            <tr class="user-row" th:each="user : ${users}"
+                th:onclick="'window.location.href=\'user?userId=' + ${user.getUserId()} + '\''">
                 <td th:text="${user.getUserName()}"></td>
                 <td th:text="${user.getFirstName()}"></td>
                 <td th:text="${user.getLastName()}"></td>
@@ -140,6 +141,5 @@
         </form>
     </div>
 </div>
-
 </body>
 </html>

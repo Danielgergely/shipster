@@ -3,9 +3,8 @@ package ch.shipster.data.domain;
 import javax.persistence.*;
 
 //Timo
-
 @Entity
-@Table(name="address")
+@Table(name = "address")
 public class Address {
 
     /// ID
@@ -30,7 +29,8 @@ public class Address {
         this.country = country;
     }
 
-    public Address() {}
+    public Address() {
+    }
 
     /// Methods
 

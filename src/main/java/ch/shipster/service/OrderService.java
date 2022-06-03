@@ -6,6 +6,7 @@ import ch.shipster.data.repository.OrderRepository;
 import ch.shipster.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.Date;
 
 import java.util.*;
@@ -41,7 +42,7 @@ public class OrderService {
         return orderRepository.getAllByOrderStatus(orderStatus.name());
     }
 
-    public List<Order> getOrdersByUserNotBasket(Long userId){
+    public List<Order> getOrdersByUserNotBasket(Long userId) {
         List<Order> orders = orderRepository.getAllByUserId(userId);
         List<Order> baskets = orderRepository.getAllByUserIdAndOrderStatus(userId, "BASKET");
         for (Order o : baskets) orders.remove(o);
@@ -127,10 +128,10 @@ public class OrderService {
         return outArticles;
     }
 
-    public List<Article> getArticlesInOrder(Long userId) {
+    public List<Article> getArticlesInOrder(Long orderId) {
         List<Article> outArticles = new ArrayList<>();
 
-        for (OrderItem i : getOrderItems(userId)) {
+        for (OrderItem i : getOrderItems(orderId)) {
             outArticles.add(orderItemService.getArticle(i));
         }
         outArticles.sort(Comparator.comparing(Article::getId));

@@ -43,7 +43,7 @@ public class ArticleService {
                                String imageUrl,
                                Float price,
                                Float palletSpace,
-                               Float maxStack){
+                               Float maxStack) {
         Optional<Long> inId = Optional.ofNullable(articleId);
         Optional<String> inName = Optional.ofNullable(name);
         Optional<String> inDescription = Optional.ofNullable(description);
@@ -54,7 +54,7 @@ public class ArticleService {
 
         Article outArticle;
 
-        if (inId.isEmpty()){
+        if (inId.isEmpty()) {
             outArticle = new Article();
         } else if (articleRepository.existsById(articleId)) {
             outArticle = articleRepository.getById(articleId);
@@ -88,7 +88,7 @@ public class ArticleService {
     }
 
     public Article findById(Long articleId) {
-        Optional<Article> article =  articleRepository.findById(articleId);
+        Optional<Article> article = articleRepository.findById(articleId);
         if (article.isEmpty()) {
             ShipsterLogger.logger.error("No article found for id: " + articleId);
             throw new NotFoundException("No article found for id: " + articleId);

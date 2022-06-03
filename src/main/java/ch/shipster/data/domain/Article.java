@@ -1,13 +1,12 @@
 package ch.shipster.data.domain;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
 
 //Timo
 
 @Entity
-@Table(name="article")
-public class Article{
+@Table(name = "article")
+public class Article {
 
     /// ID
     @Id
@@ -33,13 +32,14 @@ public class Article{
         this.maxStack = maxStack;
     }
 
-    public Article(){}
+    public Article() {
+    }
 
     /// Methods
 
     /// Special Getters & Setters
 
-    public float getPalletProductRatio(){
+    public float getPalletProductRatio() {
         return (palletSpace / maxStack);
     }
 

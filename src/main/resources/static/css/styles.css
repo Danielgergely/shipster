@@ -97,7 +97,6 @@ a:hover {
 }
 
 .shipster-user-tbl {
-    /*background-color: black;*/
     color: #ffc800;
 }
 
@@ -480,7 +479,6 @@ a:hover {
 }
 
 /* shop page */
-
 .border-primary {
     border-color: black !important;
 }
@@ -613,60 +611,6 @@ a:hover {
     height: 1px;
     background-color: #444444;
     transform: translateY(-50%);
-}
-
-/* Giacomo */
-/* Basket page */
-
-.basket .column {
-    float: left;
-    padding: 10px;
-    height: 125px;
-}
-
-.thumbnail {
-    width: 15%;
-    cursor: pointer;
-}
-
-.product-basket {
-    width: 40%;
-}
-
-.spacer {
-    width: 15%;
-}
-
-.quantity {
-    width: 15%;
-}
-
-.price {
-    width: 15%;
-}
-
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-.thumb-img {
-    display: table-cell;
-    width: 100%;
-    padding: 0px;
-    vertical-align: middle
-}
-
-.quantity-selector {
-    float: left;
-    width: 100%;
-}
-
-hr.rounded {
-    border-top: 4px solid #bbb;
-    border-radius: 4px;
-    width: 95%;
 }
 
 .counter-btn-group {
@@ -858,5 +802,58 @@ fieldset {
     .shipster-footer {
         height: 600px;
     }
+}
+
+/* Giacomo */
+/* Basket page */
+.basket .column {
+    float: left;
+    padding: 10px;
+    height: 125px;
+}
+
+.thumbnail {
+    width: 15%;
+    cursor: pointer;
+}
+
+.product-basket {
+    width: 40%;
+}
+
+.spacer {
+    width: 15%;
+}
+
+.quantity {
+    width: 15%;
+}
+
+.price {
+    width: 15%;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.thumb-img {
+    display: table-cell;
+    width: 100%;
+    padding: 0px;
+    vertical-align: middle
+}
+
+.quantity-selector {
+    float: left;
+    width: 100%;
+}
+
+hr.rounded {
+    border-top: 4px solid #bbb;
+    border-radius: 4px;
+    width: 95%;
 }
 

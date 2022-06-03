@@ -101,7 +101,7 @@ public class ShopController {
     }
 
     @GetMapping(path = "shop/article/add")
-    public String addArticle(@RequestParam Long articleId, @RequestParam Long orderId, RedirectAttributes redirectAttributes) throws Exception{
+    public String addArticle(@RequestParam Long articleId, @RequestParam Long orderId, RedirectAttributes redirectAttributes) throws Exception {
         try {
             orderItemService.add(articleId, orderId);
         } catch (PalletOverloadException e) {
@@ -130,7 +130,7 @@ public class ShopController {
         } else {
             if (Objects.equals(message, "Product added to basket")) {
                 model.addAttribute("successMessage", message);
-            } else if(Objects.equals(message, "Product removed from basket")){
+            } else if (Objects.equals(message, "Product removed from basket")) {
                 model.addAttribute("successMessage", message);
             } else if (message != null) {
                 model.addAttribute("errorMessage", message);
@@ -181,10 +181,9 @@ public class ShopController {
         if (user.isEmpty()) {
             return "user/login";
         } else {
-
             Order order = orderService.getOrderById(orderId);
             Long providerId = order.getProviderId();
-            List<Article> articles = orderService.getArticlesInOrder(user.get().getUserId());
+            List<Article> articles = orderService.getArticlesInOrder(orderId);
             List<OrderItem> orderItems = orderService.getOrderItems(order);
             Float articlesTotalPrice = checkoutService.calculateTotalOrderPrice(order);
             Float totalPrice = checkoutService.calculateTotalOrderPriceWithShipping(order, providerId);

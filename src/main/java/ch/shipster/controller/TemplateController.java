@@ -22,9 +22,9 @@ public class TemplateController {
     UserService userService;
 
     @GetMapping
-    public String getIndexView( Model model){
+    public String getIndexView(Model model) {
         Optional<User> user = userService.getCurrentUser();
-        if ( user.isPresent()) {
+        if (user.isPresent()) {
             model.addAttribute("user", user.get());
         } else {
             model.addAttribute("user", "no_user");
@@ -33,9 +33,9 @@ public class TemplateController {
     }
 
     @GetMapping(path = "team")
-    public String getTeamView(Model model){
+    public String getTeamView(Model model) {
         Optional<User> user = userService.getCurrentUser();
-        if ( user.isPresent()) {
+        if (user.isPresent()) {
             model.addAttribute("user", user.get());
         } else {
             model.addAttribute("user", "no_user");
@@ -44,9 +44,9 @@ public class TemplateController {
     }
 
     @GetMapping(path = "about")
-    public String getAboutView(Model model){
+    public String getAboutView(Model model) {
         Optional<User> user = userService.getCurrentUser();
-        if ( user.isPresent()) {
+        if (user.isPresent()) {
             model.addAttribute("user", user.get());
         } else {
             model.addAttribute("user", "no_user");
@@ -55,13 +55,13 @@ public class TemplateController {
     }
 
     @GetMapping(path = "login")
-    public String getLoginView(){
+    public String getLoginView() {
         return "user/login";
     }
 
     @GetMapping(path = "register")
-    public String getRegisterView(@RequestParam(name = "message", required = false) String message, Model model){
-        if (message != null){
+    public String getRegisterView(@RequestParam(name = "message", required = false) String message, Model model) {
+        if (message != null) {
             model.addAttribute("message", message);
         }
         model.addAttribute("user", new User());

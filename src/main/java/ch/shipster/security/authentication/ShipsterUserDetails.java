@@ -44,7 +44,7 @@ public class ShipsterUserDetails implements UserDetails {
         return username;
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return email;
     }
 

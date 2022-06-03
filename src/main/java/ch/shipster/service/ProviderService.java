@@ -4,7 +4,6 @@ import ch.shipster.data.domain.Provider;
 import ch.shipster.data.repository.ProviderRepository;
 import javassist.bytecode.DuplicateMemberException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.core.support.PropertiesBasedNamedQueries;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +17,7 @@ public class ProviderService {
     @Autowired
     ProviderRepository providerRepository;
 
-    public List<Provider> getAllProviders(){
+    public List<Provider> getAllProviders() {
         return providerRepository.findAll();
     }
 
@@ -29,7 +28,7 @@ public class ProviderService {
     public Provider saveProvider(String name) throws DuplicateMemberException {
         Optional<Provider> sameName = getProviderByName(name);
 
-        if (sameName.isPresent()){
+        if (sameName.isPresent()) {
             return sameName.get();
         } else {
             return saveProvider(new Provider(name));
@@ -38,14 +37,14 @@ public class ProviderService {
 
     public Provider saveProvider(Provider provider) throws DuplicateMemberException {
         Optional<Provider> sameName = getProviderByName(provider.getName());
-        if (sameName.isPresent()){
-            if (provider.getId().equals(null)){
+        if (sameName.isPresent()) {
+            if (provider.getId().equals(null)) {
                 return sameName.get();
-            } else if (sameName.get().getId().equals(provider.getId())){
+            } else if (sameName.get().getId().equals(provider.getId())) {
                 return providerRepository.save(provider);
             } else {
-                ShipsterLogger.logger.error("Provider with name "+provider.getName()+"already exists under Id " + sameName.get().getId());
-                throw new DuplicateMemberException("Provider with name "+provider.getName()+"already exists under Id " + sameName.get().getId());
+                ShipsterLogger.logger.error("Provider with name " + provider.getName() + "already exists under Id " + sameName.get().getId());
+                throw new DuplicateMemberException("Provider with name " + provider.getName() + "already exists under Id " + sameName.get().getId());
             }
         } else {
             if (provider.getId().equals(null)) {
@@ -60,9 +59,9 @@ public class ProviderService {
         List<Provider> providerList = providerRepository.getAllByName(name);
         if (providerList.size() == 0) {
             return Optional.empty();
-        } else if (providerList.size() == 1){
+        } else if (providerList.size() == 1) {
             return Optional.ofNullable(providerList.get(0));
-        } else  {
+        } else {
             ShipsterLogger.logger.error("Multiple Provider under the Name" + name);
             throw new DuplicateMemberException("Multiple Provider under the Name" + name);
         }

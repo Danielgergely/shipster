@@ -6,7 +6,7 @@ import java.util.Date;
 //Timo
 
 @Entity
-@Table(name="shipster_order")
+@Table(name = "shipster_order")
 public class Order {
 
     /// ID
@@ -29,7 +29,7 @@ public class Order {
 
     /// Constructor
 
-    public Order(User user){
+    public Order(User user) {
         this.userId = user.getUserId();
         this.orderStatus = OrderStatus.BASKET.name();
         this.lastUpdateDate = new Date();
@@ -42,7 +42,7 @@ public class Order {
 
     }
 
-    public Order(long userId){
+    public Order(long userId) {
         this.userId = userId;
         this.orderStatus = OrderStatus.BASKET.name();
         this.lastUpdateDate = new Date();
@@ -53,7 +53,9 @@ public class Order {
         this.cancellationDate = null;
         this.providerId = 1L;
     }
-    public Order(){}
+
+    public Order() {
+    }
 
     /// Methods
 
@@ -61,7 +63,7 @@ public class Order {
     /// Special Getter & Setter
     //TODO getUser (Instead of getUserId)
     //Start Jonas
-    public OrderStatus getOrderStatus() /*throws IllegalArgumentException*/{
+    public OrderStatus getOrderStatus() /*throws IllegalArgumentException*/ {
         return OrderStatus.valueOf(orderStatus);
     }
 

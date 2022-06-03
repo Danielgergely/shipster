@@ -7,9 +7,7 @@ import ch.shipster.data.domain.OrderStatus;
 import ch.shipster.data.repository.ArticleRepository;
 import ch.shipster.data.repository.OrderItemRepository;
 import ch.shipster.data.repository.OrderRepository;
-import ch.shipster.exceptions.NotFoundException;
 import ch.shipster.exceptions.PalletOverloadException;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

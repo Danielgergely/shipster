@@ -98,9 +98,10 @@ public class CheckoutService {
 
     /// Calculate Total Order Price with Shipping
     public float calculateTotalOrderPriceWithShipping(Order order) throws IOException, InterruptedException {
-                float price = calculateTotalOrderPrice(order);
+        float price = calculateTotalOrderPrice(order);
         float shippingCost = 0;
-       if (orderService.getOrderItems(order).size()!= 0) shippingCost = shippingCostCalculator.costCalculation(order.getId());
+        if (orderService.getOrderItems(order).size() != 0)
+            shippingCost = shippingCostCalculator.costCalculation(order.getId());
         return price + shippingCost;
     }
 
@@ -109,8 +110,10 @@ public class CheckoutService {
     }
 
     public float calculateTotalOrderPriceWithShipping(Order order, Long providerId) throws IOException, InterruptedException {
-                float price = calculateTotalOrderPrice(order);
-                        if (orderService.getOrderItems(order).size()!=0) { price += shippingCostCalculator.costCalculation(order.getId(), providerId);}
+        float price = calculateTotalOrderPrice(order);
+        if (orderService.getOrderItems(order).size() != 0) {
+            price += shippingCostCalculator.costCalculation(order.getId(), providerId);
+        }
         return price;
     }
 

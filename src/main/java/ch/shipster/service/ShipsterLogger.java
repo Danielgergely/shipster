@@ -1,11 +1,8 @@
 package ch.shipster.service;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
-
 
 // Jonas
 // https://www.youtube.com/watch?v=lGrcZsw-hKQ - How to do logging in Spring Boot - Brain Bytes
@@ -16,6 +13,4 @@ import org.springframework.stereotype.Service;
 public class ShipsterLogger {
 
     public static Logger logger = LoggerFactory.getLogger(ShipsterLogger.class);
-
-
 }

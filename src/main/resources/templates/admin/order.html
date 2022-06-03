@@ -44,13 +44,9 @@
                     <div class="basket column price">
                         <h6 class="price-article"
                             th:text="${#numbers.formatDecimal(article.getPrice() * orderItems[iterator.index].getQuantity(), 0, 2)}"></h6>
-                        <!--GET Subtotal Price (Quantity * Product Price)-->
                     </div>
                 </div>
-
                 <p></p> <!-- division line -->
-
-                <!-- Shipping Total, Product Subtotal, Order Total" -->
                 <div class="row justify-content-around">
                     <div class="col-6 d-flex justify-content-center">
                         <div>
@@ -71,9 +67,7 @@
                         </div>
                     </div>
                 </div>
-
                 <p></p> <!-- division line -->
-
                 <div class="m-2 d-flex justify-content-end">
                     <button id="delete" class="btn btn-outline-secondary mb-5 me-auto"
                             style="max-width:200px" th:onclick="|deleteOrder(${order.getId()})|">Delete
@@ -113,7 +107,7 @@
             type: "POST",
             success: function (response) {
                 let message = jQuery.parseJSON(response);
-                if(message.message === "Status updated") {
+                if (message.message === "Status updated") {
                     console.log(message);
                     window.location.replace("/admin/order?orderId=" + orderId);
                 } else {
@@ -134,7 +128,7 @@
         $.ajax({
             url: url,
             type: "GET",
-            success: function() {
+            success: function () {
                 window.location.replace("/admin/orders");
             }
         })

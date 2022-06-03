@@ -75,17 +75,17 @@
                    placeholder="Country" required=""
                    autofocus="" autocomplete="off">
         </p>
-
-<!--        <div>-->
-<!--            <div class="ui-widget">-->
-<!--                <label for="search_address" class="sr-only shipster-text-light">Address</label>-->
-<!--                <input type="text" id="search_address" name="address" class="form-control" placeholder="Country"-->
-<!--                       required=""-->
-<!--                       autofocus="" autocomplete="off">-->
-<!--            </div>-->
-<!--            <div id="searchResult" class="ui-widget" style="margin-top: 1em;">-->
-<!--            </div>-->
-<!--        </div>-->
+        <!-- Automatic address selection, not implemented due to not enough time, might implement later -->
+        <!--        <div>-->
+        <!--            <div class="ui-widget">-->
+        <!--                <label for="search_address" class="sr-only shipster-text-light">Address</label>-->
+        <!--                <input type="text" id="search_address" name="address" class="form-control" placeholder="Country"-->
+        <!--                       required=""-->
+        <!--                       autofocus="" autocomplete="off">-->
+        <!--            </div>-->
+        <!--            <div id="searchResult" class="ui-widget" style="margin-top: 1em;">-->
+        <!--            </div>-->
+        <!--        </div>-->
 
         <button class="btn btn-outline-secondary" type="submit">Register</button>
         <div th:if="${message != null}" class="col-md-12 pb-2">
@@ -94,48 +94,48 @@
     </form>
 </div>
 </body>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#search_address").autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    url: "http://dev.virtualearth.net/REST/v1/Locations",
-                    dataType: "jsonp",
-                    data: {
-                        key: "AvoMg355hzmFo7_Z3oXH0rlIMbBG2GQPM9kJVOpxMvpa2UaiVxm61yKNzxKJc6ks",
-                        q: request.term
-                    },
-                    jsonp: "jsonp",
-                    success: function (data) {
-                        let result = data.resourceSets[0];
-                        if (result) {
-                            if (result.estimatedTotal > 0) {
-                                response($.map(result.resources, function (item) {
-                                    return {
-                                        data: item,
-                                        label: item.name + ' (' + item.address.countryRegion + ')',
-                                        value: item.name
-                                    }
-                                }));
-                            }
-                        }
-                    }
-                });
-            },
-            minLength: 1,
-            change: function (event, ui) {
-                if (!ui.item)
-                    $("#searchBox").val('');
-            },
-            select: function (event, ui) {
-                displaySelectedItem(ui.item.data);
-            }
-        });
-    });
-    function displaySelectedItem(item) {
-        // $("#searchResult").empty().append('Result: ' + item.name).append(' (Latitude: ' + item.point.coordinates[0] + ' Longitude: ' + item.point.coordinates[1] + ')');
-    }
-</script>
+<!-- Automatic address selection, not implemented due to not enough time, might implement later -->
+<!--<script type="text/javascript">-->
+<!--    $(document).ready(function () {-->
+<!--        $("#search_address").autocomplete({-->
+<!--            source: function (request, response) {-->
+<!--                $.ajax({-->
+<!--                    url: "http://dev.virtualearth.net/REST/v1/Locations",-->
+<!--                    dataType: "jsonp",-->
+<!--                    data: {-->
+<!--                        key: "AvoMg355hzmFo7_Z3oXH0rlIMbBG2GQPM9kJVOpxMvpa2UaiVxm61yKNzxKJc6ks",-->
+<!--                        q: request.term-->
+<!--                    },-->
+<!--                    jsonp: "jsonp",-->
+<!--                    success: function (data) {-->
+<!--                        let result = data.resourceSets[0];-->
+<!--                        if (result) {-->
+<!--                            if (result.estimatedTotal > 0) {-->
+<!--                                response($.map(result.resources, function (item) {-->
+<!--                                    return {-->
+<!--                                        data: item,-->
+<!--                                        label: item.name + ' (' + item.address.countryRegion + ')',-->
+<!--                                        value: item.name-->
+<!--                                    }-->
+<!--                                }));-->
+<!--                            }-->
+<!--                        }-->
+<!--                    }-->
+<!--                });-->
+<!--            },-->
+<!--            minLength: 1,-->
+<!--            change: function (event, ui) {-->
+<!--                if (!ui.item)-->
+<!--                    $("#searchBox").val('');-->
+<!--            },-->
+<!--            select: function (event, ui) {-->
+<!--                displaySelectedItem(ui.item.data);-->
+<!--            }-->
+<!--        });-->
+<!--    });-->
+<!--    function displaySelectedItem(item) {-->
+<!--        // $("#searchResult").empty().append('Result: ' + item.name).append(' (Latitude: ' + item.point.coordinates[0] + ' Longitude: ' + item.point.coordinates[1] + ')');-->
+<!--    }-->
+<!--</script>-->
 
 </html>

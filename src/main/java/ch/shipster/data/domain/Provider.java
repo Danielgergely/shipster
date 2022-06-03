@@ -5,7 +5,7 @@ import javax.persistence.*;
 //Timo
 
 @Entity
-@Table(name="provider")
+@Table(name = "provider")
 public class Provider {
 
     /// ID
@@ -22,7 +22,8 @@ public class Provider {
         this.name = name;
     }
 
-    public Provider(){}
+    public Provider() {
+    }
 
     /// Methods
 

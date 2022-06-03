@@ -15,8 +15,6 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -95,8 +93,8 @@ public class ReceiptGenerator {
         Paragraph buyer = new Paragraph("Customer Information", infoHeader);
         Paragraph customer = new Paragraph(user.getFirstName() + " " + user.getLastName(), fontText);
         Paragraph cEmail = new Paragraph(user.getEmail(), fontText);
-        Paragraph cStreet = new Paragraph(address.getStreet() + " "  + address.getNumber(), fontText);
-        Paragraph cCity = new Paragraph(address.getZip() +  " " + address.getCity(), fontText);
+        Paragraph cStreet = new Paragraph(address.getStreet() + " " + address.getNumber(), fontText);
+        Paragraph cCity = new Paragraph(address.getZip() + " " + address.getCity(), fontText);
         Paragraph cCountry = new Paragraph(address.getCountry());
         buyer.setAlignment(Paragraph.ALIGN_RIGHT);
         customer.setAlignment(Paragraph.ALIGN_RIGHT);
@@ -125,7 +123,6 @@ public class ReceiptGenerator {
         //Basket table
         PdfPTable table = new PdfPTable(3);
         table.setWidthPercentage(80f);
-        //table.setWidthPercentage(new float[] {3.0f, 3.0f, 3.0f});
         table.setSpacingBefore(30);
 
         PdfPCell cell = new PdfPCell();
@@ -141,7 +138,7 @@ public class ReceiptGenerator {
         cell.setPhrase(new Phrase("Price", fontHeader));
         table.addCell(cell);
 
-        for (OrderItem i : basketItems){
+        for (OrderItem i : basketItems) {
             Article article = articleService.findById(i.getArticleId());
             table.addCell(article.getName());
             table.addCell(String.valueOf(i.getQuantity()));

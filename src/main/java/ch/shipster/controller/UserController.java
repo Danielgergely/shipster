@@ -2,12 +2,9 @@ package ch.shipster.controller;
 
 import ch.shipster.data.domain.Address;
 import ch.shipster.data.domain.User;
-import ch.shipster.exceptions.NotFoundException;
 import ch.shipster.service.AddressService;
 import ch.shipster.service.ShipsterLogger;
 import ch.shipster.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,8 +52,7 @@ public class UserController {
             userService.createUser(newUser);
             ShipsterLogger.logger.info("User with ID " + newAddress.getAddressId() + " has successfully registered");
             return "user/login";
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             redirectAttributes.addAttribute("message", e.getMessage());
             return "redirect:register";
         }

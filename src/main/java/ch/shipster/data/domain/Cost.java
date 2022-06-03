@@ -5,7 +5,7 @@ package ch.shipster.data.domain;
 import javax.persistence.*;
 
 @Entity
-@Table(name="cost")
+@Table(name = "cost")
 public class Cost {
 
     /// ID
@@ -35,10 +35,10 @@ public class Cost {
         this.price = price;
     }
 
-    public Cost(){}
+    public Cost() {
+    }
 
     /// Methods
-
 
 
     /// Getters & Setters
