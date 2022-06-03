@@ -14,10 +14,17 @@
             <div class="col-md-8 col-sm-10 shipster-text-light border rounded m-2"
                  style="min-width: 300px; background-color: black;">
                 <div class="card-body text-center border-bottom mb-2">
-                    <div class="d-flex justify-content-around"><h4 class="basket-title mb-5" th:text="'Order #' + ${order.getId()}"></h4> <h4 class="basket-title mb-5" th:text="'Customer: ' + ${user.getUserName()}"></h4></div>
-                    <div class="d-flex justify-content-around"><h6>Order date:</h6><h6 th:text="${order.getOrderDate() != null} ? ${#dates.format(order.getOrderDate(), 'dd-MM-yyyy HH:mm')} : '-'"></h6></div>
-                    <div class="d-flex justify-content-around"><h6>Order status:</h6><h6 th:text="${order.getOrderStatus()}"></h6></div>
-                    <div class="d-flex justify-content-around"><h6>Delivery date:</h6><h6 th:text="${order.getDeliveryDate()!= null} ? ${#dates.format(order.getDeliveryDate(), 'dd-MM-yyyy HH:mm')} : '-'"></h6></div>
+                    <div class="d-flex justify-content-around"><h4 class="basket-title mb-5"
+                                                                   th:text="'Order #' + ${order.getId()}"></h4> <h4
+                            class="basket-title mb-5" th:text="'Customer: ' + ${user.getUserName()}"></h4></div>
+                    <div class="d-flex justify-content-around"><h6>Order date:</h6><h6
+                            th:text="${order.getOrderDate() != null} ? ${#dates.format(order.getOrderDate(), 'dd-MM-yyyy HH:mm')} : '-'"></h6>
+                    </div>
+                    <div class="d-flex justify-content-around"><h6>Order status:</h6><h6
+                            th:text="${order.getOrderStatus()}"></h6></div>
+                    <div class="d-flex justify-content-around"><h6>Delivery date:</h6><h6
+                            th:text="${order.getDeliveryDate()!= null} ? ${#dates.format(order.getDeliveryDate(), 'dd-MM-yyyy HH:mm')} : '-'"></h6>
+                    </div>
                 </div>
                 <div class="d-flex align-items-center border-bottom mb-2 p-2" th:each="article, iterator : ${articles}">
                     <div class="basket column thumbnail"
@@ -32,7 +39,7 @@
                     <div class="basket column spacer">
                     </div>
                     <div class="basket column quantity">
-                            <div class="m-2" th:text="${orderItems[iterator.index].getQuantity()}"></div>
+                        <div class="m-2" th:text="${orderItems[iterator.index].getQuantity()}"></div>
                     </div>
                     <div class="basket column price">
                         <h6 class="price-article"
@@ -73,15 +80,18 @@
                         <option hidden> Please select</option>
                         <option th:each="status : ${orderStatuses}" th:text="${status.name()}"></option>
                     </select>
-                    <button id="save" class="btn btn-outline-secondary mb-5 me-2" th:onclick="|changeStatus(${order.getId()})|"
+                    <button id="save" class="btn btn-outline-secondary mb-5 me-2"
+                            th:onclick="|changeStatus(${order.getId()})|"
                             style="max-width:200px" disabled>Save
                     </button>
                 </div>
+                <div class="col-md-12 pb-2">
+                    <h5 class="fst-italic text-centered text-error" id="error-msg"></h5>
+                    <h5 class="fst-italic text-centered text-success" id="success-msg"></h5>
+                </div>
             </div>
         </div>
-        <div th:if="${message != null}" class="col-md-12 pb-2">
-            <h5 class="fst-italic text-centered text-error" th:text="${message}"></h5>
-        </div>
+
     </div>
 </div>
 
@@ -98,8 +108,20 @@
         $.ajax({
             url: url,
             type: "POST",
-            success: function() {
-                //window.location.replace("/admin/order?orderId=" + orderId);
+            success: function (response) {
+                let message = jQuery.parseJSON(response);
+                if(message.message === "Status updated") {
+                    console.log(message);
+                    window.location.replace("/admin/order?orderId=" + orderId);
+                } else {
+                    console.log("else");
+                    $('#error-msg').text(message.message);
+                }
+
+            },
+            error: function (response) {
+                let message = jQuery.parseJSON(response);
+                $('#error-msg').text(message.message);
             }
         })
     }

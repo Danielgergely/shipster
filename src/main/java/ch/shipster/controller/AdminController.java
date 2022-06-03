@@ -108,8 +108,7 @@ public class AdminController {
         redirectAttributes.addAttribute("success_message", "User has been updated.");
         try {
             ShipsterLogger.logger.info("User with id: " + userId + " updated by" + userService.getCurrentUser().get().getUserName());
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             ShipsterLogger.logger.info("User with id: " + userId + " updated.");
         }
         return "redirect:user?userId=" + userToUpdate.getUserId();
@@ -121,8 +120,7 @@ public class AdminController {
         redirectAttributes.addAttribute("message", "Password has been changed.");
         try {
             ShipsterLogger.logger.info("Password of user with id: " + userId + " updated by" + userService.getCurrentUser().get().getUserName());
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             ShipsterLogger.logger.info("Password of user with id: " + userId + " updated.");
         }
         return "redirect:user?userId=" + userId;
@@ -191,8 +189,7 @@ public class AdminController {
         redirectAttributes.addAttribute("success_message", "User has been created");
         try {
             ShipsterLogger.logger.info("User with id: " + newUser.getUserId() + " created by " + userService.getCurrentUser().get().getUserName());
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             ShipsterLogger.logger.info("User with id: \" + newUser.getUserId() + \" created.");
         }
         return "redirect:/admin/users";
@@ -225,18 +222,7 @@ public class AdminController {
             Float articlesTotalPrice = checkoutService.calculateTotalOrderPrice(order);
             Float totalPrice = checkoutService.calculateTotalOrderPriceWithShipping(order, order.getProviderId());
             List<OrderStatus> orderStatuses = Arrays.asList(OrderStatus.values());
-            if (message != null) {
-                model.addAttribute("message", message);
-                model.addAttribute("currentUser", currentUser.get());
-                model.addAttribute("user", user);
-                model.addAttribute("provider", provider);
-                model.addAttribute("order", order);
-                model.addAttribute("orderStatuses", orderStatuses);
-                model.addAttribute("orderItems", orderItems);
-                model.addAttribute("articles", articles);
-                model.addAttribute("articlesTotalPrice", articlesTotalPrice);
-                model.addAttribute("totalPrice", totalPrice);
-            }
+            model.addAttribute("message", message);
             model.addAttribute("currentUser", currentUser.get());
             model.addAttribute("user", user);
             model.addAttribute("provider", provider);
@@ -251,17 +237,15 @@ public class AdminController {
     }
 
     @PostMapping("admin/changeOrderStatus")
-    public String changeOrderStatus(@RequestParam Long orderId, @RequestParam String status, RedirectAttributes redirectAttributes) {
+    @ResponseBody
+    public String changeOrderStatus(@RequestParam Long orderId, @RequestParam String status) {
         try {
             orderService.changeOrderStatus(orderId, status);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             String message = e.getMessage();
-            redirectAttributes.addAttribute("orderId", orderId);
-            redirectAttributes.addAttribute("message", message);
-            return "redirect:/admin/order";
+            return "{\"message\": \" " + message + "\"}";
         }
         ShipsterLogger.logger.info("The status of order with id: " + orderId + " changed to: " + status);
-        return "{\"message\": \"Status updated.\"}";
+        return "{\"message\": \"Status updated\"}";
     }
 }

@@ -150,9 +150,9 @@ public class OrderService {
     public void changeOrderStatus(Long orderId, String status) throws Exception {
         Order order = orderRepository.getById(orderId);
         OrderStatus orderStatus = OrderStatus.valueOf(status);
-        order.setOrderStatus(orderStatus);
         switch (orderStatus) {
             case BASKET -> {
+                order.setOrderStatus(orderStatus);
                 order.setBasketDate(new Date());
                 order.setLastUpdateDate(new Date());
             }

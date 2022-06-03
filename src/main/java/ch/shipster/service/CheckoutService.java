@@ -44,9 +44,9 @@ public class CheckoutService {
             orderService.saveOrder(order);
         } else {
             ShipsterLogger.logger.error("The Order " + order.getId() + " in Status " + order.getOrderStatus().name() +
-                    " from User with ID " + order.getUserId() + "cannot be set to ordered as the current Status is" + order.getOrderStatus().name());
+                    " from User with ID " + order.getUserId() + " cannot be set to ordered as the current Status is " + order.getOrderStatus().name());
             throw new Exception("The Order " + order.getId() + " in Status " + order.getOrderStatus().name() +
-                    " from User with ID " + order.getUserId() + "cannot be set to ordered as the current Status is" + order.getOrderStatus().name());
+                    " from User with ID " + order.getUserId() + " cannot be set to ordered as the current Status is " + order.getOrderStatus().name());
         }
     }
 
@@ -58,9 +58,9 @@ public class CheckoutService {
             orderService.saveOrder(order);
         } else {
             ShipsterLogger.logger.error("The Order " + order.getId() + " in Status " + order.getOrderStatus().name() +
-                    " from User with ID " + order.getUserId() + "cannot be set to Shipped as the current Status is" + order.getOrderStatus().name());
+                    " from User with ID " + order.getUserId() + " cannot be set to Shipped as the current Status is " + order.getOrderStatus().name());
             throw new Exception("The Order " + order.getId() + " in Status " + order.getOrderStatus().name() +
-                    " from User with ID " + order.getUserId() + "cannot be set to Shipped as the current Status is" + order.getOrderStatus().name());
+                    " from User with ID " + order.getUserId() + " cannot be set to Shipped as the current Status is " + order.getOrderStatus().name());
         }
     }
 
@@ -75,7 +75,7 @@ public class CheckoutService {
             ShipsterLogger.logger.error("The Order " + order.getId() + " in Status " + order.getOrderStatus().name() +
                     " from User with ID " + order.getUserId() + "cannot be set to Delivered as the current Status is" + order.getOrderStatus().name());
             throw new Exception("The Order " + order.getId() + " in Status " + order.getOrderStatus().name() +
-                    " from User with ID " + order.getUserId() + "cannot be set to Delivered as the current Status is" + order.getOrderStatus().name());
+                    " from User with ID " + order.getUserId() + " cannot be set to Delivered as the current Status is " + order.getOrderStatus().name());
         }
 
 
