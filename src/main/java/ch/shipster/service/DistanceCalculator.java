@@ -57,8 +57,8 @@ public class DistanceCalculator {
         String APIpart2 = "&postalCode=";
         String APIpart3 = "&addressLine=";
         String APIpart4 = "&key=AvoMg355hzmFo7_Z3oXH0rlIMbBG2GQPM9kJVOpxMvpa2UaiVxm61yKNzxKJc6ks";
-        // APIpart1+country+APIpart2+ZIP+APIpart3+Street+Number+APIpart4
         String APIcall = APIpart1+UserCountry+APIpart2+UserZIP+APIpart3+StreetAndStreetnum+APIpart4;
+        APIcall = APIcall.replaceAll(" ", "%20");
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -68,7 +68,6 @@ public class DistanceCalculator {
         HttpResponse<String> response = client.send(request,
                 HttpResponse.BodyHandlers.ofString());
         String outputAPI = response.body();
-        // outputAPI = outputAPI.replaceAll("\"", "\\\"");
         String long_latitude = outputAPI.substring(outputAPI.indexOf("geocodePoints")+14,
                 outputAPI.indexOf("calculationMethod")-2);
         String latitude = long_latitude.substring(long_latitude.indexOf("coordinates")+14);
@@ -76,15 +75,11 @@ public class DistanceCalculator {
                 latitude.indexOf(","));
         String longitude = long_latitude.substring(long_latitude.indexOf("coordinates")+14);
         longitude = longitude.substring(longitude.indexOf(",")+1, longitude.indexOf("]"));
-        //TODO 1) use the address variables to form the URL which is send as GET to the API 2)use the longitude and latitude returned to form the next GET request which should return the distance
         return new String[]{latitude, longitude};
     }
 
      public static boolean validateAddress(Address deliveryAddress) throws IOException, InterruptedException {
         boolean isAddressValid = false;
-
-        //TODO: call API and validate if address is correct / IS THIS IN THE CORRECT PLACE HERE
-
         String UserStreet = deliveryAddress.getStreet();
         String UserAddressNumber = deliveryAddress.getNumber();
         String UserZIP = deliveryAddress.getZip();
@@ -97,7 +92,7 @@ public class DistanceCalculator {
         String APIpart3 = "&addressLine=";
         String APIpart4 = "&key=AvoMg355hzmFo7_Z3oXH0rlIMbBG2GQPM9kJVOpxMvpa2UaiVxm61yKNzxKJc6ks";
         String APIcall = APIpart1+UserCountry+APIpart2+UserZIP+APIpart3+StreetAndStreetnum+APIpart4;
-
+        APIcall = APIcall.replaceAll(" ", "%20");
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
